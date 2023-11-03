@@ -125,13 +125,9 @@ public class Account {
             } else {
                 if (encrypt(password).equals(passwords.get(index))) {
                     emails.remove(index);
-                    emails.removeAll(Collections.singleton(null));
                     usernames.remove(index);
-                    usernames.removeAll(Collections.singleton(null));
                     passwords.remove(index);
-                    passwords.removeAll(Collections.singleton(null));
                     roles.remove(index);
-                    roles.removeAll(Collections.singleton(null));
                     writeToFile();
                     return true;
                 } else {
@@ -141,13 +137,9 @@ public class Account {
         } else {
             if (encrypt(password).equals(passwords.get(index))) {
                 emails.remove(index);
-                emails.removeAll(Collections.singleton(null));
                 usernames.remove(index);
-                usernames.removeAll(Collections.singleton(null));
                 passwords.remove(index);
-                passwords.removeAll(Collections.singleton(null));
                 roles.remove(index);
-                roles.removeAll(Collections.singleton(null));
                 writeToFile();
                 return true;
             } else {
