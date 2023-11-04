@@ -12,6 +12,12 @@ public class Product {
         this.purchasePrice = purchasePrice;
         this.stores = stores;
     }
+    public Product() {
+        this.name = "";
+        this.stockQuantity = 0;
+        this.purchasePrice = 0;
+        this.stores = 0;
+    }
 
     public Store getStores() {
         return stores;
