@@ -2,7 +2,7 @@ package src;
 
 import java.io.*;
 import java.nio.Buffer;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * src.Seller
@@ -238,9 +238,159 @@ public class Seller {
     }
 
     /**
+     * Writes products to a csv file given store name and path
+     *
+     * @param storeName
+     * @param path
+     * @return boolean indicating successful write
+     */
+    public static boolean writeProductsToCSV(String storeName, String path) {
+        readFromFile();
+        int index = -1;
+        try {
+            for (int i = 0; i < stores.size(); i++) {
+                if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+                    index = i;
+                }
+            }
+            if (index == -1) {
+                return false;
+            }
+            PrintWriter pw = new PrintWriter(new FileWriter(path, false));
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+                pw.println(stores.get(index).getProductList().get(i).toString);
+            }
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Adds products to store from csv given store name and path
+     *
+     * @param storeName
+     * @param path
+     * @return boolean indicating successful read
+     */
+    public static boolean readProductsFromCSV(String storeName, String path) {
+        int index = -1;
+        String line = null;
+        String[] split = null;
+        readFromFile();
+        try {
+            for (int i = 0; i < stores.size(); i++) {
+                if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+                    index = i;
+                }
+            }
+            if (index == -1) {
+                return false;
+            }
+            BufferedReader bfr = new BufferedReader(new FileReader(path));
+            line = bfr.readLine();
+            while ((line != null) && (!line.isEmpty())) {
+                split = line.split(",");
+                createProduct(storeName, split[0], Double.parseDouble(split[1]), Integer.parseInt(split[2]));
+                line = bfr.readLine();
+            }
+            writeToFile();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Returns a String of customers and their purchases for a particular store given store name and username
+     * Sellers may only view their own stores
+     * Username should be stored from user input and inputted automatically
+     *
+     * @param storeName
+     * @param username
+     * @param sorted
+     * @return String of product sales, can be sorted
+     */
+    public static String getCustomersAndPurchases(String storeName, String username, boolean sorted) {
+        int index = -1;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getUsername.equalsIgnoreCase(username)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return "Error: Invalid parameters";
+        } else {
+            if (sorted) {
+                return stores.get(index).getSortedCustomersAndPurchases();
+            }
+            return stores.get(index).getCustomersAndPurchases();
+        }
+    }
+
+    /**
+     * Returns a String of product sales given a store name and username
+     * Sellers may only view their own stores
+     * Username should be stored from user input and inputted automatically
+     *
+     * @param storeName
+     * @param username
+     * @param sorted
+     * @return String of product sales, can be sorted
+     */
+    public static String getProductSales(String storeName, String username, boolean sorted) {
+        int index = -1;
+        ArrayList<String> productSales = new ArrayList<>();
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getUsername.equalsIgnoreCase(username)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return "Error: Invalid parameters";
+        } else {
+            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
+                productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
+                        stores.get(index).getProductList.get(i).getSales());
+            }
+        }
+        if (sorted) {
+            productSales.sort(Comparator.comparing(s -> s.substring(s.indexOf(":") + 2),
+                    Comparator.reverseOrder()));
+        }
+        return String.join("\n", productSales);
+    }
+
+    /**
+     * Returns a String of all products and quantities in customer shopping carts for a given seller's products
+     * Username should be stored from user input and inputted automatically
+     *
+     * @param username
+     * @return String of products and quantities
+     */
+    public static String getShoppingCartProducts(String username) {
+        String shoppingCartProducts = null;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getUsername.equalsIgnoreCase(username)) {
+                for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
+                    shoppingCartProducts += stores.get(i).getName() + " - " +
+                            stores.get(i).getProductList().get(j).getName() + ": " +
+                            Buyer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
+                }
+            }
+        }
+        return shoppingCartProducts;
+    }
+
+    /**
      * Writes Store and Product information to stores.txt and products.txt
      */
-    public static void writeToFile() {
+    private static void writeToFile() {
         try {
             PrintWriter storePW = new PrintWriter(new FileWriter("stores.txt", false));
             for (int i = 0; i < stores.size(); i++) {
@@ -262,9 +412,9 @@ public class Seller {
 
     /**
      * Reads Store and Product information from stores.txt and products.txt
-     * The toStrings for Store and Product should separate attributes with a ", "
+     * The toStrings for Store and Product should separate attributes with a ","
      */
-    public static void readFromFile() {
+    private static void readFromFile() {
         stores.clear();
         String[] productSplit = null;
         String[] attributeSplit = null;
@@ -280,10 +430,10 @@ public class Seller {
             while ((storeLine != null) && (!storeLine.isEmpty())) {
                 productSplit = productLine.split(";");
                 for (int i = 0; i < productSplit.length; i++) {
-                    attributeSplit = productSplit[i].split(", ");
+                    attributeSplit = productSplit[i].split(",");
                     productList.add(new Product(attributeSplit[0], attributeSplit[1], attributeSplit[2]));
                 }
-                storeSplit = storeLine.split(", ");
+                storeSplit = storeLine.split(",");
                 stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
                 storeLine = storeBFR.readLine();
                 productLine = productBFR.readLine();
