@@ -301,7 +301,7 @@ public class Account {
      * Writes information to files
      */
     private static void writeToFile() {
-        try (PrintWriter pw = new PrintWriter(new FileWriter("data.txt"))){
+        try (PrintWriter pw = new PrintWriter(new FileWriter("AccountData.txt"))){
             for(int i = 0; i < emails.size(); i++) {
                 pw.println(emails.get(i) + ";" + usernames.get(i) + ";" + passwords.get(i) + ";" + roles.get(i));
             }
@@ -319,7 +319,7 @@ public class Account {
         passwords.clear();
         roles.clear();
         String line;
-        try (BufferedReader br = new BufferedReader(new FileReader("data.txt"))){
+        try (BufferedReader br = new BufferedReader(new FileReader("AccountData.txt"))){
             line = br.readLine();
             while ((line != null) && (!line.isEmpty())) {
                 String[] subpart = line.split(";");
