@@ -14,11 +14,18 @@ public class Product {
         this.purchasePrice = purchasePrice;
         this.stores = stores;
     }
+    public Product(String name, double purchasePrice, int quantity){
+        this.name = name;
+        this.stockQuantity = quantity;
+        this.purchasePrice = purchasePrice;
+    }
+
     public Product() {
         this.name = "";
         this.stockQuantity = 0;
         this.purchasePrice = 0;
-        this.stores = null;
+        this.stores = new Store("", "", new Seller("", "", ""),
+                new ArrayList<>(0));
     }
 
     public Store getStores() {
@@ -60,7 +67,7 @@ public class Product {
             {
                 if(products.get(i).getName().compareTo(products.get(j).getName())>0)
                 {
-                   Collections.swap(products, i, j);
+                    Collections.swap(products, i, j);
                 }
             }
         }
@@ -81,4 +88,13 @@ public class Product {
         return products;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", stockQuantity=" + stockQuantity +
+                ", purchasePrice=" + purchasePrice +
+                ", stores=" + stores +
+                '}';
+    }
 }
