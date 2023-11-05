@@ -50,15 +50,14 @@ public class Seller extends Account {
                 index = i;
             }
         }
+        // original forces a crash
         if (index == -1) {
-            throw new IllegalArgumentException();
+            System.out.println("Store Not Found");
+            // Stores have a function to print products + store details
         } else {
-            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                System.out.println(stores.get(index).getProductList().get(i).toString());
-            }
+            stores.get(index).toString;
         }
     }
-
     /**
      * Prints all products and stores
      */
