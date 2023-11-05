@@ -78,4 +78,15 @@ public class Store {
     public void setSellserUsername(String sellserUsername) {
         this.sellserUsername = sellserUsername;
     }
+
+    public String toString() {
+        String store =  ("Store: " + this.storeName + "\n"
+                + "Owner: " + this.storeOwner + "\n"
+                + "Location: " + this.storeLocation + "\n");
+        String products = "";
+        for(Product s: this.productList){
+            products += s.toString();
+        }
+        return store + products;
+    }
 }
