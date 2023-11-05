@@ -1,3 +1,5 @@
+package src;
+
 import java.util.ArrayList;
 import java.util.*;
 public class Product {
@@ -6,7 +8,7 @@ public class Product {
     private double purchasePrice;
     private Store stores;
 
-    public Product(String name, int quantity, double purchasePrice, Stores stores) {
+    public Product(String name, int quantity, double purchasePrice, Store stores) {
         this.name = name;
         this.stockQuantity = quantity;
         this.purchasePrice = purchasePrice;
@@ -16,7 +18,7 @@ public class Product {
         this.name = "";
         this.stockQuantity = 0;
         this.purchasePrice = 0;
-        this.stores = 0;
+        this.stores = null;
     }
 
     public Store getStores() {
