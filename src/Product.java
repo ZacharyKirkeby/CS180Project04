@@ -1,10 +1,14 @@
 package src;
-
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.*;
 public class Product {
     private String name; //name of the product
     private int stockQuantity; //quantity of the product left
+    private int quantitySold;
     private double purchasePrice;
     private Store stores;
 
@@ -13,21 +17,30 @@ public class Product {
         this.stockQuantity = quantity;
         this.purchasePrice = purchasePrice;
         this.stores = stores;
+        this.quantitySold = 0;
     }
     public Product(String name, double purchasePrice, int quantity){
         this.name = name;
         this.stockQuantity = quantity;
         this.purchasePrice = purchasePrice;
+        this.quantitySold = 0;
     }
 
     public Product() {
         this.name = "";
         this.stockQuantity = 0;
         this.purchasePrice = 0;
+        this.quantitySold = 0;
         this.stores = new Store("", "", new Seller("", "", ""),
                 new ArrayList<>(0));
     }
+    public int getQuantitySold() {
+        return quantitySold;
+    }
 
+    public void setQuantitySold(int quantitySold) {
+        this.quantitySold = quantitySold;
+    }
     public Store getStores() {
         return stores;
     }
@@ -67,7 +80,7 @@ public class Product {
             {
                 if(products.get(i).getName().compareTo(products.get(j).getName())>0)
                 {
-                    Collections.swap(products, i, j);
+                   Collections.swap(products, i, j);
                 }
             }
         }
@@ -86,6 +99,24 @@ public class Product {
             }
         }
         return products;
+    }
+    public double getSales(){
+        return (purchasePrice * quantitySold);
+    }
+    public static void readProductFile(String fileName){
+        ArrayList<String> products = new ArrayList<>();
+        try(BufferedReader br = new BufferedReader(new FileReader(fileName))){
+            String line = br.readLine();
+            while(line != null){
+                products.add(line + ";");
+                line = br.readLine();
+            }
+            products.remove(products.size()-1);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
