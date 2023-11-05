@@ -6,17 +6,24 @@ public class Product {
     private double purchasePrice;
     private Store stores;
 
-    public Product(String name, int quantity, double purchasePrice, Stores stores) {
+    public Product(String name, int quantity, double purchasePrice, Store stores) {
         this.name = name;
         this.stockQuantity = quantity;
         this.purchasePrice = purchasePrice;
         this.stores = stores;
     }
+    public Product(String name, double purchasePrice, int quantity){
+        this.name = name;
+        this.stockQuantity = quantity;
+        this.purchasePrice = purchasePrice;
+    }
+
     public Product() {
         this.name = "";
         this.stockQuantity = 0;
         this.purchasePrice = 0;
-        this.stores = 0;
+        this.stores = new Store("", "", new Seller("", "", ""),
+                new ArrayList<>(0));
     }
 
     public Store getStores() {
@@ -79,4 +86,13 @@ public class Product {
         return products;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", stockQuantity=" + stockQuantity +
+                ", purchasePrice=" + purchasePrice +
+                ", stores=" + stores +
+                '}';
+    }
 }
