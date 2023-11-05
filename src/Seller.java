@@ -1,3 +1,5 @@
+package src;
+
 import java.io.*;
 import java.nio.Buffer;
 import java.util.*;
@@ -55,7 +57,7 @@ public class Seller extends Account {
             System.out.println("Store Not Found");
             // Stores have a function to print products + store details
         } else {
-            stores.get(index).toString;
+            stores.get(index).toString();
         }
     }
     /**
