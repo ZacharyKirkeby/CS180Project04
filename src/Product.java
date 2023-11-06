@@ -26,14 +26,7 @@ public class Product {
         this.quantitySold = 0;
     }
 
-    public Product() {
-        this.name = "";
-        this.stockQuantity = 0;
-        this.purchasePrice = 0;
-        this.quantitySold = 0;
-        this.stores = new Store("", "", new Seller("", "", ""),
-                new ArrayList<>(0));
-    }
+
     public int getQuantitySold() {
         return quantitySold;
     }
@@ -121,11 +114,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", stockQuantity=" + stockQuantity +
-                ", purchasePrice=" + purchasePrice +
-                ", stores=" + stores +
-                '}';
+        return name + "," + purchasePrice + "," + stockQuantity;
     }
 }

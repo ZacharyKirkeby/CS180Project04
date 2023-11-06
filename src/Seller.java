@@ -16,16 +16,7 @@ import java.util.*;
  * @version November 3, 2023
  */
 
-public class Seller extends Account {
-    private String name;
-    private String location;
-    private String typeOfStore;
-
-    public Seller(String name, String location, String typeOfStore) {
-        this.name = name;
-        this.location = location;
-        this.typeOfStore = typeOfStore;
-    }
+public abstract class Seller {
 
     private static ArrayList<Store> stores = new ArrayList<Store>(); // store arraylist
 
@@ -35,7 +26,7 @@ public class Seller extends Account {
     public static void printStores() {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
-            System.out.println(stores.get(i).toString());
+            System.out.println(stores.get(i).getStoreName());
         }
     }
 
@@ -57,9 +48,12 @@ public class Seller extends Account {
             System.out.println("Store Not Found");
             // Stores have a function to print products + store details
         } else {
-            stores.get(index).toString();
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+                System.out.println(stores.get(index).getProductList().get(i).getName());
+            }
         }
     }
+
     /**
      * Prints all products and stores
      */
@@ -67,8 +61,10 @@ public class Seller extends Account {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                System.out.println(stores.get(i).getProductList().get(j).toString() +
-                        " | " + stores.get(i).toString());
+                System.out.println(stores.get(i).getProductList().get(j).getName() +
+                        "Price: $" + stores.get(i).getProductList().get(j).getPurchasePrice() +
+                        "Quantity: " + stores.get(i).getProductList().get(j).getStockQuantity() +
+                        " | " + stores.get(i).getStoreName());
             }
         }
     }

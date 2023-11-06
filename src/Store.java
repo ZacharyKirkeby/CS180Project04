@@ -64,13 +64,6 @@ public class Store {
         this.storeOwner = storeOwner;
     }
 
-    public Store() {
-        this.storeName = "";
-        this.storeLocation = "";
-        this.storeOwner = new Seller("", "", "");
-        this.productList = new ArrayList<Product>();
-    }
-
     public String getSellserUsername() {
         return sellserUsername;
     }
@@ -80,13 +73,6 @@ public class Store {
     }
 
     public String toString() {
-        String store =  ("Store: " + this.storeName + "\n"
-                + "Owner: " + this.storeOwner + "\n"
-                + "Location: " + this.storeLocation + "\n");
-        String products = "";
-        for(Product s: this.productList){
-            products += s.toString();
-        }
-        return store + products;
+        return storeName + "," + storeLocation + "," + sellserUsername;
     }
 }
