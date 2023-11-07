@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -302,27 +301,10 @@ public class Account {
      * Writes information to files
      */
     private static void writeToFile() {
-        try {
-            PrintWriter emailPW = new PrintWriter(new FileWriter("emails.txt", false));
-            for (int i = 0; i < emails.size(); i++) {
-                emailPW.println(emails.get(i));
+        try (PrintWriter pw = new PrintWriter(new FileWriter("AccountData.txt"))){
+            for(int i = 0; i < emails.size(); i++) {
+                pw.println(emails.get(i) + ";" + usernames.get(i) + ";" + passwords.get(i) + ";" + roles.get(i));
             }
-            emailPW.close();
-            PrintWriter usernamePW = new PrintWriter(new FileWriter("usernames.txt",false));
-            for (int i = 0; i < usernames.size(); i++) {
-                usernamePW.println(usernames.get(i));
-            }
-            usernamePW.close();
-            PrintWriter passwordPW = new PrintWriter(new FileWriter("passwords.txt", false));
-            for (int i = 0; i < passwords.size(); i++) {
-                passwordPW.println(passwords.get(i));
-            }
-            passwordPW.close();
-            PrintWriter rolePW = new PrintWriter(new FileWriter("roles.txt", false));
-            for (int i = 0; i < roles.size(); i++) {
-                rolePW.println(roles.get(i));
-            }
-            rolePW.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -337,35 +319,16 @@ public class Account {
         passwords.clear();
         roles.clear();
         String line;
-        try {
-            BufferedReader emailBFR = new BufferedReader(new FileReader("emails.txt"));
-            line = emailBFR.readLine();
+        try (BufferedReader br = new BufferedReader(new FileReader("AccountData.txt"))){
+            line = br.readLine();
             while ((line != null) && (!line.isEmpty())) {
-                emails.add(line);
-                line = emailBFR.readLine();
+                String[] subpart = line.split(";");
+                emails.add(subpart[0]);
+                usernames.add(subpart[1]);
+                passwords.add(subpart[2]);
+                roles.add(subpart[3]);
+                line = br.readLine();
             }
-            emailBFR.close();
-            BufferedReader usernameBFR = new BufferedReader(new FileReader("usernames.txt"));
-            line = usernameBFR.readLine();
-            while ((line != null) && (!line.isEmpty())) {
-                usernames.add(line);
-                line = usernameBFR.readLine();
-            }
-            usernameBFR.close();
-            BufferedReader passwordBFR = new BufferedReader(new FileReader("passwords.txt"));
-            line = passwordBFR.readLine();
-            while ((line != null) && (!line.isEmpty())) {
-                passwords.add(line);
-                line = passwordBFR.readLine();
-            }
-            passwordBFR.close();
-            BufferedReader roleBFR = new BufferedReader(new FileReader("roles.txt"));
-            line = roleBFR.readLine();
-            while ((line != null) && (!line.isEmpty())) {
-                roles.add(line);
-                line = roleBFR.readLine();
-            }
-            roleBFR.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
