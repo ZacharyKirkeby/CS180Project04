@@ -1,7 +1,6 @@
 package src;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
 
 /**
@@ -104,7 +103,7 @@ public abstract class Seller {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -322,7 +321,7 @@ public abstract class Seller {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -351,7 +350,7 @@ public abstract class Seller {
         ArrayList<String> productSales = new ArrayList<>();
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -380,7 +379,7 @@ public abstract class Seller {
     public static String getShoppingCartProducts(String username) {
         String shoppingCartProducts = null;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+            if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + ": " +
@@ -389,6 +388,23 @@ public abstract class Seller {
             }
         }
         return shoppingCartProducts;
+    }
+
+    /**
+     * Changes store usernames given new username and old username
+     * Should only be called by Account.changeUsername()
+     *
+     * @param newUsername
+     * @param oldUsername
+     */
+    public static void changeStoreUsernames(String newUsername, String oldUsername) {
+        readFromFile();
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getSellerUsername().equals(oldUsername)) {
+                stores.get(i).setSellerUsername(newUsername);
+            }
+        }
+        writeToFile();
     }
 
     /**

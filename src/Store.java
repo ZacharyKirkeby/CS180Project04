@@ -15,7 +15,7 @@ public class Store {
     private String storeName;
     private String storeLocation;
     private Seller storeOwner;
-    private String sellserUsername;
+    private String sellerUsername;
 
     public Store(String name, String storeLocation, Seller seller,
                  ArrayList<Product> productList) {
@@ -24,11 +24,11 @@ public class Store {
         this.storeOwner = seller;
         this.productList = productList;
     }
-    public Store(String name, String storeLocation, String sellserUsername,
+    public Store(String name, String storeLocation, String sellerUsername,
                  ArrayList<Product> productList) {
         this.storeName = name;
         this.storeLocation = storeLocation;
-        this.sellserUsername = sellserUsername;
+        this.sellerUsername = sellerUsername;
         this.productList = productList;
     }
 
@@ -64,15 +64,15 @@ public class Store {
         this.storeOwner = storeOwner;
     }
 
-    public String getSellserUsername() {
-        return sellserUsername;
+    public String getSellerUsername() {
+        return sellerUsername;
     }
 
-    public void setSellserUsername(String sellserUsername) {
-        this.sellserUsername = sellserUsername;
+    public void setSellerUsername(String sellerUsername) {
+        this.sellerUsername = sellerUsername;
     }
 
     public String toString() {
-        return storeName + "," + storeLocation + "," + sellserUsername;
+        return storeName + "," + storeLocation + "," + sellerUsername;
     }
 }
