@@ -16,7 +16,7 @@ import java.util.*;
  * @version November 3, 2023
  */
 
-public class Seller {
+public abstract class Seller {
 
     private static ArrayList<Store> stores = new ArrayList<Store>(); // store arraylist
 
@@ -26,7 +26,7 @@ public class Seller {
     public static void printStores() {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
-            System.out.println(stores.get(i).toString());
+            System.out.println(stores.get(i).getStoreName());
         }
     }
 
@@ -39,15 +39,17 @@ public class Seller {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 index = i;
             }
         }
+        // original forces a crash
         if (index == -1) {
-            throw new IllegalArgumentException();
+            System.out.println("Store Not Found");
+            // Stores have a function to print products + store details
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                System.out.println(stores.get(index).getProductList().get(i).toString());
+                System.out.println(stores.get(index).getProductList().get(i).getName());
             }
         }
     }
@@ -59,8 +61,10 @@ public class Seller {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                System.out.println(stores.get(i).getProductList().get(j).toString() +
-                        " | " + stores.get(i).toString());
+                System.out.println(stores.get(i).getProductList().get(j).getName() +
+                        "Price: $" + stores.get(i).getProductList().get(j).getPurchasePrice() +
+                        "Quantity: " + stores.get(i).getProductList().get(j).getStockQuantity() +
+                        " | " + stores.get(i).getStoreName());
             }
         }
     }
@@ -78,7 +82,7 @@ public class Seller {
     public static boolean createStore(String storeName, String storeLocation, String username) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 return false;
             }
         }
@@ -99,8 +103,8 @@ public class Seller {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getUsername.equalsIgnoreCase(username)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -128,7 +132,7 @@ public class Seller {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 index = i;
             }
         }
@@ -158,7 +162,7 @@ public class Seller {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 index = i;
             }
         }
@@ -167,7 +171,7 @@ public class Seller {
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 if (stores.get(index).getProductList().get(i).getName().equalsIgnoreCase(name)) {
-                    (stores.get(index).getProductList().get(i).setPrice(price));
+                    stores.get(index).getProductList().get(i).setPurchasePrice(price);
                     writeToFile();
                     return true;
                 }
@@ -189,7 +193,7 @@ public class Seller {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 index = i;
             }
         }
@@ -198,7 +202,7 @@ public class Seller {
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 if (stores.get(index).getProductList().get(i).getName().equalsIgnoreCase(name)) {
-                    (stores.get(index).getProductList().get(i).setQuantity(quantity));
+                    stores.get(index).getProductList().get(i).setStockQuantity(quantity);
                     writeToFile();
                     return true;
                 }
@@ -219,7 +223,7 @@ public class Seller {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 index = i;
             }
         }
@@ -228,7 +232,7 @@ public class Seller {
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 if (stores.get(index).getProductList().get(i).getName().equalsIgnoreCase(name)) {
-                    (stores.get(index).getProductList().get(i).remove());
+                    stores.get(index).getProductList().remove(i);
                     writeToFile();
                     return true;
                 }
@@ -249,7 +253,7 @@ public class Seller {
         int index = -1;
         try {
             for (int i = 0; i < stores.size(); i++) {
-                if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+                if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                     index = i;
                 }
             }
@@ -258,7 +262,7 @@ public class Seller {
             }
             PrintWriter pw = new PrintWriter(new FileWriter(path, false));
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                pw.println(stores.get(index).getProductList().get(i).toString);
+                pw.println(stores.get(index).getProductList().get(i).toString());
             }
             return true;
 
@@ -282,7 +286,7 @@ public class Seller {
         readFromFile();
         try {
             for (int i = 0; i < stores.size(); i++) {
-                if (stores.get(i).getName().equalsIgnoreCase(storeName)) {
+                if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                     index = i;
                 }
             }
@@ -317,8 +321,8 @@ public class Seller {
     public static String getCustomersAndPurchases(String storeName, String username, boolean sorted) {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getUsername.equalsIgnoreCase(username)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -346,8 +350,8 @@ public class Seller {
         int index = -1;
         ArrayList<String> productSales = new ArrayList<>();
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getUsername.equalsIgnoreCase(username)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -356,7 +360,7 @@ public class Seller {
         } else {
             for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
-                        stores.get(index).getProductList.get(i).getSales());
+                        stores.get(index).getProductList().get(i).getSales());
             }
         }
         if (sorted) {
@@ -376,9 +380,9 @@ public class Seller {
     public static String getShoppingCartProducts(String username) {
         String shoppingCartProducts = null;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getUsername.equalsIgnoreCase(username)) {
+            if (stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                    shoppingCartProducts += stores.get(i).getName() + " - " +
+                    shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + ": " +
                             Buyer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
@@ -431,7 +435,8 @@ public class Seller {
                 productSplit = productLine.split(";");
                 for (int i = 0; i < productSplit.length; i++) {
                     attributeSplit = productSplit[i].split(",");
-                    productList.add(new Product(attributeSplit[0], attributeSplit[1], attributeSplit[2]));
+                    productList.add(new Product(attributeSplit[0], Double.parseDouble(attributeSplit[1]),
+                            Integer.parseInt(attributeSplit[2])));
                 }
                 storeSplit = storeLine.split(",");
                 stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
