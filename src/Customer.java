@@ -1,11 +1,8 @@
 package src;
-
-import src.Account;
-
 import java.io.*;
 import java.util.*;
 
-public class Customer extends Account {
+public class Customer extends Account{
     private static String name;
     private static Map<Product, Integer> shoppingCart;
     private static Map<Product, Integer> purchaseHistory;
@@ -18,8 +15,32 @@ public class Customer extends Account {
         this.purchaseHistory = new HashMap<>();
     }
 
+    public static Store searchedStoreExists(String storeName, ArrayList<Store> stores) {
+        for (Store store : MarketPlace.stores) {
+            if (store.getStoreName().equals(storeName)) {
+                return store;
+            }
+        }
+        return null;
+    }
+
+    public static Product searchedProductExists(String productName, ArrayList<Store> stores) {
+        for (Store store : MarketPlace.stores) {
+            for (Product product : store.getProductList()) {
+                if (product.getName().equals(productName)) {
+                    return product;
+                }
+            }
+        }
+        return null;
+    }
+
     public static void addToCart(Product product, int quantity) {
         shoppingCart.put(product, quantity);
+    }
+
+    public static void removeFromToCart(Product product, int quantity) {
+        shoppingCart.remove(product, quantity);
     }
 
     // products from different stores

@@ -1,5 +1,6 @@
 package src;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class MarketPlace {
@@ -8,17 +9,18 @@ public class MarketPlace {
             "\n 3. View Store Statistics \n 4. Delete Store \n 5. Manage Account \n 6. Logout \n";
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
             "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Back \n";
-    private static final String sellerAccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n";
+    private static final String manageAccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n";
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
-            "3. Search by Description \n 4. View All Products \n 6. Manage Account \n";
+            "3. View All Products \n 4. View Shopping Cart \n 5. View Purchase History \n 6. Manage Account \n";
     private static final String SEARCHPROMPT = "Enter search term: ";
-    private ArrayList<Store> stores;
+    static ArrayList<Store> stores;
     private static boolean isLoggedIn;
 
-    public MarketPlace() {
+    public MarketPlace(ArrayList<Store> stores) {
         // some kind of logic tbd
+        this.stores = stores;
     }
 
 
@@ -169,7 +171,7 @@ public class MarketPlace {
                                 Seller.deleteStore(storeName, user);
                                 break;
                             case "5":
-                                System.out.print(sellerAccountChoices);
+                                System.out.print(manageAccountChoices);
                                 input = scanner.nextLine();
                                 switch (input){
                                     case "1":
@@ -214,23 +216,70 @@ public class MarketPlace {
                         System.out.println(BUYERPROMPT);
                         input = scanner.nextLine();
                         switch (input){
-                            case "1":
+                            case "1": // search for store
                                 System.out.println(SEARCHPROMPT);
                                 input = scanner.nextLine();
-                                //search logic
+                                Store storeSearched = Customer.searchedStoreExists(input, stores);
+                                if (storeSearched != null) {
+                                    System.out.println(storeSearched);
+                                }
                                 break;
-                            case "2":
+                            case "2": // search for product
                                 System.out.println(SEARCHPROMPT);
                                 input = scanner.nextLine();
-                                //search logic
+                                Product productSearched = Customer.searchedProductExists(input, stores);
+                                if (productSearched != null) {
+                                    System.out.println(productSearched);
+                                }
                                 break;
-                            case "3":
-                                System.out.println(SEARCHPROMPT);
+                            case "3": // view all products
+                                for (Store store: stores) {
+                                    System.out.println(store.getProductList());
+                                }
+                                break;
+                            case "4": // view shopping cart
+                                for (String s : Objects.requireNonNull(Customer.readShoppingCartFile())) {
+                                    System.out.println(s + "\n");
+                                }
+                                break;
+                            case "5":
+                                for (String s : Objects.requireNonNull(Customer.readPurchaseHistoryFile())) {
+                                    System.out.println(s + "\n");
+                                }
+                                break;
+                            case "6":
+                                System.out.print(manageAccountChoices);
                                 input = scanner.nextLine();
-                                //search logic
-                                break;
-                            case "4":
-                                Seller.printProductAndStores();
+                                switch (input){
+                                    case "1":
+                                        System.out.println("Input Username or Email: ");
+                                        user = scanner.nextLine();
+                                        System.out.println("Enter Old Password: ");
+                                        String oldPassword = scanner.nextLine();
+                                        System.out.println("Enter New Password: ");
+                                        String newPassword = scanner.nextLine();
+                                        Account.changePassword(user, oldPassword, newPassword);
+                                        break;
+                                    case "2":
+                                        System.out.println("Input Username or Email: ");
+                                        user = scanner.nextLine();
+                                        System.out.println("Enter Password: ");
+                                        password = scanner.nextLine();
+                                        System.out.println("Enter New Role: ");
+                                        String newRole= scanner.nextLine();
+                                        Account.changeRole(user, password, newRole);
+                                        break;
+                                    case "3":
+                                        System.out.println("Input Username or Email: ");
+                                        user = scanner.nextLine();
+                                        System.out.println("Enter Password: ");
+                                        password = scanner.nextLine();
+                                        Account.deleteAccount(user, password);
+                                        break;
+                                    default:
+                                        System.out.println("Invalid Input");
+                                        break;
+                                }
                         }
 
 
