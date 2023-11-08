@@ -7,11 +7,11 @@ public class MarketPlace {
             "\n 3. View Store Statistics \n 4. Delete Store \n 5. Manage Account \n 6. Logout \n";
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
             "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Back \n";
-    private static final String sellerAccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n";
+    private static final String AccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n";
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
-            "3. Search by Description \n 4. View All Products \n 6. Manage Account \n";
+            "3. Search by Description \n 4. View All Products \n 5. Manage Account \n 6. Logout \n";
     private static final String SEARCHPROMPT = "Enter search term: ";
     private ArrayList<Store> stores;
     private static boolean isLoggedIn;
@@ -168,7 +168,7 @@ public class MarketPlace {
                                 Seller.deleteStore(storeName, user);
                                 break;
                             case "5":
-                                System.out.print(sellerAccountChoices);
+                                System.out.print(AccountChoices);
                                 input = scanner.nextLine();
                                 switch (input){
                                     case "1":
@@ -232,9 +232,48 @@ public class MarketPlace {
                                 break;
                             case "4":
                                 Seller.printProductAndStores();
+                                break;
+                            case "5":
+                                System.out.print(AccountChoices);
+                                input = scanner.nextLine();
+                                switch (input){
+                                    case "1":
+                                        System.out.println("Input Username or Email: ");
+                                        user = scanner.nextLine();
+                                        System.out.println("Enter Old Password: ");
+                                        String oldPassword = scanner.nextLine();
+                                        System.out.println("Enter New Password: ");
+                                        String newPassword = scanner.nextLine();
+                                        Account.changePassword(user, oldPassword, newPassword);
+                                        break;
+                                    case "2":
+                                        System.out.println("Input Username or Email: ");
+                                        user = scanner.nextLine();
+                                        System.out.println("Enter Password: ");
+                                        password = scanner.nextLine();
+                                        System.out.println("Enter New Role: ");
+                                        String newRole= scanner.nextLine();
+                                        Account.changeRole(user, password, newRole);
+                                        break;
+                                    case "3":
+                                        System.out.println("Input Username or Email: ");
+                                        user = scanner.nextLine();
+                                        System.out.println("Enter Password: ");
+                                        password = scanner.nextLine();
+                                        Account.deleteAccount(user, password);
+                                        break;
+                                    default:
+                                        System.out.println("Invalid Input");
+                                        break;
+                                }
+                            case "6":
+                                isLoggedIn = false;
+                                System.out.println("Sucessfully Logged out");
+                                break;
+                            default:
+                                System.out.println("Invalid Input");
+                                break;
                         }
-
-
                     }
                 }
                 break;
