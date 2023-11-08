@@ -237,14 +237,24 @@ public class MarketPlace {
                                     System.out.println(store.getProductList());
                                 }
                                 break;
-                            case "4": // view shopping cart
-                                for (String s : Objects.requireNonNull(Customer.readShoppingCartFile())) {
-                                    System.out.println(s + "\n");
+                            case "4": // view shopping cart in a file
+                                System.out.println("Enter file path to be written to (include .txt)");
+                                String filePath = scanner.nextLine();
+                                boolean check = Customer.getFile(filePath, Objects.requireNonNull(Customer.readShoppingCartFile()));
+                                if(check){
+                                    System.out.println("Written to Successfully");
+                                } else if (!check){
+                                    System.out.println("Failed");
                                 }
                                 break;
-                            case "5":
-                                for (String s : Objects.requireNonNull(Customer.readPurchaseHistoryFile())) {
-                                    System.out.println(s + "\n");
+                            case "5": // view purchase history in a file
+                                System.out.println("Enter file path to be written to (include .txt)");
+                                filePath = scanner.nextLine();
+                                check = Customer.getFile(filePath, Objects.requireNonNull(Customer.readPurchaseHistoryFile()));
+                                if(check){
+                                    System.out.println("Written to Successfully");
+                                } else if (!check){
+                                    System.out.println("Failed");
                                 }
                                 break;
                             case "6":

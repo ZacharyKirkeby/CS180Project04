@@ -78,14 +78,19 @@ public class Customer extends Account{
         }
     }
 
-    public static ArrayList<String> readPurchaseHistoryFile() {
+    public static String [] readPurchaseHistoryFile() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(purchaseHistoryFileName))) {
             ArrayList<String> fileContents = new ArrayList<>();
+
             String s;
             while ((s = bufferedReader.readLine()) != null) {
                 fileContents.add(s);
             }
-            return fileContents;
+            String[] fileContentsArray = new String[fileContents.size()];
+            for (int i = 0; i < fileContents.size(); i++) {
+                fileContentsArray[i] = fileContents.get(i);
+            }
+            return fileContentsArray;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -132,6 +137,19 @@ public class Customer extends Account{
             return null;
         }
 
+    }
+
+    public static boolean getFile(String fileName, String[] fileContents) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
+            for (String s : fileContents) {
+                pw.println(s);
+                pw.flush();
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
