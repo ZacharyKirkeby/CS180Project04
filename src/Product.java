@@ -7,16 +7,19 @@ import java.util.ArrayList;
 import java.util.*;
 public class Product {
     private String name; //name of the product
+
+    private String description;
     private int stockQuantity; //quantity of the product left
     private int quantitySold;
     private double purchasePrice;
-    private Store stores;
+    private Store store;
 
-    public Product(String name, int quantity, double purchasePrice, Store stores) {
+    public Product(String name, String description, int quantity, double purchasePrice, Store stores) {
         this.name = name;
+        this.description = description;
         this.stockQuantity = quantity;
         this.purchasePrice = purchasePrice;
-        this.stores = stores;
+        this.store = stores;
         this.quantitySold = 0;
     }
     public Product(String name, double purchasePrice, int quantity){
@@ -31,7 +34,7 @@ public class Product {
         this.stockQuantity = 0;
         this.purchasePrice = 0;
         this.quantitySold = 0;
-        this.stores = new Store("", "", new Seller("", "", ""),
+        this.store = new Store("", "", new Seller("", "", ""),
                 new ArrayList<>(0));
     }
     public int getQuantitySold() {
@@ -41,12 +44,12 @@ public class Product {
     public void setQuantitySold(int quantitySold) {
         this.quantitySold = quantitySold;
     }
-    public Store getStores() {
-        return stores;
+    public Store getStore() {
+        return store;
     }
 
     public void setStores(Store stores) {
-        this.stores = stores;
+        this.store = stores;
     }
 
     public String getName() {
@@ -57,12 +60,20 @@ public class Product {
         this.name = name;
     }
 
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
     public int getStockQuantity() {
         return stockQuantity;
     }
 
     public void setStockQuantity(int quantity) {
         this.stockQuantity = quantity;
+    }
+
+    public void buyProduct(int quantity) {
+        this.stockQuantity -= quantity;
     }
 
     public double getPurchasePrice() {
@@ -123,9 +134,10 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "name='" + name + '\'' +
+                "description='" + description + '\'' +
                 ", stockQuantity=" + stockQuantity +
                 ", purchasePrice=" + purchasePrice +
-                ", stores=" + stores +
+                ", store=" + store +
                 '}';
     }
 }
