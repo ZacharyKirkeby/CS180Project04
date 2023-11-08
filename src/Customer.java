@@ -15,6 +15,10 @@ public class Customer extends Account{
         this.purchaseHistory = new HashMap<>();
     }
 
+    public static Map<Product, Integer> getShoppingCart() {
+        return shoppingCart;
+    }
+
     public static Store searchedStoreExists(String storeName, ArrayList<Store> stores) {
         for (Store store : MarketPlace.stores) {
             if (store.getStoreName().equals(storeName)) {
