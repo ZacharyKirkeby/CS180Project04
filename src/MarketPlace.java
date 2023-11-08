@@ -1,4 +1,3 @@
-package src;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -217,17 +216,19 @@ public class MarketPlace {
                             case "1":
                                 System.out.println(SEARCHPROMPT);
                                 input = scanner.nextLine();
-                                //search logic
+                                System.out.println(Seller.searchByStore(input));
                                 break;
                             case "2":
                                 System.out.println(SEARCHPROMPT);
                                 input = scanner.nextLine();
+                                System.out.println(Seller.searchByProduct(input));
                                 //search logic
                                 break;
                             case "3":
                                 System.out.println(SEARCHPROMPT);
                                 input = scanner.nextLine();
-                                //search logic
+                                System.out.println("Store  |  Product ");
+                                System.out.println(Seller.searchByDescription(input));
                                 break;
                             case "4":
                                 Seller.printProductAndStores();
