@@ -1,7 +1,6 @@
 package src;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
 
 /**
@@ -16,16 +15,7 @@ import java.util.*;
  * @version November 3, 2023
  */
 
-public class Seller extends Account {
-    private String name;
-    private String location;
-    private String typeOfStore;
-
-    public Seller(String name, String location, String typeOfStore) {
-        this.name = name;
-        this.location = location;
-        this.typeOfStore = typeOfStore;
-    }
+public abstract class Seller {
 
     private static ArrayList<Store> stores = new ArrayList<Store>(); // store arraylist
 
@@ -35,7 +25,7 @@ public class Seller extends Account {
     public static void printStores() {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
-            System.out.println(stores.get(i).toString());
+            System.out.println(stores.get(i).getStoreName());
         }
     }
 
@@ -57,9 +47,12 @@ public class Seller extends Account {
             System.out.println("Store Not Found");
             // Stores have a function to print products + store details
         } else {
-            stores.get(index).toString();
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+                System.out.println(stores.get(index).getProductList().get(i).getName());
+            }
         }
     }
+
     /**
      * Prints all products and stores
      */
@@ -67,8 +60,10 @@ public class Seller extends Account {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                System.out.println(stores.get(i).getProductList().get(j).toString() +
-                        " | " + stores.get(i).toString());
+                System.out.println(stores.get(i).getProductList().get(j).getName() +
+                        "Price: $" + stores.get(i).getProductList().get(j).getPurchasePrice() +
+                        "Quantity: " + stores.get(i).getProductList().get(j).getStockQuantity() +
+                        " | " + stores.get(i).getStoreName());
             }
         }
     }
@@ -108,7 +103,7 @@ public class Seller extends Account {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -326,7 +321,7 @@ public class Seller extends Account {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -355,7 +350,7 @@ public class Seller extends Account {
         ArrayList<String> productSales = new ArrayList<>();
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -384,7 +379,7 @@ public class Seller extends Account {
     public static String getShoppingCartProducts(String username) {
         String shoppingCartProducts = null;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getSellserUsername().equalsIgnoreCase(username)) {
+            if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + ": " +
@@ -393,6 +388,23 @@ public class Seller extends Account {
             }
         }
         return shoppingCartProducts;
+    }
+
+    /**
+     * Changes store usernames given new username and old username
+     * Should only be called by Account.changeUsername()
+     *
+     * @param newUsername
+     * @param oldUsername
+     */
+    public static void changeStoreUsernames(String newUsername, String oldUsername) {
+        readFromFile();
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getSellerUsername().equals(oldUsername)) {
+                stores.get(i).setSellerUsername(newUsername);
+            }
+        }
+        writeToFile();
     }
 
     /**
