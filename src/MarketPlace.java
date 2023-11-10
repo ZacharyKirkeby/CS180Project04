@@ -48,6 +48,8 @@ public class MarketPlace {
                 String productName;
                 double price;
                 int quantity;
+                boolean sorted;
+                String isSorted;
 
 
                 // loops while definite user
@@ -142,20 +144,24 @@ public class MarketPlace {
                                             }
                                         }
                                         break;
-                                    //
+                                    // add from CSV
                                     case "5":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter file path to be written from (include .txt)");
                                         String filePath = scanner.nextLine();
                                         Seller.readProductsFromCSV(storeName, filePath);
+                                        break;
+                                    // go back
                                     case "6":
                                         break;
+                                    // handles anything else
                                     default:
                                         System.out.println("Invalid Option");
                                         break;
                                 }
                                 break;
+                            // Seller Stats menu
                             case "3":
                                 System.out.print(sellerStatisticsChoices);
                                 input = scanner.nextLine();
@@ -166,8 +172,7 @@ public class MarketPlace {
                                         System.out.println("Input Username: ");
                                         user = scanner.nextLine();
                                         System.out.println("Do you want to Sort the Products? (Y/N)");
-                                        String isSorted = scanner.nextLine();
-                                        boolean sorted;
+                                        isSorted = scanner.nextLine();
                                         if (isSorted.equalsIgnoreCase("y")) {
                                             sorted = true;
                                         } else if (isSorted.equalsIgnoreCase("n")) {
@@ -303,8 +308,8 @@ public class MarketPlace {
                                 System.out.println("Invalid Input");
                                 break;
                         }
-
-                    } else if (Account.getRole(user).equals("customer")) {
+                        // Customer Experience
+                    } else if (Account.getRole(user).equalsIgnoreCase("customer")) {
                         System.out.println(BUYERPROMPT);
                         input = scanner.nextLine();
                         switch (input) {
@@ -318,6 +323,7 @@ public class MarketPlace {
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByProduct(input));
                                 //search logic
+                                // TODO
                                 break;
                             case "3":
                                 System.out.println(SEARCH_PROMPT);
@@ -374,7 +380,8 @@ public class MarketPlace {
                     }
                 }
                 break;
-            case "Register":
+
+            case "register":
                 System.out.println("Enter an email: ");
                 String email = scanner.nextLine();
                 System.out.println("Input Username: ");
@@ -385,6 +392,7 @@ public class MarketPlace {
                 String role = scanner.nextLine();
                 Account.createAccount(email, user, password, role);
                 break;
+
             default:
                 System.out.println("Invalid Input");
         }
