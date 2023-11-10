@@ -17,6 +17,8 @@ public class Store {
     private String storeLocation;
     private Seller storeOwner;
     private String sellerUsername;
+    private int totalSales = 0;
+    private int totalRevenue = 0;
 
     public Store(String name, String storeLocation, Seller seller,
                  ArrayList<Product> productList) {
