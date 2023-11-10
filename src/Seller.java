@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -39,13 +38,11 @@ public abstract class Seller {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
-                index = i;
+                System.out.println("Store not found");
             }
         }
-        // original forces a crash
         if (index == -1) {
-            System.out.println("Store Not Found");
-            // Stores have a function to print products + store details
+            throw new IllegalArgumentException();
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 System.out.println(stores.get(index).getProductList().get(i).getName());
@@ -399,9 +396,9 @@ public abstract class Seller {
             return "Error: Invalid parameters";
         } else {
             if (sorted) {
-                return stores.get(index).getSortedCustomersAndPurchases();
+                return stores.get(index).getSortedCustomersAndPurchases(stores);
             }
-            return stores.get(index).getCustomersAndPurchases();
+            return stores.get(index).getCustomersAndPurchases(stores);
         }
     }
 
@@ -452,7 +449,7 @@ public abstract class Seller {
             if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
-                            stores.get(i).getProductList().get(j).getName() + ": " +
+                            stores.get(i).getProductList().get(j).getName() + ": " 
                             Customer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
             }
@@ -536,5 +533,52 @@ public abstract class Seller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static String searchByStore(String storeName){
+        String searchedStore = null;
+        for(int i = 0; i < stores.size(); i++){
+            if (stores.get(i).getStoreName().equals(storeName)){
+                searchedStore += stores.get(i).getStoreName() + ",";
+            }
+        }
+        if(searchedStore == null){
+            searchedStore = "No Store Found ";
+        }
+        return (searchedStore.substring(0,(searchedStore.length()-1)));
+    }
+
+    public static String searchByProduct(String productName){
+        String searched = null;
+        for(int i = 0; i < stores.size(); i++){
+            for(int j = 0; j < stores.get(i).getProductList().size(); i++){
+                if(stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)){
+                    searched += stores.get(i).getStoreName() + ",";
+                }
+            }
+        }
+        if(searched == null){
+            searched = "No locations found selling this product ";
+        }
+        return (searched.substring(0,(searched.length()-1)));
+    }
+    public static String searchByDescription(String productDescription){
+        String searchedProduct = null;
+        String searchedStore = null;
+        String searched = null;
+        for(int i = 0; i < stores.size(); i++){
+            for(int j = 0; j < stores.get(i).getProductList().size(); i++){
+                if(stores.get(i).getProductList().get(j).getDescription().contains(productDescription)){
+                    searchedStore += stores.get(i).getStoreName();
+                    searchedProduct += stores.get(i).getProductList().get(j).getName();
+                    searched +=
+                            stores.get(i).getStoreName() + " | " +
+                                    stores.get(i).getProductList().get(j).getName() + "|\n";
+                }
+            }
+        }
+        if(searchedProduct == null){
+            searched= "No Product found ";
+        }
+        return (searched.substring(0,(searched.length()-1)));
     }
 }

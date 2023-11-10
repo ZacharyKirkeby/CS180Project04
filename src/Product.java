@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.*;
 public class Product {
     private String name; //name of the product
+
     private String description;
     private int stockQuantity; //quantity of the product left
     private int quantitySold;
@@ -34,6 +35,7 @@ public class Product {
         this.purchasePrice = purchasePrice;
         this.stockQuantity = quantity;
         this.quantitySold = 0;
+
     }
 
     public int getQuantitySold() {
@@ -90,7 +92,7 @@ public class Product {
             {
                 if(products.get(i).getName().compareTo(products.get(j).getName())>0)
                 {
-                   Collections.swap(products, i, j);
+                    Collections.swap(products, i, j);
                 }
             }
         }

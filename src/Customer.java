@@ -1,5 +1,6 @@
 package src;
 
+
 import java.io.*;
 import java.util.*;
 
@@ -15,11 +16,14 @@ public class Customer extends Account {
     private static String shoppingCartFileName = "Shopping Cart";
     private static String purchaseHistoryFileName = "Purchase History";
 
+
     public Customer(String name) {
+
         this.name = name;
         this.shoppingCart = new HashMap<>();
         this.purchaseHistory = new HashMap<>();
     }
+
 
 //    public static Product[] getProductsInShoppingCart() {
 //        ArrayList<Product> productsList = new ArrayList<>();
@@ -64,6 +68,7 @@ public class Customer extends Account {
 
     // products from different stores
     public static void buyProductsInShoppingCart(int sellerThreshold) {
+
         for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
             Product product = entry.getKey(); // Get the key
             int quantity = entry.getValue(); // Get the value
@@ -80,6 +85,7 @@ public class Customer extends Account {
         int storeIndex = -1;
         for (int i = 0; i < MarketPlace.getStores().size(); i++) {
             if (MarketPlace.getStores().get(i).getStoreName().equalsIgnoreCase(store)) {
+
                 storeIndex = i;
             }
         }
@@ -89,6 +95,7 @@ public class Customer extends Account {
             Store storeToBuyFrom = MarketPlace.getStores().get(storeIndex);
             for (int i = 0; i < storeToBuyFrom.getProductList().size(); i++) {
                 if (storeToBuyFrom.getProductList().get(i).getName().equalsIgnoreCase(product.getName()) && quantity < sellerThreshold) {
+
                     storeToBuyFrom.getProductList().get(i).buyProduct(quantity);
                     writePurchaseHistoryFile(product, quantity);
                 }
@@ -100,6 +107,7 @@ public class Customer extends Account {
     public static String[] readPurchaseHistoryFile() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(purchaseHistoryFileName))) {
             ArrayList<String> fileContents = new ArrayList<>();
+
 
             String s;
             while ((s = bufferedReader.readLine()) != null) {
@@ -121,6 +129,7 @@ public class Customer extends Account {
             pw.println(String.format("%s %d", product, quantity));
             pw.flush();
             purchaseHistory.put(product, quantity);
+
             return true;
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package src;
 import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Project 04 -- Store.java
  * creates Store class
@@ -31,6 +33,7 @@ public class Store {
         this.sellerUsername = sellerUsername;
         this.productList = productList;
     }
+
 
     public ArrayList<Product> getProductList() {
         return productList;
@@ -74,5 +77,33 @@ public class Store {
 
     public String toString() {
         return storeName + "," + storeLocation + "," + sellerUsername;
+    public String getSellserUsername() {
+        return sellerUsername;
+    }
+
+    public void setSellserUsername(String sellserUsername) {
+        this.sellerUsername = sellserUsername;
+    }
+    public static String getSortedCustomersAndPurchases(ArrayList<Store> stores){
+        for(int i = 0; i< stores.size(); i++)
+        {
+            for (int j = i+1; j< stores.size(); j++)
+            {
+                if(stores.get(i).getStoreName().compareTo(stores.get(j).getStoreName())>0)
+                {
+                    Collections.swap(stores, i, j);
+                }
+            }
+        }
+        return stores.toString();
+    }
+    public static String getCustomersAndPurchases(ArrayList<Store> stores){
+        return stores.toString();
+    }
+    public void Purchases (){
+        double totalPurchases = 0;
+        for(int i = 0; i < productList.size(); i++){
+            totalPurchases += productList.get(i).getSales();
+        }
     }
 }
