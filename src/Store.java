@@ -112,13 +112,14 @@ public class Store {
      * returns end list of customers and their purchases
      **/
     public  String getSortedCustomersAndPurchases () {
-        String sentence = "";
+        String sentence = "Customer Username | Store Name | Product Name | Quantity \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
-                String[] subpart = line.split(",");
-                if (subpart[3].equals(storeName)) {
-                    sentence += line;
+                String[] subpart = line.split(";");
+                if (subpart[1].equals(storeName)) {
+                    sentence += line + "\n";
+                    sentence.replace(";"," | ");
                 }
                 line = reader.readLine();
             }
@@ -128,11 +129,12 @@ public class Store {
         return sentence;
     }
     public static String getCustomersAndPurchases () {
-        String sentence = "";
+        String sentence = "Customer Username | Store Name | Product Name | Quantity \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
-                sentence += line;
+                sentence += line + "\n";
+                sentence.replace(";"," | ");
                 line = reader.readLine();
             }
         } catch (Exception e) {
