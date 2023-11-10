@@ -404,6 +404,56 @@ public abstract class Seller {
     }
 
     /**
+     * Gets store list by sales for a username
+     * Usernanme should be inputted automatically from user input
+     *
+     * @param username
+     * @return String of stores by sales (descending)
+     */
+    public static String storesBySales(String username) {
+        ArrayList<Store> sales = new ArrayList<>();
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+                sales.add(stores.get(i));
+            }
+        }
+        if (sales.isEmpty()) {
+            return "Error: Invalid parameters";
+        }
+        Collections.sort(sales, (s1, s2) -> s2.getTotalSales() - s1.getTotalSales());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < sales.size(); i++) {
+            sb.append(sales.get(i).getStoreName() + ": " + sales.get(i).getTotalSales() + "\n");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Returns details of the sales by store
+     * Should be an option given after using storesBySales()
+     * Username should be inputted automatically from user input
+     *
+     * @param storeName
+     * @param username
+     * @return Store information and revenue
+     */
+    public static String salesByStore(String storeName, String username) {
+        int index = -1;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return "Error: Invalid parameters";
+        } else {
+            return stores.get(index).getCustomerInformationAndRevenue();
+        }
+
+    }
+
+    /**
      * Returns a String of product sales given a store name and username
      * Sellers may only view their own stores
      * Username should be stored from user input and inputted automatically
