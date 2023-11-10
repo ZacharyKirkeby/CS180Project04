@@ -16,7 +16,8 @@ public class MarketPlace {
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Sort By Cheapest \n 6. Sort " +
-            "By Most Expensive \n 7. Sort by Availability \n 8. Manage Account \n 9. Logout \n";
+            "By Most Expensive \n 7. Sort by Availability \n 8. Leave Review \n 9. View Product Reviews \n 10. Manage" +
+            "Account \n 11. Logout \n";
     private static  final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
@@ -371,6 +372,41 @@ public class MarketPlace {
                                     }
                                     break;
                                 case "8":
+                                    boolean bool = false;
+                                    int rating = 5;
+                                    System.out.println("Name of Product reviewing: ");
+                                    productName = scanner.nextLine();
+                                    System.out.println("Name of Store Product is from: ");
+                                    storeName = scanner.nextLine();
+                                    System.out.println("Enter a rating between 1-5");
+                                    while(!bool) {
+                                        try {
+                                            rating = Integer.parseInt(scanner.nextLine());
+                                            bool = true;
+                                        } catch (NumberFormatException e) {
+                                            System.out.println("Error, Invalid Input");
+                                            System.out.println("Enter a rating between 1-5");
+                                        }
+                                    }
+                                    System.out.println("Review: ");
+                                    String description = scanner.nextLine();
+                                    boolean check = Customer.leaveReview(storeName, productName, user, rating,
+                                            description);
+                                    if(check){
+                                        System.out.println("Review Left Successfully");
+                                    } else if(!check){
+                                        System.out.println("Failed");
+                                    }
+                                    break;
+                                case "9":
+                                    System.out.println("Enter Products Name to view Review");
+                                    productName = scanner.nextLine();
+                                    System.out.println("Enter Store Name (Leave Blank to view all stores selling " +
+                                            "that product)");
+                                    storeName = scanner.nextLine();
+                                    System.out.println(Customer.viewReviews(storeName, productName));
+                                    break;
+                                case "10":
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
                                     switch (input) {
@@ -405,7 +441,7 @@ public class MarketPlace {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
-                                case "9":
+                                case "11":
                                     isLoggedIn = false;
                                     System.out.println("Sucessfully Logged out");
                                     break;
