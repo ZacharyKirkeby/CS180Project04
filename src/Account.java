@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -148,6 +149,36 @@ public class Account {
     }
 
     /**
+     * Changes username of a user and all their store usernames
+     * Old username should be inputted automatically from user input
+     *
+     * @param newUsername
+     * @param oldUsername
+     * @return boolean indicating whether username change was successful
+     */
+    public static boolean changeUsername(String newUsername, String oldUsername) {
+        readFromFile();
+        int index = -1;
+        for (int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(newUsername)) {
+                return false;
+            }
+            if (usernames.get(i).equals(oldUsername)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return false; // should not happen
+        }
+        usernames.set(index, newUsername);
+        if (roles.get(index).equalsIgnoreCase("seller")) {
+            Seller.changeStoreUsernames(newUsername, oldUsername);
+        }
+        writeToFile();
+        return true;
+    }
+
+    /**
      * Takes a username / email and changes password if old password matches
      *
      * @param usernameOrEmail
@@ -156,6 +187,9 @@ public class Account {
      * @return boolean determining whether password change was successful
      */
     public static boolean changePassword(String usernameOrEmail, String oldPassword, String newPassword) {
+        if (newPassword.isEmpty() || newPassword.isBlank()) {
+            return false;
+        }
         if (usernameOrEmail.contains("\\") || usernameOrEmail.contains(" ")) {
             return false;
         }
@@ -301,8 +335,8 @@ public class Account {
      * Writes information to files
      */
     private static void writeToFile() {
-        try (PrintWriter pw = new PrintWriter(new FileWriter("AccountData.txt"))){
-            for(int i = 0; i < emails.size(); i++) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter("AccountData.txt"))) {
+            for (int i = 0; i < emails.size(); i++) {
                 pw.println(emails.get(i) + ";" + usernames.get(i) + ";" + passwords.get(i) + ";" + roles.get(i));
             }
         } catch (IOException e) {
@@ -319,7 +353,7 @@ public class Account {
         passwords.clear();
         roles.clear();
         String line;
-        try (BufferedReader br = new BufferedReader(new FileReader("AccountData.txt"))){
+        try (BufferedReader br = new BufferedReader(new FileReader("AccountData.txt"))) {
             line = br.readLine();
             while ((line != null) && (!line.isEmpty())) {
                 String[] subpart = line.split(";");

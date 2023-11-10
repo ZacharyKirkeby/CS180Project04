@@ -15,13 +15,17 @@ public class MarketPlace {
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Manage Account \n 6. Logout \n";
     private static final String SEARCHPROMPT = "Enter search term: ";
-    private ArrayList<Store> stores;
+    private static ArrayList<Store> stores;
     private static boolean isLoggedIn;
 
-    public MarketPlace() {
+    public MarketPlace(ArrayList<Store> stores) {
+        this.stores = stores;
         // some kind of logic tbd
     }
 
+    public static ArrayList<Store> getStores() {
+        return stores;
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

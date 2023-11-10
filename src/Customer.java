@@ -1,6 +1,13 @@
 package src;
+
+
 import java.io.*;
 import java.util.*;
+
+/**
+ * Customer class
+ * Includes methods:
+ */
 
 public class Customer extends Account {
     private static String name;
@@ -9,48 +16,86 @@ public class Customer extends Account {
     private static String shoppingCartFileName = "Shopping Cart";
     private static String purchaseHistoryFileName = "Purchase History";
 
-    public Customer (String name) {
+
+    public Customer(String name) {
+
         this.name = name;
         this.shoppingCart = new HashMap<>();
         this.purchaseHistory = new HashMap<>();
     }
 
+
+//    public static Product[] getProductsInShoppingCart() {
+//        ArrayList<Product> productsList = new ArrayList<>();
+//        for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
+//            Product product = entry.getKey();
+//            productsList.add(product);
+//        }
+//        Product[] products = new Product[productsList.size()];
+//        for (int i = 0; i < products.length; i++) {
+//            products[i] = productsList.get(i);
+//        }
+//        return products;
+//    }
+
+    public static Store searchedStoreExists(String storeName, ArrayList<Store> stores) {
+        for (Store store : MarketPlace.getStores()) {
+            if (store.getStoreName().equals(storeName)) {
+                return store;
+            }
+        }
+        return null;
+    }
+
+    public static Product searchedProductExists(String productName, ArrayList<Store> stores) {
+        for (Store store : MarketPlace.getStores()) {
+            for (Product product : store.getProductList()) {
+                if (product.getName().equals(productName)) {
+                    return product;
+                }
+            }
+        }
+        return null;
+    }
+
     public static void addToCart(Product product, int quantity) {
         shoppingCart.put(product, quantity);
     }
-    public static Map<Product, Integer> viewCart(String Name){
-        if (Name.equalsIgnoreCase(name)){
-            return shoppingCart;
-        }
-        else return null;
+
+    public static void removeFromToCart(Product product, int quantity) {
+        shoppingCart.remove(product, quantity);
     }
+
     // products from different stores
-    public static void buyProductsInShoppingCart (ArrayList<Store> stores, int sellerThreshold) {
+    public static void buyProductsInShoppingCart(int sellerThreshold) {
+
         for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
             Product product = entry.getKey(); // Get the key
             int quantity = entry.getValue(); // Get the value
 
-            boolean productBought = buyProduct(stores, product.getStore().getStoreName(), product.getName(), quantity, sellerThreshold);
+            boolean productBought = buyProduct(product.getStore().getStoreName(), product, quantity, sellerThreshold);
 
             if (productBought) {
-                writePurchaseHistoryFile(product.getName(), quantity);
+                writePurchaseHistoryFile(product, quantity);
             }
         }
     }
 
-    public static boolean buyProduct(ArrayList<Store> stores, String store, String product, int quantity, int sellerThreshold) {
+    public static boolean buyProduct(String store, Product product, int quantity, int sellerThreshold) {
         int storeIndex = -1;
-        for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(store)) {
+        for (int i = 0; i < MarketPlace.getStores().size(); i++) {
+            if (MarketPlace.getStores().get(i).getStoreName().equalsIgnoreCase(store)) {
+
                 storeIndex = i;
             }
         }
         if (storeIndex == -1) {
             return false;
         } else {
-            Store storeToBuyFrom = stores.get(storeIndex);
+            Store storeToBuyFrom = MarketPlace.getStores().get(storeIndex);
             for (int i = 0; i < storeToBuyFrom.getProductList().size(); i++) {
-                if (storeToBuyFrom.getProductList().get(i).getName().equalsIgnoreCase(product) && quantity < sellerThreshold) {
+                if (storeToBuyFrom.getProductList().get(i).getName().equalsIgnoreCase(product.getName()) && quantity < sellerThreshold) {
+
                     storeToBuyFrom.getProductList().get(i).buyProduct(quantity);
                     writePurchaseHistoryFile(product, quantity);
                 }
@@ -59,22 +104,41 @@ public class Customer extends Account {
         }
     }
 
-    public static ArrayList<String> readPurchaseHistoryFile() {
+    public static String[] readPurchaseHistoryFile() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(purchaseHistoryFileName))) {
             ArrayList<String> fileContents = new ArrayList<>();
+
+
             String s;
             while ((s = bufferedReader.readLine()) != null) {
                 fileContents.add(s);
             }
-            return fileContents;
+            String[] fileContentsArray = new String[fileContents.size()];
+            for (int i = 0; i < fileContents.size(); i++) {
+                fileContentsArray[i] = fileContents.get(i);
+            }
+            return fileContentsArray;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static boolean writePurchaseHistoryFile(String product, int quantity) {
+    public static boolean writePurchaseHistoryFile(Product product, int quantity) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryFileName, true))) {
+            pw.println(String.format("%s %d", product, quantity));
+            pw.flush();
+            purchaseHistory.put(product, quantity);
+
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean writeShoppingCartFileAddProduct(String product, int quantity) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartFileName, true))) {
             pw.println(String.format("%s %d", product, quantity));
             pw.flush();
             return true;
@@ -84,10 +148,17 @@ public class Customer extends Account {
         }
     }
 
-    public static boolean writeShoppingCartFile(String product, int quantity) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartFileName, true))) {
-            pw.println(String.format("%s %d", product, quantity));
-            pw.flush();
+    public static boolean writeShoppingCartFileRemoveProduct(String product, int quantity) {
+        String[] shoppingCartFileContents = readShoppingCartFile();
+        try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartFileName))) {
+            for (int i = 0; i < shoppingCartFileContents.length; i++) {
+                String[] productAndQuantity = shoppingCartFileContents[i].split(" ");
+                if (productAndQuantity[0].equals(product)) {
+                    productAndQuantity[1] = Integer.toString(Integer.parseInt(productAndQuantity[1]) - quantity);
+                }
+                pw.println(String.format("%s %d", productAndQuantity[0], Integer.parseInt(productAndQuantity[1])));
+                pw.flush();
+            }
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,10 +186,17 @@ public class Customer extends Account {
 
     }
 
-
-
-    // get shopping cart
-    // buy items in shopping cart. are you sure you want to buy? yes/no/cancel
-
+    public static boolean getFile(String fileName, String[] fileContents) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
+            for (String s : fileContents) {
+                pw.println(s);
+                pw.flush();
+            }
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }
