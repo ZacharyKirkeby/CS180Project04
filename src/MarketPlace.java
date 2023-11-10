@@ -15,7 +15,12 @@ public class MarketPlace {
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Sort By Cheapest \n 6. Sort " +
-            "By Most Expensive \n  7. Manage Account \n 8. Logout \n";
+            "By Most Expensive \n  7. Shopping cart \n 8. View purchase history \n" +
+            "9. Manage Account \n 10. Logout \n";
+    private static final String customerShoppingCartChoices = " 1. Add product(s) to cart \n" +
+            "2. Remove product(s) from cart \n 3. Buy products in cart \n";
+
+
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
     private static boolean isLoggedIn;
