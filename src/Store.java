@@ -117,9 +117,7 @@ public class Store {
         return Product.sortByCheapest(products);
     }
 
-    public String getSellserUsername () {
-
-  public String getSellserUsername() {
+    public String getSellserUsername() {
         return sellerUsername;
     }
 
@@ -134,7 +132,7 @@ public class Store {
      * returns end list of customers and their purchases
      **/
 
-    public  String getSortedCustomersAndPurchases () {
+    public String getSortedCustomersAndPurchases() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
@@ -157,7 +155,7 @@ public class Store {
      * adds records by adding line
      * returns end list of customers and their purchases
      **/
-    public static String getCustomersAndPurchases () {
+    public static String getCustomersAndPurchases() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
