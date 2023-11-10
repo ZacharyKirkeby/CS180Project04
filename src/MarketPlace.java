@@ -8,7 +8,8 @@ public class MarketPlace {
     private static final String sellerChoices = " 1. Create Store \n 2. Modify Store " +
             "\n 3. View Store Statistics \n 4. Delete Store \n 5. Manage Account \n 6. Logout \n";
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
-            "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Back \n";
+            "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Start Sale \n" +
+            "7. Add Purchase Limit \n 8. Back \n";
     private static final String AccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n 4. " +
             "Back \n";
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
@@ -158,6 +159,21 @@ public class MarketPlace {
                                             break;
                                         // go back
                                         case "6":
+                                            System.out.println("Enter Product to Put on Sale: ");
+                                            input = scanner.nextLine();
+                                            System.out.println("Enter Sale price: ");
+                                            double salePrice = scanner.nextDouble();
+                                            scanner.nextLine();
+                                            System.out.println("Enter Quantity on sale: ");
+                                            int numOnSale = scanner.nextInt();
+                                            scanner.nextLine();
+                                            // call store method triggerSale with params
+
+
+                                            break;
+                                        case "7":
+                                            break;
+                                        case "8":
                                             break;
                                         // handles anything else
                                         default:

@@ -199,5 +199,23 @@ public class Store {
         return sentence;
     }
 
+    /**
+     * Finds product and calls respective product method
+     * returns failure or not
+     * @param productName
+     * @param salePrice
+     * @param saleCap
+     * @return
+     */
+    public String triggerSale(String productName, double salePrice, int saleCap) {
+        String output = "";
+        for (Product p:productList) {
+            if (p.getName().equals(productName)) {
+                output = p.startSale(salePrice, saleCap);
+            }
+        }
+        return output;
+    }
+
 
 }
