@@ -11,7 +11,8 @@ public class MarketPlace {
     private static final String AccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n 4. " +
             "Back \n";
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
-            "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
+            "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. View Sales By Store \n " +
+            "6. Back \n ";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Manage Account \n 6. Logout \n";
     private static final String SEARCH_PROMPT = "Enter search term: ";
@@ -218,6 +219,11 @@ public class MarketPlace {
                                         }
                                         break;
                                     case "5":
+                                        System.out.println("Enter Store Name: ");
+                                        storeName = scanner.nextLine();
+                                        System.out.println(Seller.salesByStore(storeName, user));
+                                        break;
+                                    case "6":
                                         break;
                                     default:
                                         System.out.println("Invalid Input");
