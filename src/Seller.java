@@ -12,7 +12,7 @@ import java.util.*;
  * Create stores.txt and products.txt before using
  *
  * @author Alexander Chen, 05
- * @version November 3, 2023
+ * @version November 10, 2023
  */
 
 public abstract class Seller {
@@ -56,14 +56,12 @@ public abstract class Seller {
      */
     public static void printProductAndStores() {
         readFromFile();
-        System.out.println("Store Name | Product Name | Product Price | Product Quantity");
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                System.out.println(stores.get(i).getStoreName() + " | " +
-                                stores.get(i).getProductList().get(j).getName() +
-                        " | " + stores.get(i).getProductList().get(j).getPurchasePrice() +
-                        " | " + stores.get(i).getProductList().get(j).getStockQuantity()
-                        );
+                System.out.println(stores.get(i).getProductList().get(j).getName() +
+                        "Price: $" + stores.get(i).getProductList().get(j).getPurchasePrice() +
+                        "Quantity: " + stores.get(i).getProductList().get(j).getStockQuantity() +
+                        " | " + stores.get(i).getStoreName());
             }
         }
     }
@@ -406,8 +404,8 @@ public abstract class Seller {
     }
 
     /**
-     * Gets store list by sales for a username
-     * Usernanme should be inputted automatically from user input
+     * Gets store list by sales for a user
+     * Username should be inputted automatically from user input
      *
      * @param username
      * @return String of stores by sales (descending)
@@ -503,7 +501,8 @@ public abstract class Seller {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + ": " +
-                            Customer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
+                            Customer.getTotalInCart(stores.get(i).getStoreName(),
+                                    stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
             }
         }
@@ -662,5 +661,67 @@ public abstract class Seller {
             searched = "No Product found ";
         }
         return (searched.substring(0, (searched.length() - 1)));
+    }
+    public String sortCheapest(ArrayList<Store> stores) {
+        ArrayList<String> combined = new ArrayList<>();
+        String result = "";
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.size(); j++) {
+                String element = stores.get(i).getStoreName() + ";"
+                        + stores.get(i).getProductList().get(j).getName() + ";"
+                        + stores.get(i).getProductList().get(j).getPurchasePrice()
+                        + stores.get(i).getProductList().get(j).getStockQuantity();
+                combined.add(element);
+            }
+        }
+        for (int k = 0; k < combined.size(); k++) {
+            double min = (double) Integer.MAX_VALUE;
+            String[] subpart = combined.get(k).split(";");
+            double purchasePrice = Double.parseDouble(subpart[2]);
+            if (purchasePrice < min) {
+                min = purchasePrice;
+                String temp = combined.get(k);
+                combined.remove(k);
+                combined.add(0, temp);
+
+
+            }
+        }
+        for(int a = 0; a < combined.size(); a++){
+            result += combined.get(a) + "\n";
+        }
+        result = result.replace(";", " | ");
+        return result;
+    }
+    public String sortExpensive(ArrayList<Store> stores) {
+        ArrayList<String> combined = new ArrayList<>();
+        String result = "";
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.size(); j++) {
+                String element = stores.get(i).getStoreName() + ";"
+                        + stores.get(i).getProductList().get(j).getName() + ";"
+                        + stores.get(i).getProductList().get(j).getPurchasePrice()
+                        + stores.get(i).getProductList().get(j).getStockQuantity();
+                combined.add(element);
+            }
+        }
+        for (int k = 0; k < combined.size(); k++) {
+            double min = (double) Integer.MIN_VALUE;
+            String[] subpart = combined.get(k).split(";");
+            double purchasePrice = Double.parseDouble(subpart[2]);
+            if (purchasePrice > min) {
+                min = purchasePrice;
+                String temp = combined.get(k);
+                combined.remove(k);
+                combined.add(0, temp);
+
+
+            }
+        }
+        for(int a = 0; a < combined.size(); a++){
+            result += combined.get(a) + "\n";
+        }
+        result = result.replace(";", " | ");
+        return result;
     }
 }
