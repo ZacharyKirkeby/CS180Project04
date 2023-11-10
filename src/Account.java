@@ -68,12 +68,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -111,12 +113,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -164,6 +168,7 @@ public class Account {
             }
             if (usernames.get(i).equals(oldUsername)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -197,12 +202,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -235,12 +242,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -253,6 +262,33 @@ public class Account {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Returns username or email given opposite
+     *
+     * @param usernameOrEmail
+     * @return String username or email
+     */
+    public static String getUsernameOrEmail(String usernameOrEmail) {
+        int index = -1;
+        if (usernameOrEmail.contains("@")) {
+            for (int i = 0; i < emails.size(); i++) {
+                if (emails.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+            return usernames.get(index);
+        } else {
+            for (int i = 0; i < usernames.size(); i++) {
+                if (usernames.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+            return emails.get(index);
         }
     }
 
@@ -271,12 +307,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {

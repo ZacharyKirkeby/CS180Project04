@@ -103,6 +103,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -133,6 +134,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -164,6 +166,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -196,6 +199,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -228,6 +232,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -259,6 +264,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -289,6 +295,7 @@ public abstract class Seller {
             for (int i = 0; i < stores.size(); i++) {
                 if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -322,6 +329,7 @@ public abstract class Seller {
             for (int i = 0; i < stores.size(); i++) {
                 if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -360,6 +368,7 @@ public abstract class Seller {
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -391,6 +400,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -443,6 +453,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -470,6 +481,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
