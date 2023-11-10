@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -662,7 +661,7 @@ public abstract class Seller {
         }
         return (searched.substring(0, (searched.length() - 1)));
     }
-    public String sortCheapest(ArrayList<Store> stores) {
+    public static String sortCheapest() {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
@@ -693,7 +692,7 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
-    public String sortExpensive(ArrayList<Store> stores) {
+    public static String sortExpensive() {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
