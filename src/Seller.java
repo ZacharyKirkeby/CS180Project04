@@ -127,7 +127,7 @@ public abstract class Seller {
      * @param quantity
      * @return boolean indicating whether creation was successful
      */
-    public static boolean createProduct(String storeName, String name, double price, int quantity) {
+    public static boolean createProduct(String storeName, String name, String description, double price, int quantity) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -143,8 +143,39 @@ public abstract class Seller {
                     return false;
                 }
             }
-            stores.get(index).getProductList().add(new Product(name, price, quantity));
+            stores.get(index).getProductList().add(new Product(name, storeName, description, price, quantity));
             return true;
+        }
+    }
+
+    /**
+     * Edits product description given store name, product name, and new product description
+     * Store name should be stored from user input and inputted automatically
+     *
+     * @param storeName
+     * @param name
+     * @param description
+     * @return boolean indicating whether edit was successful
+     */
+    public static boolean editProductDescription(String storeName, String name, String description) {
+        readFromFile();
+        int index = -1;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return false;
+        } else {
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+                if (stores.get(index).getProductList().get(i).getName().equalsIgnoreCase(name)) {
+                    stores.get(index).getProductList().get(i).setDescription(description);
+                    writeToFile();
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
