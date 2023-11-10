@@ -143,7 +143,7 @@ public abstract class Seller {
                     return false;
                 }
             }
-            stores.get(index).getProductList().add(new Product(name, storeName, description, price, quantity));
+            stores.get(index).getProductList().add(new Product(name, description, price, quantity));
             return true;
         }
     }
@@ -327,7 +327,7 @@ public abstract class Seller {
             line = bfr.readLine();
             while ((line != null) && (!line.isEmpty())) {
                 split = line.split(",");
-                createProduct(storeName, split[0], Double.parseDouble(split[1]), Integer.parseInt(split[2]));
+                createProduct(storeName, split[0], split[1], Double.parseDouble(split[2]), Integer.parseInt(split[3]));
                 line = bfr.readLine();
             }
             writeToFile();
@@ -482,8 +482,8 @@ public abstract class Seller {
                 productSplit = productLine.split(";");
                 for (int i = 0; i < productSplit.length; i++) {
                     attributeSplit = productSplit[i].split(",");
-                    productList.add(new Product(attributeSplit[0], Double.parseDouble(attributeSplit[1]),
-                            Integer.parseInt(attributeSplit[2])));
+                    productList.add(new Product(attributeSplit[0], attributeSplit[1], Double.parseDouble(attributeSplit[2]),
+                            Integer.parseInt(attributeSplit[3])));
                 }
                 storeSplit = storeLine.split(",");
                 stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));

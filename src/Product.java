@@ -28,6 +28,14 @@ public class Product {
         this.quantitySold = 0;
     }
 
+    public Product(String name, String description, double purchasePrice, int quantity) {
+        this.name = name;
+        this.description = description;
+        this.purchasePrice = purchasePrice;
+        this.stockQuantity = quantity;
+        this.quantitySold = 0;
+    }
+
     public int getQuantitySold() {
         return quantitySold;
     }
@@ -123,6 +131,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return name + "," + purchasePrice + "," + stockQuantity;
+        return name + "," + description + "," + purchasePrice + "," + stockQuantity;
     }
 }
