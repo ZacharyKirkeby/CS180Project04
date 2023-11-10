@@ -26,11 +26,11 @@ public class Store {
         this.storeOwner = seller;
         this.productList = productList;
     }
-    public Store(String name, String storeLocation, String sellserUsername,
+    public Store(String name, String storeLocation, String sellerUsername,
                  ArrayList<Product> productList) {
         this.storeName = name;
         this.storeLocation = storeLocation;
-        this.sellerUsername = sellserUsername;
+        this.sellerUsername = sellerUsername;
         this.productList = productList;
     }
 
@@ -67,13 +67,16 @@ public class Store {
         this.storeOwner = storeOwner;
     }
 
-    public Store() {
-        this.storeName = "";
-        this.storeLocation = "";
-        this.storeOwner = new Seller("", "", "");
-        this.productList = new ArrayList<Product>();
+    public String getSellerUsername() {
+        return sellerUsername;
     }
 
+    public void setSellerUsername(String sellerUsername) {
+        this.sellerUsername = sellerUsername;
+    }
+
+    public String toString() {
+        return storeName + "," + storeLocation + "," + sellerUsername;
     public String getSellserUsername() {
         return sellerUsername;
     }
