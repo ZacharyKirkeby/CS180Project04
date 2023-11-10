@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MarketPlace {
-    private static final String WELCOMEPROMPT = "Login or Register an Account (Login / Register)";
+    private static final String WELCOME_PROMPT = "Login or Register an Account (Login / Register)";
     private static final String sellerChoices = " 1. Create Store \n 2. Modify Store " +
             "\n 3. View Store Statistics \n 4. Delete Store \n 5. Manage Account \n 6. Logout \n";
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
@@ -14,7 +14,7 @@ public class MarketPlace {
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Manage Account \n 6. Logout \n";
-    private static final String SEARCHPROMPT = "Enter search term: ";
+    private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
     private static boolean isLoggedIn;
 
@@ -28,11 +28,13 @@ public class MarketPlace {
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(WELCOMEPROMPT);
-        String input = scanner.nextLine().toLowerCase();
-        switch (input) {
 
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(WELCOME_PROMPT);
+        String input = scanner.nextLine().toLowerCase();
+
+        switch (input) {
+            // Authenticates User, begins use loop
             case "login":
                 System.out.println("Input Username or Email: ");
                 String user = scanner.nextLine();
@@ -40,15 +42,25 @@ public class MarketPlace {
                 String password = scanner.nextLine();
                 Account.login(user, password);
                 isLoggedIn = true;
+
+                // Switch Var declarations
+                String storeName;
+                String productName;
+                double price;
+                int quantity;
+
+
+                // loops while definite user
                 while (isLoggedIn) {
                     if (Account.getRole(user).equalsIgnoreCase("seller")) {
                         boolean bool;
                         System.out.print(sellerChoices);
                         input = scanner.nextLine();
                         switch (input) {
+                            //Create Store
                             case "1":
                                 System.out.println("Enter a store name: ");
-                                String storeName = scanner.nextLine();
+                                storeName = scanner.nextLine();
                                 System.out.println("Enter a store location: ");
                                 String location = scanner.nextLine();
                                 bool = Seller.createStore(storeName, location, user);
@@ -59,19 +71,21 @@ public class MarketPlace {
                                     System.out.println("Try Again!");
                                 }
                                 break;
+                            // Modify Store
                             case "2":
                                 System.out.print(sellerModificationChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
+                                    // creates product
                                     case "1":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter Product Name: ");
-                                        String productName = scanner.nextLine();
+                                        productName = scanner.nextLine();
                                         System.out.println("Enter Product Price: ");
-                                        double price = Double.parseDouble(scanner.nextLine());
+                                        price = Double.parseDouble(scanner.nextLine());
                                         System.out.println("Enter Product Quantity: ");
-                                        int quantity = Integer.parseInt(scanner.nextLine());
+                                        quantity = Integer.parseInt(scanner.nextLine());
                                         System.out.println("Enter Product Description: ");
                                         String description = scanner.nextLine();
                                         bool = Seller.createProduct(storeName, productName, description, price, quantity, user);
@@ -81,6 +95,7 @@ public class MarketPlace {
                                             System.out.println("Deletion Failed");
                                         }
                                         break;
+                                    // Delete product
                                     case "2":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
@@ -291,18 +306,18 @@ public class MarketPlace {
                         input = scanner.nextLine();
                         switch (input) {
                             case "1":
-                                System.out.println(SEARCHPROMPT);
+                                System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByStore(input));
                                 break;
                             case "2":
-                                System.out.println(SEARCHPROMPT);
+                                System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByProduct(input));
                                 //search logic
                                 break;
                             case "3":
-                                System.out.println(SEARCHPROMPT);
+                                System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println("Store  |  Product ");
                                 System.out.println(Seller.searchByDescription(input));
