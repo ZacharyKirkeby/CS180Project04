@@ -1,5 +1,6 @@
 package src;
 
+
 import java.io.*;
 import java.util.*;
 
@@ -9,6 +10,7 @@ import java.util.*;
  */
 
 public abstract class Customer {
+
 
     private static ArrayList<String> emails = new ArrayList<>(); // username arraylist
     private static ArrayList<String> usernames = new ArrayList<>(); // username arraylist
@@ -73,6 +75,7 @@ public abstract class Customer {
     }
 
     // products from different stores
+
     public static boolean buyProductsInShoppingCart(String username) {
         readFromShoppingCartDatabaseFile();
         boolean productsBoughtSuccessfully = false;
@@ -199,5 +202,4 @@ public abstract class Customer {
             e.printStackTrace();
         }
     }
-
 }

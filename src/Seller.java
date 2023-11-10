@@ -39,13 +39,11 @@ public abstract class Seller {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
-                index = i;
+                System.out.println("Store not found");
             }
         }
-        // original forces a crash
         if (index == -1) {
-            System.out.println("Store Not Found");
-            // Stores have a function to print products + store details
+            throw new IllegalArgumentException();
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 System.out.println(stores.get(index).getProductList().get(i).getName());
@@ -356,7 +354,7 @@ public abstract class Seller {
      * @return boolean indicating successful product creation
      */
     private static boolean createProductInternal(String storeName, String name, String description, double price,
-                                         int quantity) {
+                                                 int quantity) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -403,6 +401,56 @@ public abstract class Seller {
             }
             return stores.get(index).getCustomersAndPurchases();
         }
+    }
+
+    /**
+     * Gets store list by sales for a username
+     * Usernanme should be inputted automatically from user input
+     *
+     * @param username
+     * @return String of stores by sales (descending)
+     */
+    public static String storesBySales(String username) {
+        ArrayList<Store> sales = new ArrayList<>();
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+                sales.add(stores.get(i));
+            }
+        }
+        if (sales.isEmpty()) {
+            return "Error: Invalid parameters";
+        }
+        Collections.sort(sales, (s1, s2) -> s2.getTotalSales() - s1.getTotalSales());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < sales.size(); i++) {
+            sb.append(sales.get(i).getStoreName() + ": " + sales.get(i).getTotalSales() + "\n");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Returns details of the sales by store
+     * Should be an option given after using storesBySales()
+     * Username should be inputted automatically from user input
+     *
+     * @param storeName
+     * @param username
+     * @return Store information and revenue
+     */
+    public static String salesByStore(String storeName, String username) {
+        int index = -1;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return "Error: Invalid parameters";
+        } else {
+            return stores.get(index).getCustomerInformationAndRevenue();
+        }
+
     }
 
     /**
@@ -478,6 +526,15 @@ public abstract class Seller {
     }
 
     /**
+     * Gets arraylist of stores
+     *
+     * @return ArrayList of stores
+     */
+    public ArrayList<Store> getStores() {
+        return stores;
+    }
+
+    /**
      * Writes Store and Product information to stores.txt and products.txt
      */
     private static void writeToFile() {
@@ -536,5 +593,72 @@ public abstract class Seller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Searches for store
+     *
+     * @param storeName
+     * @return searched stores
+     */
+    public static String searchByStore(String storeName) {
+        String searchedStore = null;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equals(storeName)) {
+                searchedStore += stores.get(i).getStoreName() + ",";
+            }
+        }
+        if (searchedStore == null) {
+            searchedStore = "No Store Found ";
+        }
+        return (searchedStore.substring(0, (searchedStore.length() - 1)));
+    }
+
+    /**
+     * Searches for product
+     *
+     * @param productName
+     * @return searched products
+     */
+    public static String searchByProduct(String productName) {
+        String searched = null;
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+                if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
+                    searched += stores.get(i).getStoreName() + ",";
+                }
+            }
+        }
+        if (searched == null) {
+            searched = "No locations found selling this product ";
+        }
+        return (searched.substring(0, (searched.length() - 1)));
+    }
+
+    /**
+     * Searches from product by description
+     *
+     * @param productDescription
+     * @return searched products
+     */
+    public static String searchByDescription(String productDescription) {
+        String searchedProduct = null;
+        String searchedStore = null;
+        String searched = null;
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+                if (stores.get(i).getProductList().get(j).getDescription().contains(productDescription)) {
+                    searchedStore += stores.get(i).getStoreName();
+                    searchedProduct += stores.get(i).getProductList().get(j).getName();
+                    searched +=
+                            stores.get(i).getStoreName() + " | " +
+                                    stores.get(i).getProductList().get(j).getName() + "|\n";
+                }
+            }
+        }
+        if (searchedProduct == null) {
+            searched = "No Product found ";
+        }
+        return (searched.substring(0, (searched.length() - 1)));
     }
 }

@@ -7,18 +7,17 @@ import java.util.ArrayList;
 import java.util.*;
 public class Product {
     private String name; //name of the product
+
     private String description;
     private int stockQuantity; //quantity of the product left
     private int quantitySold;
     private double purchasePrice;
-    private Store store;
 
     public Product(String name, String description, int quantity, double purchasePrice, Store stores) {
         this.name = name;
         this.description = description;
         this.stockQuantity = quantity;
         this.purchasePrice = purchasePrice;
-        this.store = stores;
         this.quantitySold = 0;
     }
     public Product(String name, double purchasePrice, int quantity){
@@ -34,6 +33,7 @@ public class Product {
         this.purchasePrice = purchasePrice;
         this.stockQuantity = quantity;
         this.quantitySold = 0;
+
     }
 
     public int getQuantitySold() {
@@ -43,13 +43,7 @@ public class Product {
     public void setQuantitySold(int quantitySold) {
         this.quantitySold = quantitySold;
     }
-    public Store getStore() {
-        return store;
-    }
 
-    public void setStores(Store stores) {
-        this.store = stores;
-    }
 
     public String getName() {
         return name;
@@ -90,7 +84,7 @@ public class Product {
             {
                 if(products.get(i).getName().compareTo(products.get(j).getName())>0)
                 {
-                   Collections.swap(products, i, j);
+                    Collections.swap(products, i, j);
                 }
             }
         }

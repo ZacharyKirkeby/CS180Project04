@@ -1,5 +1,18 @@
 # CS180Project04
 
+## TODO List
+
+Add Documentation to each class
+Write comments/explain what stuff does
+
+Primary authors of Files -> add writeup of file to Writeups folder
+
+Everyone -> work on individual write up files
+
+Document Testing methods
+
+Come up with Setup Instructions
+
 ## Selected Option Requirements
 
 ### Option 3
