@@ -450,8 +450,8 @@ public abstract class Seller {
             if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
-                            stores.get(i).getProductList().get(j).getName() + ": "
-                    Customer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
+                            stores.get(i).getProductList().get(j).getName() + ": " +
+                            Customer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
             }
         }
