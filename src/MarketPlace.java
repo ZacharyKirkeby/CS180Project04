@@ -1,5 +1,4 @@
 package src;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -13,10 +12,10 @@ public class MarketPlace {
     private static final String AccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n 4. " +
             "Back \n";
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
-            "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. View Sales By Store \n " +
-            "6. Back \n ";
+            "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
-            "3. Search by Description \n 4. View All Products \n 5. Manage Account \n 6. Logout \n";
+            "3. Search by Description \n 4. View All Products \n 5. Sort By Cheapest \n 6. Sort " +
+            "By Most Expensive \n  7. Manage Account \n 8. Logout \n";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
     private static boolean isLoggedIn;
@@ -221,11 +220,6 @@ public class MarketPlace {
                                         }
                                         break;
                                     case "5":
-                                        System.out.println("Enter Store Name: ");
-                                        storeName = scanner.nextLine();
-                                        System.out.println(Seller.salesByStore(storeName, user));
-                                        break;
-                                    case "6":
                                         break;
                                     default:
                                         System.out.println("Invalid Input");
@@ -330,8 +324,6 @@ public class MarketPlace {
                                 System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByProduct(input));
-                                //search logic
-                                // TODO
                                 break;
                             case "3":
                                 System.out.println(SEARCH_PROMPT);
@@ -343,6 +335,12 @@ public class MarketPlace {
                                 Seller.printProductAndStores();
                                 break;
                             case "5":
+                                System.out.println(Seller.sortCheapest());
+                                break;
+                            case "6":
+                                System.out.println(Seller.sortExpensive());
+                                break;
+                            case "7":
                                 System.out.print(AccountChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -377,7 +375,7 @@ public class MarketPlace {
                                         System.out.println("Invalid Input");
                                         break;
                                 }
-                            case "6":
+                            case "8":
                                 isLoggedIn = false;
                                 System.out.println("Sucessfully Logged out");
                                 break;
@@ -406,69 +404,4 @@ public class MarketPlace {
         }
     }
 
-    public String sortCheapest(ArrayList<Store> stores) {
-        ArrayList<String> combined = new ArrayList<>();
-        String result = "";
-        for (int i = 0; i < stores.size(); i++) {
-            for (int j = 0; j < stores.size(); j++) {
-                String element = stores.get(i).getStoreName() + ";"
-                        + stores.get(i).getProductList().get(j).getName() + ";"
-                        + stores.get(i).getProductList().get(j).getPurchasePrice()
-                        + stores.get(i).getProductList().get(j).getStockQuantity();
-                combined.add(element);
-            }
-        }
-        for (int k = 0; k < combined.size(); k++) {
-            double min = (double) Integer.MAX_VALUE;
-            String[] subpart = combined.get(k).split(";");
-            double purchasePrice = Double.parseDouble(subpart[2]);
-            if (purchasePrice < min) {
-                min = purchasePrice;
-                String temp = combined.get(k);
-                combined.remove(k);
-                combined.add(0, temp);
-
-
-            }
-        }
-        for(int a = 0; a < combined.size(); a++){
-            result += combined.get(a) + "\n";
-        }
-        result = result.replace(";", " | ");
-        return result;
-    }
-
-    public String sortExpensive(ArrayList<Store> stores) {
-        ArrayList<String> combined = new ArrayList<>();
-        String result = "";
-        for (int i = 0; i < stores.size(); i++) {
-            for (int j = 0; j < stores.size(); j++) {
-                String element = stores.get(i).getStoreName() + ";"
-                        + stores.get(i).getProductList().get(j).getName() + ";"
-                        + stores.get(i).getProductList().get(j).getPurchasePrice()
-                        + stores.get(i).getProductList().get(j).getStockQuantity();
-                combined.add(element);
-            }
-        }
-        for (int k = 0; k < combined.size(); k++) {
-            double min = (double) Integer.MIN_VALUE;
-            String[] subpart = combined.get(k).split(";");
-            double purchasePrice = Double.parseDouble(subpart[2]);
-            if (purchasePrice > min) {
-                min = purchasePrice;
-                String temp = combined.get(k);
-                combined.remove(k);
-                combined.add(0, temp);
-
-
-            }
-        }
-        for(int a = 0; a < combined.size(); a++){
-            result += combined.get(a) + "\n";
-        }
-        result = result.replace(";", " | ");
-        return result;
-    }
-
 }
-
