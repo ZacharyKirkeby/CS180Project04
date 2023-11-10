@@ -736,6 +736,12 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
+
+    /**
+     * Gets highest quantity
+     *
+     * @return highest
+     */
     public static String highestQuant() {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
@@ -767,6 +773,12 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
+
+    /**
+     * Returns lowest quantity
+     *
+     * @return lowest
+     */
     public static String lowestQuant() {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";

@@ -21,6 +21,7 @@ public abstract class Customer {
     private static String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
 
     public static int getTotalInCart(String storeName, String productName) {
+        readFromShoppingCartDatabaseFile();
         int totalQuantityOfProduct = 0;
         for (int i = 0; i < storeNames.size(); i++) {
             if (storeNames.get(i).equals(storeName) && productNames.get(i).equals(productName)) {
