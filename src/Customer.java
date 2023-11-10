@@ -35,7 +35,7 @@ public class Customer extends Account {
 //    }
 
     public static Store searchedStoreExists(String storeName, ArrayList<Store> stores) {
-        for (Store store : MarketPlace.stores) {
+        for (Store store : MarketPlace.getStores()) {
             if (store.getStoreName().equals(storeName)) {
                 return store;
             }
@@ -44,7 +44,7 @@ public class Customer extends Account {
     }
 
     public static Product searchedProductExists(String productName, ArrayList<Store> stores) {
-        for (Store store : MarketPlace.stores) {
+        for (Store store : MarketPlace.getStores()) {
             for (Product product : store.getProductList()) {
                 if (product.getName().equals(productName)) {
                     return product;
@@ -68,27 +68,27 @@ public class Customer extends Account {
             Product product = entry.getKey(); // Get the key
             int quantity = entry.getValue(); // Get the value
 
-            boolean productBought = buyProduct(product.getStore().getStoreName(), product.getName(), quantity, sellerThreshold);
+            boolean productBought = buyProduct(product.getStore().getStoreName(), product, quantity, sellerThreshold);
 
             if (productBought) {
-                writePurchaseHistoryFile(product.getName(), quantity);
+                writePurchaseHistoryFile(product, quantity);
             }
         }
     }
 
-    public static boolean buyProduct(String store, String product, int quantity, int sellerThreshold) {
+    public static boolean buyProduct(String store, Product product, int quantity, int sellerThreshold) {
         int storeIndex = -1;
-        for (int i = 0; i < MarketPlace.stores.size(); i++) {
-            if (MarketPlace.stores.get(i).getStoreName().equalsIgnoreCase(store)) {
+        for (int i = 0; i < MarketPlace.getStores().size(); i++) {
+            if (MarketPlace.getStores().get(i).getStoreName().equalsIgnoreCase(store)) {
                 storeIndex = i;
             }
         }
         if (storeIndex == -1) {
             return false;
         } else {
-            Store storeToBuyFrom = MarketPlace.stores.get(storeIndex);
+            Store storeToBuyFrom = MarketPlace.getStores().get(storeIndex);
             for (int i = 0; i < storeToBuyFrom.getProductList().size(); i++) {
-                if (storeToBuyFrom.getProductList().get(i).getName().equalsIgnoreCase(product) && quantity < sellerThreshold) {
+                if (storeToBuyFrom.getProductList().get(i).getName().equalsIgnoreCase(product.getName()) && quantity < sellerThreshold) {
                     storeToBuyFrom.getProductList().get(i).buyProduct(quantity);
                     writePurchaseHistoryFile(product, quantity);
                 }
@@ -116,10 +116,11 @@ public class Customer extends Account {
         }
     }
 
-    public static boolean writePurchaseHistoryFile(String product, int quantity) {
+    public static boolean writePurchaseHistoryFile(Product product, int quantity) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryFileName, true))) {
             pw.println(String.format("%s %d", product, quantity));
             pw.flush();
+            purchaseHistory.put(product, quantity);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
