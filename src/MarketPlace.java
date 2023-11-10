@@ -7,7 +7,8 @@ public class MarketPlace {
     private static final String sellerChoices = " 1. Create Store \n 2. Modify Store " +
             "\n 3. View Store Statistics \n 4. Delete Store \n 5. Manage Account \n 6. Logout \n";
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
-            "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Back \n";
+            "3. Change Product Quantity \n 4. Change Product Description \n 5. Delete Product \n 6. Add products to " +
+            "Store from CSV \n 7. Back \n";
     private static final String AccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n 4. " +
             "Back \n";
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
@@ -68,11 +69,14 @@ public class MarketPlace {
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter Product Name: ");
                                         String productName = scanner.nextLine();
+                                        System.out.println("Enter Product Description");
+                                        String description = scanner.nextLine();
                                         System.out.println("Enter Product Price: ");
                                         double price = Double.parseDouble(scanner.nextLine());
                                         System.out.println("Enter Product Quantity: ");
                                         int quantity = Integer.parseInt(scanner.nextLine());
-                                        bool = Seller.createProduct(storeName, productName, price, quantity);
+                                        bool = Seller.createProduct(storeName, productName, description, price,
+                                                quantity, user);
                                         if (bool) {
                                             System.out.println("Successfully Deleted");
                                         } else {
@@ -86,7 +90,7 @@ public class MarketPlace {
                                         productName = scanner.nextLine();
                                         System.out.println("Enter New Product Price: ");
                                         price = Double.parseDouble(scanner.nextLine());
-                                        bool = Seller.editProductPrice(storeName, productName, price);
+                                        bool = Seller.editProductPrice(storeName, productName, price, user);
                                         if (bool) {
                                             System.out.println("Successfully edited");
                                         } else {
@@ -100,7 +104,7 @@ public class MarketPlace {
                                         productName = scanner.nextLine();
                                         System.out.println("Enter New Quantity: ");
                                         quantity = Integer.parseInt(scanner.nextLine());
-                                        bool = Seller.editProductQuantity(storeName, productName, quantity);
+                                        bool = Seller.editProductQuantity(storeName, productName, quantity, user);
                                         if (bool) {
                                             System.out.println("Successfully Edited");
                                         } else {
@@ -114,7 +118,10 @@ public class MarketPlace {
                                             storeName = scanner.nextLine();
                                             System.out.println("Enter Product Name: ");
                                             productName = scanner.nextLine();
-                                            bool = Seller.deleteProduct(storeName, productName);
+                                            System.out.println("Enter New Product Description: ");
+                                            String newDescription = scanner.nextLine();
+                                            bool = Seller.editProductDescription(storeName, productName,
+                                                    newDescription, user);
                                             if (bool) {
                                                 System.out.println("Successfully Deleted");
                                             } else {
@@ -124,12 +131,28 @@ public class MarketPlace {
                                         }
                                         break;
                                     case "5":
+                                        bool = false;
+                                        while(!bool) {
+                                            System.out.println("Enter Store Name: ");
+                                            storeName = scanner.nextLine();
+                                            System.out.println("Enter Product Name: ");
+                                            productName = scanner.nextLine();
+                                            bool = Seller.deleteProduct(storeName, productName, user);
+                                            if (bool) {
+                                                System.out.println("Successfully Deleted");
+                                            } else {
+                                                System.out.println("Deletion Failed");
+                                                System.out.println("Try Again!");
+                                            }
+                                        }
+                                        break;
+                                    case "6":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter file path to be written from (include .txt)");
                                         String filePath = scanner.nextLine();
                                         Seller.readProductsFromCSV(storeName, filePath);
-                                    case "6":
+                                    case "7":
                                         break;
                                     default:
                                         System.out.println("Invalid Option");
