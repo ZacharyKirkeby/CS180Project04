@@ -333,7 +333,8 @@ public abstract class Seller {
             line = bfr.readLine();
             while ((line != null) && (!line.isEmpty())) {
                 split = line.split(",");
-                createProduct(storeName, split[0], split[1], Double.parseDouble(split[2]), Integer.parseInt(split[3]));
+                createProductInternal(storeName, split[0], split[1], Double.parseDouble(split[2]),
+                        Integer.parseInt(split[3]));
                 line = bfr.readLine();
             }
             writeToFile();
@@ -342,6 +343,38 @@ public abstract class Seller {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * Internal product creation without username for CSV
+     *
+     * @param storeName
+     * @param name
+     * @param description
+     * @param price
+     * @param quantity
+     * @return boolean indicating successful product creation
+     */
+    private static boolean createProductInternal(String storeName, String name, String description, double price,
+                                         int quantity) {
+        readFromFile();
+        int index = -1;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return false;
+        } else {
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+                if (stores.get(index).getProductList().get(i).getName().equalsIgnoreCase(name)) {
+                    return false;
+                }
+            }
+            stores.get(index).getProductList().add(new Product(name, description, price, quantity));
+            return true;
+        }
     }
 
     /**
