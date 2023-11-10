@@ -10,7 +10,7 @@ requirements.
 
 ### Account
 ***
-
+Manages user account creation, login, editing, and deletion. Includes username, email, password, and writes information to file. Encrypts password.
 
 ### Customer
 ***
@@ -44,11 +44,9 @@ Lastly, the customer can purchase items, add to a shopping cart, view their shop
 
 #### Account Management (General Feature)
 ***
-Users, regardless of designation can change their username, email, password and can also logout. 
+Users, regardless of designation can change their username, role, password and can also logout. 
 
 ### Product
-
-### Seller
 
 ### Store
 
