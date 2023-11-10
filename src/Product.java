@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.*;
 public class Product {
     private String name; //name of the product
-
     private String description;
     private int stockQuantity; //quantity of the product left
     private int quantitySold;
