@@ -501,7 +501,7 @@ public abstract class Seller {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + ": " +
-                            Customer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
+                            Customer.getTotalInCart(stores.get(i).getStoreName(), stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
             }
         }
