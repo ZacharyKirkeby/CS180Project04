@@ -1,6 +1,4 @@
 package src;
-
-
 import java.io.*;
 import java.util.*;
 
@@ -197,5 +195,56 @@ public abstract class Customer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //Optional Method
+    public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
+                                    String description ){
+        boolean bool = false;
+        while(!bool){
+            if( !(1 <= rating && rating <= 5)){
+                System.out.println("Invalid Input");
+                System.out.println("Try Again");
+                System.out.println("What is your Rating 1-5 ");
+            }
+            else {bool = true;}
+        }
+        try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
+        PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt"), true)){
+            String line = br.readLine();
+            int count = 0;
+            while(line != null) {
+                line = br.readLine();
+                if(line == null){
+                    pw.write(String.format("%s | %s | %s | %d | %s", storeName, productName, customerName, rating,
+                            description));
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    return false;
+    }
+    public static String viewReviews(String storeName, String productName){
+        String result = "";
+        try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))){
+            String line = br.readLine();
+            while(line != null){
+                String[] subpart = line.split("\\|");
+                if(!(storeName.equals(""))) {
+                    if (subpart[0].equalsIgnoreCase(storeName) && subpart[1].equalsIgnoreCase(productName)) {
+                        result += line + "\n";
+                    }
+                } else if(storeName.equals("")){
+                    if (subpart[1].equalsIgnoreCase(productName)) {
+                        result += line + "\n";
+                    }
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();;
+        }
+        return result;
     }
 }
