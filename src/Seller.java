@@ -723,4 +723,67 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
+    public static String highestQuant() {
+        ArrayList<String> combined = new ArrayList<>();
+        String result = "";
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.size(); j++) {
+                String element = stores.get(i).getStoreName() + ";"
+                        + stores.get(i).getProductList().get(j).getName() + ";"
+                        + stores.get(i).getProductList().get(j).getPurchasePrice()
+                        + stores.get(i).getProductList().get(j).getStockQuantity();
+                combined.add(element);
+            }
+        }
+        for (int k = 0; k < combined.size(); k++) {
+            double min = (double) Integer.MIN_VALUE;
+            String[] subpart = combined.get(k).split(";");
+            double quant = Double.parseDouble(subpart[3]);
+            if (quant > min) {
+                min = quant;
+                String temp = combined.get(k);
+                combined.remove(k);
+                combined.add(0, temp);
+
+
+            }
+        }
+        for(int a = 0; a < combined.size(); a++){
+            result += combined.get(a) + "\n";
+        }
+        result = result.replace(";", " | ");
+        return result;
+    }
+    public static String lowestQuant() {
+        ArrayList<String> combined = new ArrayList<>();
+        String result = "";
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.size(); j++) {
+                String element = stores.get(i).getStoreName() + ";"
+                        + stores.get(i).getProductList().get(j).getName() + ";"
+                        + stores.get(i).getProductList().get(j).getPurchasePrice()
+                        + stores.get(i).getProductList().get(j).getStockQuantity();
+                combined.add(element);
+            }
+        }
+        for (int k = 0; k < combined.size(); k++) {
+            double min = (double) Integer.MAX_VALUE;
+            String[] subpart = combined.get(k).split(";");
+            double quant = Double.parseDouble(subpart[3]);
+            if (quant < min) {
+                min = quant;
+                String temp = combined.get(k);
+                combined.remove(k);
+                combined.add(0, temp);
+
+
+            }
+        }
+        for(int a = 0; a < combined.size(); a++){
+            result += combined.get(a) + "\n";
+        }
+        result = result.replace(";", " | ");
+        return result;
+    }
+
 }

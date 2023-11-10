@@ -15,7 +15,8 @@ public class MarketPlace {
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Sort By Cheapest \n 6. Sort " +
-            "By Most Expensive \n  7. Manage Account \n 8. Logout \n";
+            "By Most Expensive \n 7. Sort by Availability \n 8. Manage Account \n 9. Logout \n";
+    private static  final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
     private static boolean isLoggedIn;
@@ -341,6 +342,18 @@ public class MarketPlace {
                                 System.out.println(Seller.sortExpensive());
                                 break;
                             case "7":
+                                System.out.println(AVAILABILITY);
+                                input = scanner.nextLine();
+                                switch (input){
+                                    case "1":
+                                        System.out.println(Seller.highestQuant());
+                                        break;
+                                    case "2":
+                                        System.out.println(Seller.lowestQuant());
+                                        break;
+                                }
+                                break;
+                            case "8":
                                 System.out.print(AccountChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -375,7 +388,7 @@ public class MarketPlace {
                                         System.out.println("Invalid Input");
                                         break;
                                 }
-                            case "8":
+                            case "9":
                                 isLoggedIn = false;
                                 System.out.println("Sucessfully Logged out");
                                 break;
