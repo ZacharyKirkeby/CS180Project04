@@ -14,6 +14,14 @@ public class Product {
     private int quantitySold; // quantity of product sold
     private double purchasePrice; // price of product
 
+    // Optional Features Parameters
+    private boolean onSale; // Sale status
+    private int saleCap; // Amount of product on sale
+    private int saleSold;
+    private double salePrice; // Sale price
+
+    private int orderCap; // Max number a customer can order
+
     public Product(String name, String description, int quantity, double purchasePrice, Store stores) {
         this.name = name;
         this.description = description;
@@ -72,11 +80,24 @@ public class Product {
     }
 
     public void buyProduct(int quantity) {
-        this.stockQuantity -= quantity;
+        if (this.saleCap > 0 && quantity < this.saleCap) {
+            this.stockQuantity -= quantity;
+        }
+        if (this.onSale && this.saleCap != 0) {
+            this.saleCap--;
+            this.saleSold++;
+            if (saleCap == 0) {
+                onSale = false;
+            }
+        }
     }
 
     public double getPurchasePrice() {
-        return purchasePrice;
+        if (onSale) {
+            return salePrice;
+        } else {
+            return purchasePrice;
+        }
     }
 
     public void setPurchasePrice(double purchasePrice) {
@@ -107,7 +128,18 @@ public class Product {
         return products;
     }
 
+    /**
+     * get sales
+     * checks if a sale is ongoing
+     * if so, calculates sales attributed to the current sale
+     * as well as the rest of products sold
+     * @return
+     */
     public double getSales() {
+        if (onSale) {
+            int temp = quantitySold - saleSold;
+            return salePrice * saleSold + (purchasePrice * temp);
+        }
         return (purchasePrice * quantitySold);
     }
 
@@ -126,6 +158,58 @@ public class Product {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Optional Feature
+     * creates a sale
+     * sale cannot exceed number availible
+     * price cannot be negative
+     * @param salePrice
+     * @param saleCap
+     *
+     */
+    public String startSale(double salePrice, int saleCap) {
+        onSale = true;
+        if (saleCap > this.stockQuantity) {
+            saleCap = stockQuantity;
+        } else {
+            this.saleCap = saleCap;
+        }
+        if (salePrice <= 0) {
+            return "Unable to Start Sale";
+        } else {
+            this.salePrice = salePrice;
+        }
+        return "Sale Successfully Started";
+    }
+    public int getSaleCap() {
+        return saleCap;
+    }
+    public double getSalePrice() {
+        return salePrice;
+    }
+
+
+    /**
+     * Sets order cap
+     * makes sure it is greater than 0
+     * @param cap
+     * @return
+     */
+    public String setCap(int cap) {
+        if (cap > 0) {
+            this.orderCap = cap;
+        } else {
+            return "There was a problem implementing an order cap";
+        }
+        return "Order Cap created successfully!";
+    }
+
+    public int getOrderCap() {
+        return orderCap;
+    }
+
+
 
     @Override
     public String toString() {
