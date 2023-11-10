@@ -18,7 +18,7 @@ public class Store {
     private Seller storeOwner;
     private String sellerUsername;
     private int totalSales = 0;
-    private int totalRevenue = 0;
+    private double totalRevenue = 0;
 
     public Store(String name, String storeLocation, Seller seller,
                  ArrayList<Product> productList) {
@@ -34,6 +34,20 @@ public class Store {
         this.storeLocation = storeLocation;
         this.sellerUsername = sellerUsername;
         this.productList = productList;
+    }
+
+    public int getTotalSales() {
+        for(Product p:productList) {
+            totalSales += p.getQuantitySold();
+        }
+        return totalSales;
+    }
+
+    public double getTotalRevenue() {
+        for(Product p:productList) {
+            totalRevenue += p.getSales();
+        }
+        return totalRevenue;
     }
 
 
