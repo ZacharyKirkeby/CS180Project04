@@ -1,5 +1,7 @@
 package src;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,7 +17,9 @@ public class MarketPlace {
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. View Sales By Store \n " +
             "6. Back \n ";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
-            "3. Search by Description \n 4. View All Products \n 5. Manage Account \n 6. Logout \n";
+            "3. Search by Description \n 4. View All Products \n 5. Sort products by price \n" +
+            "6. Sort products by quantity \n 7. Buy products in shopping cart \n 8. View purchase history \n" +
+            "9. Manage Account \n 10. Logout \n";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
     private static boolean isLoggedIn;
@@ -320,28 +324,53 @@ public class MarketPlace {
                         System.out.println(BUYERPROMPT);
                         input = scanner.nextLine();
                         switch (input) {
-                            case "1":
+                            case "1": // search by store name
                                 System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByStore(input));
                                 break;
-                            case "2":
+                            case "2": // search by product name
                                 System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByProduct(input));
-                                //search logic
-                                // TODO
                                 break;
-                            case "3":
+                            case "3": // search by product description
                                 System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println("Store  |  Product ");
                                 System.out.println(Seller.searchByDescription(input));
                                 break;
-                            case "4":
+                            case "4": //view all products
                                 Seller.printProductAndStores();
                                 break;
-                            case "5":
+                            case "5": // sort products by price
+
+                                break;
+                            case "6": // sort products by quantity
+
+                                break;
+                            case "7": // buy products in shopping cart
+                                System.out.println("Enter the store name of the product you want to purchase: ");
+                                storeName = scanner.nextLine();
+                                if (Customer.searchedStoreExists(storeName, stores) != null) {
+                                    System.out.println("Enter the name of the product you want to purchase: ");
+                                    productName = scanner.nextLine();
+                                    if (Customer.searchedProductExists(productName, stores) != null) {
+                                        System.out.printf("Enter how many %s woud you like to buy: ", productName);
+                                        quantity = scanner.nextInt();
+                                        scanner.nextLine();
+                                        Customer.addToCart(, ,storeName, productName, quantity); // pass in email, username before store, product, quantity
+                                    }
+                                }
+                                Customer.buyProductsInShoppingCart(); // pass in username
+                                System.out.println("Product bought successfully!");
+                                break;
+                            case "8": // view purchase history
+                                System.out.println("Enter the file name you want to output your purchase history to: ");
+                                String filename = scanner.nextLine();
+                                Customer.getPurchaseHistoryofCustomer(, filename); // pass in username beforeq filename
+                                break;
+                            case "9": // manage account
                                 System.out.print(AccountChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -376,7 +405,7 @@ public class MarketPlace {
                                         System.out.println("Invalid Input");
                                         break;
                                 }
-                            case "6":
+                            case "10": // logout
                                 isLoggedIn = false;
                                 System.out.println("Sucessfully Logged out");
                                 break;

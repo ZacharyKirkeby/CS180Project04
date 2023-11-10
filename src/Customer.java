@@ -104,7 +104,7 @@ public abstract class Customer {
         return productsBoughtSuccessfully;
     }
 
-    private static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName, String productName, int quantity) {
+    public static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName, String productName, int quantity) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
             pw.println(String.format("%s,%s;%s;%s;%d", email, username, storeName, productName, quantity));
         } catch (IOException e) {
@@ -112,7 +112,7 @@ public abstract class Customer {
         }
     }
 
-    private static void writeToShoppingCartDatabaseFile() {
+    public static void writeToShoppingCartDatabaseFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
                 pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
@@ -124,7 +124,7 @@ public abstract class Customer {
 
     // format of shoppingCartDatabaseFile
     // email;username;storeName;productName;quantity
-    private static void readFromShoppingCartDatabaseFile() {
+    public static void readFromShoppingCartDatabaseFile() {
         emails.clear();
         usernames.clear();
         storeNames.clear();
@@ -149,7 +149,7 @@ public abstract class Customer {
         }
     }
 
-    private static void readFromPurchaseHistoryDatabaseFile() {
+    public static void readFromPurchaseHistoryDatabaseFile() {
         emails.clear();
         usernames.clear();
         storeNames.clear();
@@ -174,7 +174,7 @@ public abstract class Customer {
         }
     }
 
-    private static ArrayList<String> getShoppingCartofCustomer(String username) {
+    public static ArrayList<String> getShoppingCartofCustomer(String username) {
         readFromShoppingCartDatabaseFile();
         ArrayList<String> customerProducts = new ArrayList<>();
         for (int i = 0; i < usernames.size(); i++) {
@@ -186,7 +186,7 @@ public abstract class Customer {
     }
 
     // make sure to make file exists or create file first before printing
-    private static void getPurchaseHistoryofCustomer(String username, String fileName) {
+    public static void getPurchaseHistoryofCustomer(String username, String fileName) {
         readFromPurchaseHistoryDatabaseFile();
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
             for (int i = 0; i < usernames.size(); i++) {
