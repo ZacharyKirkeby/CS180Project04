@@ -8,31 +8,25 @@ import java.util.*;
  * Includes methods:
  */
 
-public class Customer extends Account {
-    private static String name;
-    private static Map<Product, Integer> shoppingCart;
-    private static Map<Product, Integer> purchaseHistory;
-    private static String shoppingCartFileName = "Shopping Cart";
-    private static String purchaseHistoryFileName = "Purchase History";
+public abstract class Customer {
 
-    public Customer(String name) {
-        this.name = name;
-        this.shoppingCart = new HashMap<>();
-        this.purchaseHistory = new HashMap<>();
+    private static ArrayList<String> emails = new ArrayList<>(); // username arraylist
+    private static ArrayList<String> usernames = new ArrayList<>(); // username arraylist
+    private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
+    private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
+    private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
+    private static String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
+    private static String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
+
+    public static int getTotalInCart(String storeName, String productName) {
+        int totalQuantityOfProduct = 0;
+        for (int i = 0; i < storeNames.size(); i++) {
+            if (storeNames.get(i).equals(storeName) && productNames.get(i).equals(productName)) {
+                totalQuantityOfProduct += quantities.get(i);
+            }
+        }
+        return totalQuantityOfProduct;
     }
-
-//    public static Product[] getProductsInShoppingCart() {
-//        ArrayList<Product> productsList = new ArrayList<>();
-//        for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
-//            Product product = entry.getKey();
-//            productsList.add(product);
-//        }
-//        Product[] products = new Product[productsList.size()];
-//        for (int i = 0; i < products.length; i++) {
-//            products[i] = productsList.get(i);
-//        }
-//        return products;
-//    }
 
     public static Store searchedStoreExists(String storeName, ArrayList<Store> stores) {
         for (Store store : MarketPlace.getStores()) {
@@ -54,139 +48,155 @@ public class Customer extends Account {
         return null;
     }
 
-    public static void addToCart(Product product, int quantity) {
-        shoppingCart.put(product, quantity);
+    public static void addToCart(String email, String username, Store store, Product product, int quantity) {
+        emails.add(email);
+        usernames.add(username);
+        storeNames.add(store.getStoreName());
+        productNames.add(product.getName());
+        quantities.add(quantity);
+        writeToShoppingCartDatabaseFile();
     }
 
-    public static void removeFromToCart(Product product, int quantity) {
-        shoppingCart.remove(product, quantity);
+    public static void removeFromCart(String email, String username, Store store, Product product, int quantity) {
+        readFromShoppingCartDatabaseFile();
+        for (int i = 0; i < usernames.size(); i++) {
+            if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(store.getStoreName()) && productNames.get(i).equals(product.getName()) && quantities.get(i) == quantity) {
+                emails.remove(i);
+                usernames.remove(i);
+                storeNames.remove(i);
+                productNames.remove(i);
+                quantities.remove(i);
+                break;
+            }
+        }
+        writeToShoppingCartDatabaseFile();
     }
 
     // products from different stores
-    public static void buyProductsInShoppingCart(int sellerThreshold) {
-        for (Map.Entry<Product, Integer> entry : shoppingCart.entrySet()) {
-            Product product = entry.getKey(); // Get the key
-            int quantity = entry.getValue(); // Get the value
-
-            boolean productBought = buyProduct(product.getStore().getStoreName(), product, quantity, sellerThreshold);
-
-            if (productBought) {
-                writePurchaseHistoryFile(product, quantity);
-            }
-        }
-    }
-
-    public static boolean buyProduct(String store, Product product, int quantity, int sellerThreshold) {
-        int storeIndex = -1;
-        for (int i = 0; i < MarketPlace.getStores().size(); i++) {
-            if (MarketPlace.getStores().get(i).getStoreName().equalsIgnoreCase(store)) {
-                storeIndex = i;
-            }
-        }
-        if (storeIndex == -1) {
-            return false;
-        } else {
-            Store storeToBuyFrom = MarketPlace.getStores().get(storeIndex);
-            for (int i = 0; i < storeToBuyFrom.getProductList().size(); i++) {
-                if (storeToBuyFrom.getProductList().get(i).getName().equalsIgnoreCase(product.getName()) && quantity < sellerThreshold) {
-                    storeToBuyFrom.getProductList().get(i).buyProduct(quantity);
-                    writePurchaseHistoryFile(product, quantity);
+    public static boolean buyProductsInShoppingCart(String username) {
+        readFromShoppingCartDatabaseFile();
+        boolean productsBoughtSuccessfully = false;
+        for (int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(username)) { // check if username matches'
+                for (int j = 0; j < MarketPlace.getStores().size(); j++) { // iterate through stores in marketplace
+                    if (storeNames.get(i).equals(MarketPlace.getStores().get(j).getStoreName())) { // if storename matches
+                        for (int k = 0; k < MarketPlace.getStores().get(j).getProductList().size(); k++) { // iterrate through product list
+                            if (MarketPlace.getStores().get(j).getProductList().get(k).getName().equals(productNames.get(i))) { // if product name matches
+                                MarketPlace.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
+                                writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i), productNames.get(i), quantities.get(i));
+                                emails.remove(i);
+                                usernames.remove(i);
+                                storeNames.remove(i);
+                                productNames.remove(i);
+                                quantities.remove(i);
+                                writeToShoppingCartDatabaseFile();
+                                productsBoughtSuccessfully = true;
+                            }
+                        }
+                    }
                 }
             }
-            return true;
         }
+        return productsBoughtSuccessfully;
     }
 
-    public static String[] readPurchaseHistoryFile() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(purchaseHistoryFileName))) {
-            ArrayList<String> fileContents = new ArrayList<>();
-
-            String s;
-            while ((s = bufferedReader.readLine()) != null) {
-                fileContents.add(s);
-            }
-            String[] fileContentsArray = new String[fileContents.size()];
-            for (int i = 0; i < fileContents.size(); i++) {
-                fileContentsArray[i] = fileContents.get(i);
-            }
-            return fileContentsArray;
+    private static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName, String productName, int quantity) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
+            pw.println(String.format("%s,%s;%s;%s;%d", email, username, storeName, productName, quantity));
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
-    public static boolean writePurchaseHistoryFile(Product product, int quantity) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryFileName, true))) {
-            pw.println(String.format("%s %d", product, quantity));
-            pw.flush();
-            purchaseHistory.put(product, quantity);
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static boolean writeShoppingCartFileAddProduct(String product, int quantity) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartFileName, true))) {
-            pw.println(String.format("%s %d", product, quantity));
-            pw.flush();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static boolean writeShoppingCartFileRemoveProduct(String product, int quantity) {
-        String[] shoppingCartFileContents = readShoppingCartFile();
-        try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartFileName))) {
-            for (int i = 0; i < shoppingCartFileContents.length; i++) {
-                String[] productAndQuantity = shoppingCartFileContents[i].split(" ");
-                if (productAndQuantity[0].equals(product)) {
-                    productAndQuantity[1] = Integer.toString(Integer.parseInt(productAndQuantity[1]) - quantity);
-                }
-                pw.println(String.format("%s %d", productAndQuantity[0], Integer.parseInt(productAndQuantity[1])));
-                pw.flush();
+    private static void writeToShoppingCartDatabaseFile() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
+            for (int i = 0; i < usernames.size(); i++) {
+                pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
             }
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
-    public static String[] readShoppingCartFile() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(shoppingCartFileName))) {
-            ArrayList<String> fileContents = new ArrayList<>();
-            String s;
-            while ((s = bufferedReader.readLine()) != null) {
-                fileContents.add(s);
+    // format of shoppingCartDatabaseFile
+    // email;username;storeName;productName;quantity
+    private static void readFromShoppingCartDatabaseFile() {
+        emails.clear();
+        usernames.clear();
+        storeNames.clear();
+        productNames.clear();
+        quantities.clear();
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(shoppingCartDatabaseFileName))) {
+            line = br.readLine();
+            while ((line != null) && (!line.isEmpty())) {
+                String[] subpart = line.split(";");
+                emails.add(subpart[0]);
+                usernames.add(subpart[1]);
+                storeNames.add(subpart[2]);
+                productNames.add(subpart[3]);
+                quantities.add(Integer.parseInt(subpart[4]));
+                line = br.readLine();
             }
-            String[] arrayOfFileContents = new String[fileContents.size()];
-
-            for (int i = 0; i < fileContents.size(); i++) {
-                arrayOfFileContents[i] = fileContents.get(i);
-            }
-            return arrayOfFileContents;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
-
     }
 
-    public static boolean getFile(String fileName, String[] fileContents) {
+    private static void readFromPurchaseHistoryDatabaseFile() {
+        emails.clear();
+        usernames.clear();
+        storeNames.clear();
+        productNames.clear();
+        quantities.clear();
+        String line;
+        try (BufferedReader br = new BufferedReader(new FileReader(purchaseHistoryDatabaseFileName))) {
+            line = br.readLine();
+            while ((line != null) && (!line.isEmpty())) {
+                String[] subpart = line.split(";");
+                emails.add(subpart[0]);
+                usernames.add(subpart[1]);
+                storeNames.add(subpart[2]);
+                productNames.add(subpart[3]);
+                quantities.add(Integer.parseInt(subpart[4]));
+                line = br.readLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static ArrayList<String> getShoppingCartofCustomer(String username) {
+        readFromShoppingCartDatabaseFile();
+        ArrayList<String> customerProducts = new ArrayList<>();
+        for (int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(username)) { // check if username matches
+                customerProducts.add(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
+            }
+        }
+        return customerProducts;
+    }
+
+    private static void getPurchaseHistoryofCustomer(String username, String fileName) {
+        readFromPurchaseHistoryDatabaseFile();
+        ArrayList<Integer> customerProducts = new ArrayList<>();
+        for (int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(username)) { // check if username and email match
+                customerProducts.add(i);
+            }
+        }
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
-            for (String s : fileContents) {
-                pw.println(s);
-                pw.flush();
+            for (Integer cp : customerProducts) {
+                for (int i = 0; i < usernames.size(); i++) {
+                    pw.println(String.format("%s,%s;%s;%s;%d", emails.get(cp), usernames.get(cp), storeNames.get(cp), productNames.get(cp), quantities.get(cp)));
+                }
             }
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
