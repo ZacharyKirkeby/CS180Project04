@@ -171,7 +171,9 @@ public class Account {
             return false; // should not happen
         }
         usernames.set(index, newUsername);
-        Seller.changeStoreUsernames(newUsername, oldUsername);
+        if (roles.get(index).equalsIgnoreCase("seller")) {
+            Seller.changeStoreUsernames(newUsername, oldUsername);
+        }
         writeToFile();
         return true;
     }
@@ -185,6 +187,9 @@ public class Account {
      * @return boolean determining whether password change was successful
      */
     public static boolean changePassword(String usernameOrEmail, String oldPassword, String newPassword) {
+        if (newPassword.isEmpty() || newPassword.isBlank()) {
+            return false;
+        }
         if (usernameOrEmail.contains("\\") || usernameOrEmail.contains(" ")) {
             return false;
         }
