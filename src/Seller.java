@@ -56,12 +56,14 @@ public abstract class Seller {
      */
     public static void printProductAndStores() {
         readFromFile();
+        System.out.println("Store Name | Product Name | Product Price | Product Quantity");
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                System.out.println(stores.get(i).getProductList().get(j).getName() +
-                        "Price: $" + stores.get(i).getProductList().get(j).getPurchasePrice() +
-                        "Quantity: " + stores.get(i).getProductList().get(j).getStockQuantity() +
-                        " | " + stores.get(i).getStoreName());
+                System.out.println(stores.get(i).getStoreName() + " | " +
+                                stores.get(i).getProductList().get(j).getName() +
+                        " | " + stores.get(i).getProductList().get(j).getPurchasePrice() +
+                        " | " + stores.get(i).getProductList().get(j).getStockQuantity()
+                        );
             }
         }
     }

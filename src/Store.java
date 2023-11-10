@@ -97,6 +97,18 @@ public class Store {
         return storeName + "," + storeLocation + "," + sellerUsername;
     }
 
+    public String toStringProducts() {
+        String products = "";
+        for (Product p: productList) {
+            products += p.getName() + " | ";
+        }
+        return storeName + "," + products;
+    }
+
+    public ArrayList<Product> cheapestProduct(ArrayList<Product> products) {
+        return Product.sortByCheapest(products);
+    }
+
     public String getSellserUsername () {
         return sellerUsername;
     }
