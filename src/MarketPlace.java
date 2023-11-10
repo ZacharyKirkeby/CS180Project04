@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class MarketPlace {
     private static final String WELCOME_PROMPT = "Login or Register an Account (Login / Register)";
     private static final String sellerChoices = " 1. Create Store \n 2. Modify Store " +
-            "\n 3. View Store Statistics \n 4. Delete Store \n 5. Manage Account \n 6. Logout \n";
+            "\n 3. View Store Statistics \n 4. Delete Store \n 5. View Customer Reviews \n 6. Manage Account \n 7. " +
+            "Logout \n";
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
             "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Start Sale \n" +
             "7. Add Purchase Limit \n 8. Back \n";
@@ -274,6 +275,12 @@ public class MarketPlace {
                                     }
                                     break;
                                 case "5":
+                                    System.out.println("Enter Product Name (Leave empty if you want to view reviews " +
+                                            "of all products)");
+                                    productName = scanner.nextLine();
+                                    System.out.println(Seller.viewCustomerReviews(productName, user));
+                                    break;
+                                case "6":
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
                                     switch (input) {
@@ -333,7 +340,7 @@ public class MarketPlace {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
-                                case "6":
+                                case "7":
                                     isLoggedIn = false;
                                     System.out.println("Successfully Logged out");
                                     break;
