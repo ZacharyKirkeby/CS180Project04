@@ -127,11 +127,13 @@ public abstract class Seller {
      * @param quantity
      * @return boolean indicating whether creation was successful
      */
-    public static boolean createProduct(String storeName, String name, String description, double price, int quantity) {
+    public static boolean createProduct(String storeName, String name, String description, double price, int quantity,
+                                        String username) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
+                    stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -157,11 +159,12 @@ public abstract class Seller {
      * @param description
      * @return boolean indicating whether edit was successful
      */
-    public static boolean editProductDescription(String storeName, String name, String description) {
+    public static boolean editProductDescription(String storeName, String name, String description, String username) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
+                    stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -188,11 +191,12 @@ public abstract class Seller {
      * @param price
      * @return boolean indicating whether edit was successful
      */
-    public static boolean editProductPrice(String storeName, String name, double price) {
+    public static boolean editProductPrice(String storeName, String name, double price, String username) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
+                    stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -219,11 +223,12 @@ public abstract class Seller {
      * @param quantity
      * @return boolean indicating whether edit was successful
      */
-    public static boolean editProductQuantity(String storeName, String name, int quantity) {
+    public static boolean editProductQuantity(String storeName, String name, int quantity, String username) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
+                    stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
@@ -249,11 +254,12 @@ public abstract class Seller {
      * @param name
      * @return boolean indicating whether deletion was successful
      */
-    public static boolean deleteProduct(String storeName, String name) {
+    public static boolean deleteProduct(String storeName, String name, String username) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
+                    stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
             }
         }
