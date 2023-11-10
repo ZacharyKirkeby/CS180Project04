@@ -4,17 +4,16 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.regex.Pattern;
 
 /**
  * src.Account
  * <p>
  * Allows for creation of accounts, login, and deletion of accounts
- * Create emails.txt, usernames.txt, passwords.txt, and roles.txt before using
+ * Create AccountData.txt before using
  *
  * @author Alexander Chen, 05
- * @version November 2, 2023
+ * @version November 10, 2023
  */
 
 public class Account {

@@ -29,6 +29,7 @@ public class Store {
         this.storeOwner = seller;
         this.productList = productList;
     }
+
     // More generic Store constructor based off a named seller
     public Store(String name, String storeLocation, String sellerUsername,
                  ArrayList<Product> productList) {
@@ -37,16 +38,18 @@ public class Store {
         this.sellerUsername = sellerUsername;
         this.productList = productList;
     }
+
     // gets total number of products sold
     public int getTotalSales() {
-        for(Product p:productList) {
+        for (Product p : productList) {
             totalSales += p.getQuantitySold();
         }
         return totalSales;
     }
+
     // calculates total revenue by getting sales * price
     public double getTotalRevenue() {
-        for(Product p:productList) {
+        for (Product p : productList) {
             totalRevenue += p.getSales();
         }
         return totalRevenue;
@@ -56,22 +59,27 @@ public class Store {
     public ArrayList<Product> getProductList() {
         return productList;
     }
+
     // generic setter
     public void setProductList(ArrayList<Product> productList) {
         this.productList = productList;
     }
+
     // returns store name
     public String getStoreName() {
         return storeName;
     }
+
     // allows for renaming store
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
+
     // generic getter
     public String getStoreLocation() {
         return storeLocation;
     }
+
     // generic setter
     public void setStoreLocation(String storeLocation) {
         this.storeLocation = storeLocation;
@@ -110,10 +118,12 @@ public class Store {
     }
 
     public String getSellserUsername () {
+
+  public String getSellserUsername() {
         return sellerUsername;
     }
 
-    public void setSellserUsername (String sellserUsername){
+    public void setSellserUsername(String sellserUsername) {
         this.sellerUsername = sellserUsername;
     }
 
@@ -123,6 +133,7 @@ public class Store {
      * adds line
      * returns end list of customers and their purchases
      **/
+
     public  String getSortedCustomersAndPurchases () {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
@@ -131,7 +142,7 @@ public class Store {
                 String[] subpart = line.split(";");
                 if (subpart[2].equals(storeName)) {
                     sentence += line + "\n";
-                    sentence.replace(";"," | ");
+                    sentence.replace(";", " | ");
                 }
                 line = reader.readLine();
             }
@@ -152,7 +163,7 @@ public class Store {
             String line = reader.readLine();
             while (line != null) {
                 sentence += line + "\n";
-                sentence.replace(";"," | ");
+                sentence.replace(";", " | ");
                 line = reader.readLine();
             }
         } catch (Exception e) {
@@ -160,7 +171,8 @@ public class Store {
         }
         return sentence;
     }
-    public void Purchases () {
+
+    public void Purchases() {
         double totalPurchases = 0;
         for (int i = 0; i < productList.size(); i++) {
             totalPurchases += productList.get(i).getSales();
