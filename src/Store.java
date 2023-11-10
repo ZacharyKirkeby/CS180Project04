@@ -1,4 +1,5 @@
 package src;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,9 +9,7 @@ import java.util.Collections;
  * WIP
  *
  * @author Zachary Kirkeby, 05
- *
  * @version November 3, 2023
- *
  */
 public class Store {
     private ArrayList<Product> productList;
@@ -26,6 +25,7 @@ public class Store {
         this.storeOwner = seller;
         this.productList = productList;
     }
+
     public Store(String name, String storeLocation, String sellerUsername,
                  ArrayList<Product> productList) {
         this.storeName = name;
@@ -77,32 +77,32 @@ public class Store {
 
     public String toString() {
         return storeName + "," + storeLocation + "," + sellerUsername;
-    public String getSellserUsername() {
+    }
+
+    public String getSellserUsername () {
         return sellerUsername;
     }
 
-    public void setSellserUsername(String sellserUsername) {
+    public void setSellserUsername (String sellserUsername){
         this.sellerUsername = sellserUsername;
     }
-    public static String getSortedCustomersAndPurchases(ArrayList<Store> stores){
-        for(int i = 0; i< stores.size(); i++)
-        {
-            for (int j = i+1; j< stores.size(); j++)
-            {
-                if(stores.get(i).getStoreName().compareTo(stores.get(j).getStoreName())>0)
-                {
+
+    public static String getSortedCustomersAndPurchases (ArrayList < Store > stores) {
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = i + 1; j < stores.size(); j++) {
+                if (stores.get(i).getStoreName().compareTo(stores.get(j).getStoreName()) > 0) {
                     Collections.swap(stores, i, j);
                 }
             }
         }
         return stores.toString();
     }
-    public static String getCustomersAndPurchases(ArrayList<Store> stores){
+    public static String getCustomersAndPurchases (ArrayList < Store > stores) {
         return stores.toString();
     }
-    public void Purchases (){
+    public void Purchases () {
         double totalPurchases = 0;
-        for(int i = 0; i < productList.size(); i++){
+        for (int i = 0; i < productList.size(); i++) {
             totalPurchases += productList.get(i).getSales();
         }
     }

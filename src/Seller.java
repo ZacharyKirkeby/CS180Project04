@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.util.*;
 
@@ -353,7 +354,7 @@ public abstract class Seller {
      * @return boolean indicating successful product creation
      */
     private static boolean createProductInternal(String storeName, String name, String description, double price,
-                                         int quantity) {
+                                                 int quantity) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -449,7 +450,7 @@ public abstract class Seller {
             if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
-                            stores.get(i).getProductList().get(j).getName() + ": " 
+                            stores.get(i).getProductList().get(j).getName() + ": " +
                             Customer.getTotalInCart(stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
             }
@@ -472,6 +473,15 @@ public abstract class Seller {
             }
         }
         writeToFile();
+    }
+
+    /**
+     * Gets arraylist of stores
+     *
+     * @return ArrayList of stores
+     */
+    public ArrayList<Store> getStores() {
+        return stores;
     }
 
     /**
@@ -534,40 +544,60 @@ public abstract class Seller {
             e.printStackTrace();
         }
     }
-    public static String searchByStore(String storeName){
+
+    /**
+     * Searches for store
+     *
+     * @param storeName
+     * @return searched stores
+     */
+    public static String searchByStore(String storeName) {
         String searchedStore = null;
-        for(int i = 0; i < stores.size(); i++){
-            if (stores.get(i).getStoreName().equals(storeName)){
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equals(storeName)) {
                 searchedStore += stores.get(i).getStoreName() + ",";
             }
         }
-        if(searchedStore == null){
+        if (searchedStore == null) {
             searchedStore = "No Store Found ";
         }
-        return (searchedStore.substring(0,(searchedStore.length()-1)));
+        return (searchedStore.substring(0, (searchedStore.length() - 1)));
     }
 
-    public static String searchByProduct(String productName){
+    /**
+     * Searches for product
+     *
+     * @param productName
+     * @return searched products
+     */
+    public static String searchByProduct(String productName) {
         String searched = null;
-        for(int i = 0; i < stores.size(); i++){
-            for(int j = 0; j < stores.get(i).getProductList().size(); i++){
-                if(stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)){
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+                if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
                     searched += stores.get(i).getStoreName() + ",";
                 }
             }
         }
-        if(searched == null){
+        if (searched == null) {
             searched = "No locations found selling this product ";
         }
-        return (searched.substring(0,(searched.length()-1)));
+        return (searched.substring(0, (searched.length() - 1)));
     }
-    public static String searchByDescription(String productDescription){
+
+    /**
+     * Searches from product by description
+     *
+     * @param productDescription
+     * @return searched products
+     */
+    public static String searchByDescription(String productDescription) {
         String searchedProduct = null;
         String searchedStore = null;
         String searched = null;
-        for(int i = 0; i < stores.size(); i++){
-            for(int j = 0; j < stores.get(i).getProductList().size(); i++){
-                if(stores.get(i).getProductList().get(j).getDescription().contains(productDescription)){
+        for (int i = 0; i < stores.size(); i++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+                if (stores.get(i).getProductList().get(j).getDescription().contains(productDescription)) {
                     searchedStore += stores.get(i).getStoreName();
                     searchedProduct += stores.get(i).getProductList().get(j).getName();
                     searched +=
@@ -576,9 +606,9 @@ public abstract class Seller {
                 }
             }
         }
-        if(searchedProduct == null){
-            searched= "No Product found ";
+        if (searchedProduct == null) {
+            searched = "No Product found ";
         }
-        return (searched.substring(0,(searched.length()-1)));
+        return (searched.substring(0, (searched.length() - 1)));
     }
 }
