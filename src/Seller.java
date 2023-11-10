@@ -12,7 +12,7 @@ import java.util.*;
  * Create stores.txt and products.txt before using
  *
  * @author Alexander Chen, 05
- * @version November 3, 2023
+ * @version November 10, 2023
  */
 
 public abstract class Seller {
@@ -501,7 +501,8 @@ public abstract class Seller {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + ": " +
-                            Customer.getTotalInCart(stores.get(i).getStoreName(), stores.get(i).getProductList().get(j).getName()) + "\n";
+                            Customer.getTotalInCart(stores.get(i).getStoreName(),
+                                    stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
             }
         }
