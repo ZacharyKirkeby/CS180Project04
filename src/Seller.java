@@ -403,6 +403,22 @@ public abstract class Seller {
         }
     }
 
+    public static String salesByStore(String storeName, String username) {
+        int index = -1;
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return "Error: Invalid parameters";
+        } else {
+            return stores.get(index).getCustomerInformationAndRevenue();
+        }
+
+    }
+
     /**
      * Returns a String of product sales given a store name and username
      * Sellers may only view their own stores
