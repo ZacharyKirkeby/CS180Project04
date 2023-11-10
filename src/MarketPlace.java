@@ -398,4 +398,12 @@ public class MarketPlace {
         }
     }
 
+    public static ArrayList<Product> sortCheapest(ArrayList<Product> products) {
+        for (int i = 0; i < products.size()-1; i++) {
+            if (products.get(i).getPurchasePrice() > products.get(i+1).getPurchasePrice()) {
+                products.add()
+            }
+        }
+    }
+
 }

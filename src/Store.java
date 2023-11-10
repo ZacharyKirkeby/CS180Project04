@@ -107,12 +107,12 @@ public class Store {
 
     /**
      * Iterates through purchase history file
-     * if store name corosponds to this store name
+     * if store name corresponds to this store name
      * adds line
      * returns end list of customers and their purchases
      **/
     public  String getSortedCustomersAndPurchases () {
-        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity \n";
+        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
@@ -128,8 +128,14 @@ public class Store {
         }
         return sentence;
     }
+
+    /**
+     * Iterates through purchase history file
+     * adds records by adding line
+     * returns end list of customers and their purchases
+     **/
     public static String getCustomersAndPurchases () {
-        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity \n";
+        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
@@ -148,4 +154,29 @@ public class Store {
             totalPurchases += productList.get(i).getSales();
         }
     }
+
+    public String getCustomerInformationAndRevenue() {
+        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased |" +
+                " Revenue From Customer \n";
+        try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
+            String line = reader.readLine();
+            while (line != null) {
+                String[] subpart = line.split(";");
+                String productName = subpart[3];
+                for (Product p:productList) {
+                    if (p.getName().equals(productName) && (subpart[2].equals(storeName))) {
+                        double revenue = Integer.parseInt(subpart[4]) * p.getPurchasePrice();
+                        sentence += line + " | " + revenue + "\n";
+                    }
+                }
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sentence;
+    }
+
+
+
 }
