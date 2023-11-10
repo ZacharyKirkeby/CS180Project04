@@ -158,8 +158,11 @@ public class MarketPlace {
                                             String filePath = scanner.nextLine();
                                             Seller.readProductsFromCSV(storeName, filePath);
                                             break;
-                                        // go back
+                                        // Trigger Sale
                                         case "6":
+                                            System.out.println("Enter Store Name: ");
+                                            storeName = scanner.nextLine();
+                                            Store store = whichStore(storeName);
                                             System.out.println("Enter Product to Put on Sale: ");
                                             input = scanner.nextLine();
                                             System.out.println("Enter Sale price: ");
@@ -168,12 +171,21 @@ public class MarketPlace {
                                             System.out.println("Enter Quantity on sale: ");
                                             int numOnSale = scanner.nextInt();
                                             scanner.nextLine();
-                                            // call store method triggerSale with params
-
-
+                                            System.out.println(store.triggerSale(input, salePrice, numOnSale));
                                             break;
+                                        // put a purchase cap on a product
                                         case "7":
+                                            System.out.println("Enter Store Name: ");
+                                            storeName = scanner.nextLine();
+                                            store = whichStore(storeName);
+                                            System.out.println("Enter a product to restrict: ");
+                                            input = scanner.nextLine();
+                                            System.out.println("Enter Sales cap ");
+                                            int cap = scanner.nextInt();
+                                            scanner.nextLine();
+                                            System.out.println(store.triggerCap(input, cap));
                                             break;
+                                        // back
                                         case "8":
                                             break;
                                         // handles anything else
@@ -469,6 +481,15 @@ public class MarketPlace {
                     System.out.println("Invalid Input");
             }
         } while (1 ==1);
+    }
+
+    public static Store whichStore(String storeName) {
+        for (Store s: stores) {
+            if (s.equals(storeName)) {
+                return s;
+            }
+        }
+        return null;
     }
 
 }

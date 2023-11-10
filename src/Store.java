@@ -217,5 +217,15 @@ public class Store {
         return output;
     }
 
+    public String triggerCap(String productName, int cap) {
+        String output = "";
+        for (Product p:productList) {
+            if (p.getName().equals(productName)) {
+                output = p.setCap(cap);
+            }
+        }
+        return output;
+    }
+
 
 }
