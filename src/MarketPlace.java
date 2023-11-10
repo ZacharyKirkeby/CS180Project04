@@ -1,4 +1,5 @@
 package src;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -15,11 +16,10 @@ public class MarketPlace {
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Sort By Cheapest \n 6. Sort " +
-            "By Most Expensive \n  7. Shopping cart \n 8. View purchase history \n" +
-            "9. Manage Account \n 10. Logout \n";
+            "By Most Expensive \n 7. Sort by Availability \n 8. Shopping Cart \n 9. Manage Account \n 10. Logout \n";
+    private static final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
     private static final String customerShoppingCartChoices = " 1. Add product(s) to cart \n" +
             "2. Remove product(s) from cart \n 3. Buy products in cart \n";
-
 
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
@@ -119,8 +119,24 @@ public class MarketPlace {
                                             System.out.println("Edit Failed");
                                         }
                                         break;
-                                    // Edit Product Quantity
+                                    // Edit Product Description
                                     case "3":
+                                        System.out.println("Enter Store Name: ");
+                                        storeName = scanner.nextLine();
+                                        System.out.println("Enter Product Name: ");
+                                        productName = scanner.nextLine();
+                                        System.out.println("Enter New Product Description: ");
+                                        String productDescription = scanner.nextLine();
+                                        bool = Seller.editProductDescription(storeName, productName,
+                                                productDescription, user);
+                                        if (bool) {
+                                            System.out.println("Successfully edited");
+                                        } else {
+                                            System.out.println("Edit Failed");
+                                        }
+                                        break;
+                                    // Edit Product Quantity
+                                    case "4":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter Product Name: ");
@@ -135,7 +151,7 @@ public class MarketPlace {
                                         }
                                         break;
                                     // Delete product
-                                    case "4":
+                                    case "5":
                                         bool = false;
                                         while (!bool) {
                                             System.out.println("Enter Store Name: ");
@@ -152,7 +168,7 @@ public class MarketPlace {
                                         }
                                         break;
                                     // add from CSV
-                                    case "5":
+                                    case "6":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter file path to be written from (include .txt)");
@@ -160,7 +176,7 @@ public class MarketPlace {
                                         Seller.readProductsFromCSV(storeName, filePath);
                                         break;
                                     // go back
-                                    case "6":
+                                    case "7":
                                         break;
                                     // handles anything else
                                     default:
@@ -346,6 +362,61 @@ public class MarketPlace {
                                 System.out.println(Seller.sortExpensive());
                                 break;
                             case "7":
+                                System.out.println(AVAILABILITY);
+                                input = scanner.nextLine();
+                                switch (input) {
+                                    case "1":
+                                        System.out.println(Seller.highestQuant());
+                                        break;
+                                    case "2":
+                                        System.out.println(Seller.lowestQuant());
+                                        break;
+                                }
+                                break;
+                            case "8": // shopping cart
+                                System.out.println(customerShoppingCartChoices);
+                                input = scanner.nextLine();
+                                switch (input) {
+                                    case "1": // add product to cart
+                                        System.out.println("Enter the store name of the product you want to add to cart: ");
+                                        storeName = scanner.nextLine();
+                                        if (Customer.searchedStoreExists(storeName, stores) != null) {
+                                            System.out.println("Enter the name of the product you want to add to cart: ");
+                                            productName = scanner.nextLine();
+                                            if (Customer.searchedProductExists(productName, stores) != null) {
+                                                System.out.printf("Enter how many %s would you like to buy: ", productName);
+                                                quantity = scanner.nextInt();
+                                                scanner.nextLine();
+                                                Customer.addToCart(, ,storeName, productName, quantity); // pass in email, username before store, product, quantity
+                                            }
+                                        }
+                                        break;
+                                    case "2": // remove product from cart
+                                        System.out.println("Enter the store name of the product you want to remove from cart: ");
+                                        storeName = scanner.nextLine();
+                                        if (Customer.searchedStoreExists(storeName, stores) != null) {
+                                            System.out.println("Enter the name of the product you want to remove from cart: ");
+                                            productName = scanner.nextLine();
+                                            if (Customer.searchedProductExists(productName, stores) != null) {
+                                                System.out.printf("Enter how many %s would you like to remove: ", productName);
+                                                quantity = scanner.nextInt();
+                                                scanner.nextLine();
+                                                Customer.removeFromCart(, ,storeName, productName, quantity); // pass in email, username before store, product, quantity
+                                            }
+                                        }
+                                        break;
+                                    case "3": // buy products in cart
+                                        Customer.buyProductsInShoppingCart(); // pass in username
+                                        System.out.println("Product bought successfully!");
+                                        break;
+                                }
+                                break;
+                            case "9": // view purchase history
+                                System.out.println("Enter the file name you want to output your purchase history to: ");
+                                String filename = scanner.nextLine();
+                                Customer.getPurchaseHistoryofCustomer(, filename); // pass in username before filename
+                                break;
+                            case "10":
                                 System.out.print(AccountChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -380,7 +451,7 @@ public class MarketPlace {
                                         System.out.println("Invalid Input");
                                         break;
                                 }
-                            case "8":
+                            case "9":
                                 isLoggedIn = false;
                                 System.out.println("Sucessfully Logged out");
                                 break;
