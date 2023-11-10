@@ -404,8 +404,8 @@ public abstract class Seller {
     }
 
     /**
-     * Gets store list by sales for a username
-     * Usernanme should be inputted automatically from user input
+     * Gets store list by sales for a user
+     * Username should be inputted automatically from user input
      *
      * @param username
      * @return String of stores by sales (descending)
