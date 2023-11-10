@@ -397,9 +397,9 @@ public abstract class Seller {
             return "Error: Invalid parameters";
         } else {
             if (sorted) {
-                return stores.get(index).getSortedCustomersAndPurchases(stores);
+                return stores.get(index).getSortedCustomersAndPurchases();
             }
-            return stores.get(index).getCustomersAndPurchases(stores);
+            return stores.get(index).getCustomersAndPurchases();
         }
     }
 
