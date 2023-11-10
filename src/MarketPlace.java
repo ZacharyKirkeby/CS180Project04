@@ -1,4 +1,5 @@
 package src;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class MarketPlace {
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search by Description \n 4. View All Products \n 5. Sort By Cheapest \n 6. Sort " +
             "By Most Expensive \n 7. Sort by Availability \n 8. Manage Account \n 9. Logout \n";
-    private static  final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
+    private static final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
     private static boolean isLoggedIn;
@@ -115,8 +116,24 @@ public class MarketPlace {
                                             System.out.println("Edit Failed");
                                         }
                                         break;
-                                    // Edit Product Quantity
+                                    // Edit Product Description
                                     case "3":
+                                        System.out.println("Enter Store Name: ");
+                                        storeName = scanner.nextLine();
+                                        System.out.println("Enter Product Name: ");
+                                        productName = scanner.nextLine();
+                                        System.out.println("Enter New Product Description: ");
+                                        String productDescription = scanner.nextLine();
+                                        bool = Seller.editProductDescription(storeName, productName,
+                                                productDescription, user);
+                                        if (bool) {
+                                            System.out.println("Successfully edited");
+                                        } else {
+                                            System.out.println("Edit Failed");
+                                        }
+                                        break;
+                                    // Edit Product Quantity
+                                    case "4":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter Product Name: ");
@@ -131,7 +148,7 @@ public class MarketPlace {
                                         }
                                         break;
                                     // Delete product
-                                    case "4":
+                                    case "5":
                                         bool = false;
                                         while (!bool) {
                                             System.out.println("Enter Store Name: ");
@@ -148,7 +165,7 @@ public class MarketPlace {
                                         }
                                         break;
                                     // add from CSV
-                                    case "5":
+                                    case "6":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter file path to be written from (include .txt)");
@@ -156,7 +173,7 @@ public class MarketPlace {
                                         Seller.readProductsFromCSV(storeName, filePath);
                                         break;
                                     // go back
-                                    case "6":
+                                    case "7":
                                         break;
                                     // handles anything else
                                     default:
@@ -344,7 +361,7 @@ public class MarketPlace {
                             case "7":
                                 System.out.println(AVAILABILITY);
                                 input = scanner.nextLine();
-                                switch (input){
+                                switch (input) {
                                     case "1":
                                         System.out.println(Seller.highestQuant());
                                         break;
