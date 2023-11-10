@@ -95,7 +95,7 @@ public class MarketPlace {
                                             System.out.println("Deletion Failed");
                                         }
                                         break;
-                                    // Delete product
+                                    // Edit Product Price
                                     case "2":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
@@ -107,9 +107,10 @@ public class MarketPlace {
                                         if (bool) {
                                             System.out.println("Successfully edited");
                                         } else {
-                                            System.out.println("Deletion Failed");
+                                            System.out.println("Edit Failed");
                                         }
                                         break;
+                                    // Edit Product Quantity
                                     case "3":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
@@ -124,6 +125,7 @@ public class MarketPlace {
                                             System.out.println("Failed");
                                         }
                                         break;
+                                    // Delete product
                                     case "4":
                                         bool = false;
                                         while (!bool) {
@@ -140,6 +142,7 @@ public class MarketPlace {
                                             }
                                         }
                                         break;
+                                    //
                                     case "5":
                                         System.out.println("Enter Store Name: ");
                                         storeName = scanner.nextLine();
