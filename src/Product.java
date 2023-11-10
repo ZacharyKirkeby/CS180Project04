@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.*;
 
 public class Product {
-    private String name; //name of the product
-
-    private String description;
-    private int stockQuantity; //quantity of the product left
-    private int quantitySold;
-    private double purchasePrice;
+    private String name; // name of the product
+    private String description; // description of product
+    private int stockQuantity; // quantity of the product left
+    private int quantitySold; // quantity of product sold
+    private double purchasePrice; // price of product
 
     public Product(String name, String description, int quantity, double purchasePrice, Store stores) {
         this.name = name;
