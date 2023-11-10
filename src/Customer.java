@@ -51,6 +51,7 @@ public abstract class Customer {
     }
 
     public static void addToCart(String email, String username, Store store, Product product, int quantity) {
+        readFromShoppingCartDatabaseFile();
         emails.add(email);
         usernames.add(username);
         storeNames.add(store.getStoreName());
@@ -184,18 +185,13 @@ public abstract class Customer {
         return customerProducts;
     }
 
+    // make sure to make file exists or create file first before printing
     private static void getPurchaseHistoryofCustomer(String username, String fileName) {
         readFromPurchaseHistoryDatabaseFile();
-        ArrayList<Integer> customerProducts = new ArrayList<>();
-        for (int i = 0; i < usernames.size(); i++) {
-            if (usernames.get(i).equals(username)) { // check if username and email match
-                customerProducts.add(i);
-            }
-        }
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
-            for (Integer cp : customerProducts) {
-                for (int i = 0; i < usernames.size(); i++) {
-                    pw.println(String.format("%s,%s;%s;%s;%d", emails.get(cp), usernames.get(cp), storeNames.get(cp), productNames.get(cp), quantities.get(cp)));
+            for (int i = 0; i < usernames.size(); i++) {
+                if (usernames.get(i).equals(username)) { // check if username and email match
+                    pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
                 }
             }
         } catch (IOException e) {
