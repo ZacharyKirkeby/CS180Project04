@@ -5,21 +5,35 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Customer class
- * Includes methods:
+ * Class to support customer interaction with the stores in the marketplace.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ * Manages the shopping cart and purchase history
+ * Creates ShoppingCartDatabase.txt and "PurchaseHistoryDatabase.txt"
+ * Creates the Purchase History file based on the customer input filename
+ *
+ * @author Yi Lin Yang
+ * @version November 9, 2023
  */
 
+
 public abstract class Customer {
-
-
-    private static ArrayList<String> emails = new ArrayList<>(); // username arraylist
-    private static ArrayList<String> usernames = new ArrayList<>(); // username arraylist
+    private static ArrayList<String> emails = new ArrayList<>(); // emails arraylist
+    private static ArrayList<String> usernames = new ArrayList<>(); // usernames arraylist
     private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
     private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
     private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
     private static String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
+    //shopping cart database for all customers
     private static String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
+    // purchase history databse for all customers
 
+
+    /**
+     * @param storeName
+     * @param productName
+     * @return total number of a products in all the customer's carts
+     */
     public static int getTotalInCart(String storeName, String productName) {
         readFromShoppingCartDatabaseFile();
         int totalQuantityOfProduct = 0;
@@ -31,6 +45,12 @@ public abstract class Customer {
         return totalQuantityOfProduct;
     }
 
+    /**
+     * @param storeName
+     * @param stores
+     * @return boolean of whether the store exists in the marketplace
+     */
+
     public static boolean searchedStoreExists(String storeName, ArrayList<Store> stores) {
         for (Store store : MarketPlace.getStores()) {
             if (store.getStoreName().equals(storeName)) {
@@ -39,6 +59,12 @@ public abstract class Customer {
         }
         return false;
     }
+
+    /**
+     * @param productName
+     * @param stores
+     * @return boolean of whether the product exists in a store in the marketplace
+     */
 
     public static boolean searchedProductExists(String productName, ArrayList<Store> stores) {
         for (Store store : MarketPlace.getStores()) {
@@ -51,6 +77,15 @@ public abstract class Customer {
         return false;
     }
 
+    /**
+     * Adds a product to the shopping cart database
+     * @param email
+     * @param username
+     * @param store
+     * @param product
+     * @param quantity
+     */
+
     public static void addToCart(String email, String username, String store, String product, int quantity) {
         readFromShoppingCartDatabaseFile();
         emails.add(email);
@@ -60,6 +95,16 @@ public abstract class Customer {
         quantities.add(quantity);
         writeToShoppingCartDatabaseFile();
     }
+
+    /**
+     * Removes a product from the purchase history database
+     * @param email
+     * @param username
+     * @param storeName
+     * @param productName
+     * @param quantity
+     * @return
+     */
 
     public static boolean removeFromCart(String email, String username, String storeName, String productName,
                                          int quantity) {
@@ -81,7 +126,14 @@ public abstract class Customer {
         return successfullyRemovedFromCart;
     }
 
-    // products from different stores
+    /**
+     * Purchases the product by locating the product in the marketplace given the storeName and productName
+     * Decreases the product quantity
+     * Updates the shopping cart database
+     * Updates the purchase history database
+     * @param username
+     * @return boolean of whether the products in the shopping cart were purchased sucessfully
+     */
 
     public static boolean buyProductsInShoppingCart(String username) {
         readFromShoppingCartDatabaseFile();
@@ -89,11 +141,15 @@ public abstract class Customer {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches'
                 for (int j = 0; j < MarketPlace.getStores().size(); j++) { // iterate through stores in marketplace
-                    if (storeNames.get(i).equals(MarketPlace.getStores().get(j).getStoreName())) { // if storename matches
-                        for (int k = 0; k < MarketPlace.getStores().get(j).getProductList().size(); k++) { // iterrate through product list
-                            if (MarketPlace.getStores().get(j).getProductList().get(k).getName().equals(productNames.get(i))) { // if product name matches
+                    if (storeNames.get(i).equals(MarketPlace.getStores().get(j).getStoreName())) {
+                        // if storename matches
+                        for (int k = 0; k < MarketPlace.getStores().get(j).getProductList().size(); k++) {
+                            // iterrate through product list
+                            if (MarketPlace.getStores().get(j).getProductList().get(k).getName()
+                                    .equals(productNames.get(i))) { // if product name matches
                                 MarketPlace.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
-                                writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i), productNames.get(i), quantities.get(i));
+                                writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
+                                        productNames.get(i), quantities.get(i));
                                 emails.remove(i);
                                 usernames.remove(i);
                                 storeNames.remove(i);
@@ -110,7 +166,17 @@ public abstract class Customer {
         return productsBoughtSuccessfully;
     }
 
-    public static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName, String productName, int quantity) {
+    /**
+     * Writes to the purchase history database file
+     * @param email
+     * @param username
+     * @param storeName
+     * @param productName
+     * @param quantity
+     */
+
+    public static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName,
+                                                          String productName, int quantity) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
             pw.println(String.format("%s,%s;%s;%s;%d", email, username, storeName, productName, quantity));
         } catch (IOException e) {
@@ -118,18 +184,25 @@ public abstract class Customer {
         }
     }
 
+    /**
+     * Writes to the shopping cart database file by iterating through all the arrayList fields and appending them to
+     * the shopping cart database file
+     */
+
     public static void writeToShoppingCartDatabaseFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
-                pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
+                pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
+                        productNames.get(i), quantities.get(i)));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // format of shoppingCartDatabaseFile
-    // email;username;storeName;productName;quantity
+    /**
+     * Reads from the shopping cart database file
+     */
     public static void readFromShoppingCartDatabaseFile() {
         emails.clear();
         usernames.clear();
@@ -155,6 +228,9 @@ public abstract class Customer {
         }
     }
 
+    /**
+     * Reads from the purchase history database file
+     */
     public static void readFromPurchaseHistoryDatabaseFile() {
         emails.clear();
         usernames.clear();
@@ -180,18 +256,27 @@ public abstract class Customer {
         }
     }
 
+    /**
+     * @param username
+     * @return arraylist of the products currently in the shopping cart of the customer identified by the username
+     */
     public static ArrayList<String> getShoppingCartofCustomer(String username) {
         readFromShoppingCartDatabaseFile();
         ArrayList<String> customerProducts = new ArrayList<>();
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches
-                customerProducts.add(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
+                customerProducts.add(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i),
+                        storeNames.get(i), productNames.get(i), quantities.get(i)));
             }
         }
         return customerProducts;
     }
 
-    // make sure to make file exists or create file first before printing
+    /**
+     * Generates purchase history file for the customer identified by the username
+     * @param username
+     * @param fileName
+     */
     public static void getPurchaseHistoryofCustomer(String username, String fileName) {
         readFromPurchaseHistoryDatabaseFile();
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {

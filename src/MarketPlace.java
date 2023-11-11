@@ -338,39 +338,39 @@ public class MarketPlace {
                         System.out.println(BUYERPROMPT);
                         input = scanner.nextLine();
                         switch (input) {
-                            case "1":
+                            case "1": // search for products by store name
                                 System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByStore(input));
                                 break;
-                            case "2":
+                            case "2": // search for products by product name
                                 System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println(Seller.searchByProduct(input));
                                 break;
-                            case "3":
+                            case "3": // search for products by description
                                 System.out.println(SEARCH_PROMPT);
                                 input = scanner.nextLine();
                                 System.out.println("Store  |  Product ");
                                 System.out.println(Seller.searchByDescription(input));
                                 break;
-                            case "4":
+                            case "4": // view all products and stores in the marketplace
                                 Seller.printProductAndStores();
                                 break;
-                            case "5":
+                            case "5": // sort the products by price, increasing
                                 System.out.println(Seller.sortCheapest());
                                 break;
-                            case "6":
+                            case "6": // sort the products by price, decreasing
                                 System.out.println(Seller.sortExpensive());
                                 break;
-                            case "7":
+                            case "7": // sort the products by quantity available
                                 System.out.println(AVAILABILITY);
                                 input = scanner.nextLine();
                                 switch (input) {
-                                    case "1":
+                                    case "1": // sort the products by quantity available, decreasing
                                         System.out.println(Seller.highestQuant());
                                         break;
-                                    case "2":
+                                    case "2": // sort the products by quantity available, increasing
                                         System.out.println(Seller.lowestQuant());
                                         break;
                                 }
@@ -437,11 +437,11 @@ public class MarketPlace {
                                 String filename = scanner.nextLine();
                                 Customer.getPurchaseHistoryofCustomer(Account.getUsername(user), filename);
                                 break;
-                            case "10":
+                            case "10": // manage account
                                 System.out.print(AccountChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
-                                    case "1":
+                                    case "1": // change password
                                         System.out.println("Input Username or Email: ");
                                         user = scanner.nextLine();
                                         System.out.println("Enter Old Password: ");
@@ -450,7 +450,7 @@ public class MarketPlace {
                                         String newPassword = scanner.nextLine();
                                         Account.changePassword(user, oldPassword, newPassword);
                                         break;
-                                    case "2":
+                                    case "2": // change role
                                         System.out.println("Input Username or Email: ");
                                         user = scanner.nextLine();
                                         System.out.println("Enter Password: ");
@@ -459,14 +459,12 @@ public class MarketPlace {
                                         String newRole = scanner.nextLine();
                                         Account.changeRole(user, password, newRole);
                                         break;
-                                    case "3":
+                                    case "3": // delete account
                                         System.out.println("Input Username or Email: ");
                                         user = scanner.nextLine();
                                         System.out.println("Enter Password: ");
                                         password = scanner.nextLine();
                                         Account.deleteAccount(user, password);
-                                        break;
-                                    case "4":
                                         break;
                                     default:
                                         System.out.println("Invalid Input");
