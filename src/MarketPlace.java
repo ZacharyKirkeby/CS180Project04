@@ -9,6 +9,7 @@ import java.util.Scanner;
  * and functions.
  * Acts as the main interface of all the classes
  * @author Armaan Sayyad, 05
+ * @author Zachary Kirkeby, 05
  * @version November 10, 2023
  */
 public class MarketPlace {
