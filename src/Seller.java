@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -812,8 +811,6 @@ public abstract class Seller {
                 String temp = combined.get(k);
                 combined.remove(k);
                 combined.add(0, temp);
-
-
             }
         }
         for(int a = 0; a < combined.size(); a++){
@@ -822,5 +819,26 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
+    public static String viewCustomerReviews(String productName, String user) {
+        String result = "";
+        if(!(productName.equals(""))) {
+            for (int i = 0; i < stores.size(); i++) {
+                if (stores.get(i).getSellerUsername().equalsIgnoreCase(user)) {
+                    result += Customer.viewReviews(stores.get(i).getStoreName(), productName) + "\n";
+                }
+            }
+        } else if(productName.equals("")){
+            for(int i = 0; i < stores.size(); i++){
+                if(stores.get(i).getSellerUsername().equalsIgnoreCase(user)) {
+                    for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+                        result += Customer.viewReviews(stores.get(i).getStoreName(),
+                                stores.get(i).getProductList().get(j).getName() + "\n");
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 
 }
