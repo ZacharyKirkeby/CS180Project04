@@ -19,8 +19,8 @@ public class MarketPlace {
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
             "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Start Sale \n" +
             "7. Add Purchase Limit \n 8. Back \n";
-    private static final String AccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n 4. " +
-            "Back \n";
+    private static final String AccountChoices = " 1. Change Username \n 2. Change Password \n 3. Change Role \n 4. " +
+            "Delete Account \n 5. Back"; 
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
@@ -314,8 +314,39 @@ public class MarketPlace {
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
                                     switch (input) {
-                                        //Change Password
+                                        //Change Username
                                         case "1":
+                                            bool = false;
+                                            while(!bool) {
+                                                System.out.println("Enter Old Username");
+                                                String oldUsername = scanner.nextLine();
+                                                while (!(oldUsername.equals(user))) {
+                                                    System.out.println("Incorrect Username");
+                                                    System.out.println("Enter Old Username");
+                                                    oldUsername = scanner.nextLine();
+                                                }
+                                                System.out.println("Enter New Username");
+                                                String newUsername = scanner.nextLine();
+                                                System.out.println("Enter New Username Again");
+                                                String newUsernameCheck = scanner.nextLine();
+                                                while (!(newUsername.equals(newUsernameCheck))) {
+                                                    System.out.println("Errors, new usernames do not match");
+                                                    System.out.println("Enter New Username");
+                                                    newUsername = scanner.nextLine();
+                                                    System.out.println("Enter New Username Again");
+                                                    newUsernameCheck = scanner.nextLine();
+                                                }
+                                                bool = Account.changeUsername(newUsername, oldUsername);
+                                                if (bool) {
+                                                    System.out.println("Successfully Username Password");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
+                                            break;
+                                        //Change Password
+                                        case "2":
                                             bool = false;
                                             while (!bool) {
                                                 System.out.println("Input Username or Email: ");
@@ -324,6 +355,15 @@ public class MarketPlace {
                                                 String oldPassword = scanner.nextLine();
                                                 System.out.println("Enter New Password: ");
                                                 String newPassword = scanner.nextLine();
+                                                System.out.println("Enter New Password Again");
+                                                String newPasswordCheck = scanner.nextLine();
+                                                while(!(newPassword.equals(newPasswordCheck))){
+                                                    System.out.println("Error, new passwords do not match");
+                                                    System.out.println("Enter New Password: ");
+                                                    newPassword = scanner.nextLine();
+                                                    System.out.println("Enter New Password Again");
+                                                    newPasswordCheck = scanner.nextLine();
+                                                }
                                                 bool = Account.changePassword(user, oldPassword, newPassword);
                                                 if (bool) {
                                                     System.out.println("Successfully Changed Password");
@@ -334,7 +374,7 @@ public class MarketPlace {
                                             }
                                             break;
                                         //Change Role
-                                        case "2":
+                                        case "3":
                                             bool = false;
                                             while (!bool) {
                                                 System.out.println("Input Username or Email: ");
@@ -353,7 +393,7 @@ public class MarketPlace {
                                             }
                                             break;
                                         //Delete Account
-                                        case "3":
+                                        case "4":
                                             bool = false;
                                             while (!bool) {
                                                 System.out.println("Input Username or Email: ");
@@ -368,6 +408,8 @@ public class MarketPlace {
                                                     System.out.println("Try Again!");
                                                 }
                                             }
+                                            break;
+                                        case "5":
                                             break;
                                         default:
                                             System.out.println("Invalid Input");
@@ -532,36 +574,102 @@ public class MarketPlace {
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
                                     switch (input) {
-                                        //Change Password
+                                        //Change Username
                                         case "1":
-                                            System.out.println("Input Username or Email: ");
-                                            user = scanner.nextLine();
-                                            System.out.println("Enter Old Password: ");
-                                            String oldPassword = scanner.nextLine();
-                                            System.out.println("Enter New Password: ");
-                                            String newPassword = scanner.nextLine();
-                                            Account.changePassword(user, oldPassword, newPassword);
+                                            bool = false;
+                                            while(!bool) {
+                                                System.out.println("Enter Old Username");
+                                                String oldUsername = scanner.nextLine();
+                                                while (!(oldUsername.equals(user))) {
+                                                    System.out.println("Incorrect Username");
+                                                    System.out.println("Enter Old Username");
+                                                    oldUsername = scanner.nextLine();
+                                                }
+                                                System.out.println("Enter New Username");
+                                                String newUsername = scanner.nextLine();
+                                                System.out.println("Enter New Username Again");
+                                                String newUsernameCheck = scanner.nextLine();
+                                                while (!(newUsername.equals(newUsernameCheck))) {
+                                                    System.out.println("Errors, new usernames do not match");
+                                                    System.out.println("Enter New Username");
+                                                    newUsername = scanner.nextLine();
+                                                    System.out.println("Enter New Username Again");
+                                                    newUsernameCheck = scanner.nextLine();
+                                                }
+                                                bool = Account.changeUsername(newUsername, oldUsername);
+                                                if (bool) {
+                                                    System.out.println("Successfully Username Password");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
+                                            break;
+                                        //Change Password
+                                        case "2":
+                                            bool = false;
+                                            while (!bool) {
+                                                System.out.println("Input Username or Email: ");
+                                                user = scanner.nextLine();
+                                                System.out.println("Enter Old Password: ");
+                                                String oldPassword = scanner.nextLine();
+                                                System.out.println("Enter New Password: ");
+                                                String newPassword = scanner.nextLine();
+                                                System.out.println("Enter New Password Again");
+                                                String newPasswordCheck = scanner.nextLine();
+                                                while(!(newPassword.equals(newPasswordCheck))){
+                                                    System.out.println("Error, new passwords do not match");
+                                                    System.out.println("Enter New Password: ");
+                                                    newPassword = scanner.nextLine();
+                                                    System.out.println("Enter New Password Again");
+                                                    newPasswordCheck = scanner.nextLine();
+                                                }
+                                                bool = Account.changePassword(user, oldPassword, newPassword);
+                                                if (bool) {
+                                                    System.out.println("Successfully Changed Password");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
                                             break;
                                         //Change Role
-                                        case "2":
-                                            System.out.println("Input Username or Email: ");
-                                            user = scanner.nextLine();
-                                            System.out.println("Enter Password: ");
-                                            password = scanner.nextLine();
-                                            System.out.println("Enter New Role: ");
-                                            String newRole = scanner.nextLine();
-                                            Account.changeRole(user, password, newRole);
+                                        case "3":
+                                            bool = false;
+                                            while (!bool) {
+                                                System.out.println("Input Username or Email: ");
+                                                user = scanner.nextLine();
+                                                System.out.println("Enter Password: ");
+                                                password = scanner.nextLine();
+                                                System.out.println("Enter New Role: ");
+                                                String newRole = scanner.nextLine();
+                                                bool = Account.changeRole(user, password, newRole);
+                                                if (bool) {
+                                                    System.out.println("Successfully Changed");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
                                             break;
                                         //Delete Account
-                                        case "3":
-                                            System.out.println("Input Username or Email: ");
-                                            user = scanner.nextLine();
-                                            System.out.println("Enter Password: ");
-                                            password = scanner.nextLine();
-                                            Account.deleteAccount(user, password);
-                                            break;
-                                        //Go back to previous Menu
                                         case "4":
+                                            bool = false;
+                                            while (!bool) {
+                                                System.out.println("Input Username or Email: ");
+                                                user = scanner.nextLine();
+                                                System.out.println("Enter Password: ");
+                                                password = scanner.nextLine();
+                                                bool = Account.deleteAccount(user, password);
+                                                if (bool) {
+                                                    System.out.println("Successfully Deleted");
+                                                } else {
+                                                    System.out.println("Deletion Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
+                                            break;
+                                        case "5":
                                             break;
                                         default:
                                             System.out.println("Invalid Input");
