@@ -1,5 +1,4 @@
 package src;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -7,7 +6,7 @@ import java.util.Scanner;
  * Project 04 -- MarketPlace.java
  * creates a Market to manage interactions and listings in a marketplace
  * Handles all MarketPlace related tasks
- * and functions. 
+ * and functions.
  * Acts as the main interface of all the classes
  * @author Armaan Sayyad, 05
  * @version November 10, 2023
@@ -20,15 +19,16 @@ public class MarketPlace {
     private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
             "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Start Sale \n" +
             "7. Add Purchase Limit \n 8. Back \n";
-    private static final String AccountChoices = " 1. Change Password \n 2. Change Role \n 3. Delete Account \n 4. " +
-            "Back \n";
+    private static final String AccountChoices = " 1. Change Username \n 2. Change Password \n 3. Change Role \n 4. " +
+            "Delete Account \n 5. Back"; 
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
             "3. Search Product by Description \n 4. View All Products \n 5. Sort Products By Cheapest \n 6. Sort " +
-            " Products By Most Expensive \n 7. Sort by Availability \n 8. Leave Review \n 9. View Product Reviews \n " +
-            "10. Manage" +
-            "Account \n 11. Logout \n";
+            " Products By Most Expensive \n 7. Sort by Availability \n  8. Shopping Cart \n 9. Leave Review \n 10. " +
+            "View Product Reviews \n 11. Manage Account \n 12. Logout \n";
+    private static final String customerShoppingCartChoices = " 1. Add product(s) to cart \n" +
+            "2. Remove product(s) from cart \n 3. Buy products in cart \n 4. View shopping cart \n";
     private static  final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
@@ -50,7 +50,7 @@ public class MarketPlace {
         return stores;
     }
     /**
-     *Main method for the Marketplace handles all the interactions 
+     *Main method for the Marketplace handles all the interactions
      * and interfaces between the classes
      * @param args (String[])
      */
@@ -78,6 +78,7 @@ public class MarketPlace {
                     int quantity;
                     boolean sorted;
                     String isSorted;
+
 
                     // loops while definite user
                     while (isLoggedIn) {
@@ -184,7 +185,7 @@ public class MarketPlace {
                                         case "6":
                                             System.out.println("Enter Store Name: ");
                                             storeName = scanner.nextLine();
-                                            Store store = whichStore(storeName);
+                                            Store store = Seller.whichStore(storeName);
                                             System.out.println("Enter Product to Put on Sale: ");
                                             input = scanner.nextLine();
                                             System.out.println("Enter Sale price: ");
@@ -199,7 +200,7 @@ public class MarketPlace {
                                         case "7":
                                             System.out.println("Enter Store Name: ");
                                             storeName = scanner.nextLine();
-                                            store = whichStore(storeName);
+                                            store = Seller.whichStore(storeName);
                                             System.out.println("Enter a product to restrict: ");
                                             input = scanner.nextLine();
                                             System.out.println("Enter Sales cap ");
@@ -239,7 +240,7 @@ public class MarketPlace {
                                             }
                                             System.out.println(Seller.getCustomersAndPurchases(storeName, user, sorted));
                                             break;
-                                        //View Product Sales    
+                                        //View Product Sales
                                         case "2":
                                             System.out.println("Enter a store name: ");
                                             storeName = scanner.nextLine();
@@ -257,13 +258,13 @@ public class MarketPlace {
                                             }
                                             System.out.println(Seller.getProductSales(storeName, user, sorted));
                                             break;
-                                        //View Products in Shopping Cart    
+                                        //View Products in Shopping Cart
                                         case "3":
                                             System.out.println("Enter Username: ");
                                             user = scanner.nextLine();
                                             System.out.println(Seller.getShoppingCartProducts(user));
                                             break;
-                                        //Get a CSV with all the Products in a Store    
+                                        //Get a CSV with all the Products in a Store
                                         case "4":
                                             System.out.println("Enter Store Name: ");
                                             storeName = scanner.nextLine();
@@ -276,51 +277,15 @@ public class MarketPlace {
                                                 System.out.println("Failed");
                                             }
                                             break;
-                                        //Goes back to the Main menu    
+                                        //Goes back to the Main menu
                                         case "5":
                                             break;
                                         default:
-                                        }
-                                        break;
-                                    // add from CSV
-                                    case "6":
-                                        System.out.println("Enter Store Name: ");
-                                        storeName = scanner.nextLine();
-                                        System.out.println("Enter file path to be written from (include .txt)");
-                                        String filePath = scanner.nextLine();
-                                        Seller.readProductsFromCSV(storeName, filePath);
-                                        break;
-                                    // go back
-                                    case "7":
-                                        break;
-                                    // handles anything else
-                                    default:
-                                        System.out.println("Invalid Option");
-                                        break;
-                                }
-                                break;
-                            // Seller Stats menu
-                            case "3":
-                                System.out.print(sellerStatisticsChoices);
-                                input = scanner.nextLine();
-                                switch (input) {
-                                    case "1":
-                                        System.out.println("Enter a store name: ");
-                                        storeName = scanner.nextLine();
-                                        System.out.println("Input Username: ");
-                                        user = scanner.nextLine();
-                                        System.out.println("Do you want to Sort the Products? (Y/N)");
-                                        isSorted = scanner.nextLine();
-                                        if (isSorted.equalsIgnoreCase("y")) {
-                                            sorted = true;
-                                        } else if (isSorted.equalsIgnoreCase("n")) {
-                                            sorted = false;
-                                        } else {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
                                     break;
-                                //Delete Store    
+                                //Delete Store
                                 case "4":
                                     bool = false;
                                     while (!bool) {
@@ -337,20 +302,51 @@ public class MarketPlace {
                                         }
                                     }
                                     break;
-                                //View Customer Reviews    
+                                //View Customer Reviews
                                 case "5":
                                     System.out.println("Enter Product Name (Leave empty if you want to view reviews " +
                                             "of all products)");
                                     productName = scanner.nextLine();
                                     System.out.println(Seller.viewCustomerReviews(productName, user));
                                     break;
-                                //Manage the Seller's account    
+                                //Manage the Seller's account
                                 case "6":
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
                                     switch (input) {
-                                        //Change Password
+                                        //Change Username
                                         case "1":
+                                            bool = false;
+                                            while(!bool) {
+                                                System.out.println("Enter Old Username");
+                                                String oldUsername = scanner.nextLine();
+                                                while (!(oldUsername.equals(user))) {
+                                                    System.out.println("Incorrect Username");
+                                                    System.out.println("Enter Old Username");
+                                                    oldUsername = scanner.nextLine();
+                                                }
+                                                System.out.println("Enter New Username");
+                                                String newUsername = scanner.nextLine();
+                                                System.out.println("Enter New Username Again");
+                                                String newUsernameCheck = scanner.nextLine();
+                                                while (!(newUsername.equals(newUsernameCheck))) {
+                                                    System.out.println("Errors, new usernames do not match");
+                                                    System.out.println("Enter New Username");
+                                                    newUsername = scanner.nextLine();
+                                                    System.out.println("Enter New Username Again");
+                                                    newUsernameCheck = scanner.nextLine();
+                                                }
+                                                bool = Account.changeUsername(newUsername, oldUsername);
+                                                if (bool) {
+                                                    System.out.println("Successfully Username Password");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
+                                            break;
+                                        //Change Password
+                                        case "2":
                                             bool = false;
                                             while (!bool) {
                                                 System.out.println("Input Username or Email: ");
@@ -359,6 +355,15 @@ public class MarketPlace {
                                                 String oldPassword = scanner.nextLine();
                                                 System.out.println("Enter New Password: ");
                                                 String newPassword = scanner.nextLine();
+                                                System.out.println("Enter New Password Again");
+                                                String newPasswordCheck = scanner.nextLine();
+                                                while(!(newPassword.equals(newPasswordCheck))){
+                                                    System.out.println("Error, new passwords do not match");
+                                                    System.out.println("Enter New Password: ");
+                                                    newPassword = scanner.nextLine();
+                                                    System.out.println("Enter New Password Again");
+                                                    newPasswordCheck = scanner.nextLine();
+                                                }
                                                 bool = Account.changePassword(user, oldPassword, newPassword);
                                                 if (bool) {
                                                     System.out.println("Successfully Changed Password");
@@ -368,8 +373,8 @@ public class MarketPlace {
                                                 }
                                             }
                                             break;
-                                        //Change Role    
-                                        case "2":
+                                        //Change Role
+                                        case "3":
                                             bool = false;
                                             while (!bool) {
                                                 System.out.println("Input Username or Email: ");
@@ -387,8 +392,8 @@ public class MarketPlace {
                                                 }
                                             }
                                             break;
-                                        //Delete Account    
-                                        case "3":
+                                        //Delete Account
+                                        case "4":
                                             bool = false;
                                             while (!bool) {
                                                 System.out.println("Input Username or Email: ");
@@ -404,11 +409,13 @@ public class MarketPlace {
                                                 }
                                             }
                                             break;
+                                        case "5":
+                                            break;
                                         default:
                                             System.out.println("Invalid Input");
                                             break;
                                     }
-                                //Logout    
+                                //Logout
                                 case "7":
                                     isLoggedIn = false;
                                     System.out.println("Successfully Logged out");
@@ -428,32 +435,32 @@ public class MarketPlace {
                                     input = scanner.nextLine();
                                     System.out.println(Seller.searchByStore(input));
                                     break;
-                                //Search for a Product    
+                                //Search for a Product
                                 case "2":
                                     System.out.println(SEARCH_PROMPT);
                                     input = scanner.nextLine();
                                     System.out.println(Seller.searchByProduct(input));
                                     break;
-                                //Search for a Product by Description    
+                                //Search for a Product by Description
                                 case "3":
                                     System.out.println(SEARCH_PROMPT);
                                     input = scanner.nextLine();
                                     System.out.println("Store  |  Product ");
                                     System.out.println(Seller.searchByDescription(input));
                                     break;
-                                //View All Products    
+                                //View All Products
                                 case "4":
                                     Seller.printProductAndStores();
                                     break;
-                                //Sort Products by Cheapest    
+                                //Sort Products by Cheapest
                                 case "5":
                                     System.out.println(Seller.sortCheapest());
                                     break;
-                                //Sort Products by Most Expensive    
+                                //Sort Products by Most Expensive
                                 case "6":
                                     System.out.println(Seller.sortExpensive());
                                     break;
-                                //Sort Products by Availability    
+                                //Sort Products by Availability
                                 case "7":
                                     System.out.println(AVAILABILITY);
                                     input = scanner.nextLine();
@@ -462,14 +469,71 @@ public class MarketPlace {
                                         case "1":
                                             System.out.println(Seller.highestQuant());
                                             break;
-                                        //Sort Products By Least in stock    
+                                        //Sort Products By Least in stock
                                         case "2":
                                             System.out.println(Seller.lowestQuant());
                                             break;
                                     }
                                     break;
-                                //Leave Review    
+                                // shopping cart
                                 case "8":
+                                    System.out.println(customerShoppingCartChoices);
+                                    input = scanner.nextLine();
+                                    switch (input) {
+                                        case "1": // add product to cart
+                                            System.out.println("Enter the store name of the product " +
+                                                    "you want to add to cart: ");
+                                            storeName = scanner.nextLine();
+                                            if (Customer.searchedStoreExists(storeName, stores)) {
+                                                System.out.println("Enter the name of the product " +
+                                                        "you want to add to cart: ");
+                                                productName = scanner.nextLine();
+                                                if (Customer.searchedProductExists(productName, stores)) {
+                                                    System.out.printf("Enter how many %s would you like to buy: "
+                                                            , productName);
+                                                    quantity = scanner.nextInt();
+                                                    scanner.nextLine();
+                                                    Customer.addToCart(Account.getEmail(user), Account.getUsername(user),
+                                                            storeName, productName, quantity);
+                                                    System.out.println("Product added to cart");
+                                                }
+                                            }
+                                            break;
+                                        case "2": // remove product from cart
+                                            System.out.println("Enter the store name of the product you want to " +
+                                                    "remove from cart: ");
+                                            storeName = scanner.nextLine();
+                                            if (Customer.searchedStoreExists(storeName, stores)) {
+                                                System.out.println("Enter the name of the product you want to " +
+                                                        "remove from cart: ");
+                                                productName = scanner.nextLine();
+                                                if (Customer.searchedProductExists(productName, stores)) {
+                                                    System.out.printf("Enter how many %s would you like to " +
+                                                            "remove: ", productName);
+                                                    quantity = scanner.nextInt();
+                                                    scanner.nextLine();
+                                                    boolean productRemoved = Customer.removeFromCart(Account.getEmail(user),
+                                                            Account.getUsername(user), storeName, productName, quantity);
+                                                    if (productRemoved) {
+                                                        System.out.println("Product removed from cart");
+                                                    } else {
+                                                        System.out.println("Product is not in cart");
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                        case "3": // buy products in cart
+                                            Customer.buyProductsInShoppingCart(Account.getUsername(user));
+                                            System.out.println("Products in cart purchased successfully!");
+                                            break;
+                                        case "4": // view shopping cart
+                                            for (String s : Customer.getShoppingCartofCustomer(user)) {
+                                                System.out.println(s);
+                                            }
+                                            break;
+                                    }
+                                //Leave Review
+                                case "9":
                                     boolean bool = false;
                                     int rating = 5;
                                     System.out.println("Name of Product reviewing: ");
@@ -496,8 +560,8 @@ public class MarketPlace {
                                         System.out.println("Failed");
                                     }
                                     break;
-                                //View Reviews of Products    
-                                case "9":
+                                //View Reviews of Products
+                                case "10":
                                     System.out.println("Enter Products Name to view Review");
                                     productName = scanner.nextLine();
                                     System.out.println("Enter Store Name (Leave Blank to view all stores selling " +
@@ -505,48 +569,114 @@ public class MarketPlace {
                                     storeName = scanner.nextLine();
                                     System.out.println(Customer.viewReviews(storeName, productName));
                                     break;
-                                //Manage Customer Account    
-                                case "10":
+                                //Manage Customer Account
+                                case "11":
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
                                     switch (input) {
-                                        //Change Password
+                                        //Change Username
                                         case "1":
-                                            System.out.println("Input Username or Email: ");
-                                            user = scanner.nextLine();
-                                            System.out.println("Enter Old Password: ");
-                                            String oldPassword = scanner.nextLine();
-                                            System.out.println("Enter New Password: ");
-                                            String newPassword = scanner.nextLine();
-                                            Account.changePassword(user, oldPassword, newPassword);
+                                            bool = false;
+                                            while(!bool) {
+                                                System.out.println("Enter Old Username");
+                                                String oldUsername = scanner.nextLine();
+                                                while (!(oldUsername.equals(user))) {
+                                                    System.out.println("Incorrect Username");
+                                                    System.out.println("Enter Old Username");
+                                                    oldUsername = scanner.nextLine();
+                                                }
+                                                System.out.println("Enter New Username");
+                                                String newUsername = scanner.nextLine();
+                                                System.out.println("Enter New Username Again");
+                                                String newUsernameCheck = scanner.nextLine();
+                                                while (!(newUsername.equals(newUsernameCheck))) {
+                                                    System.out.println("Errors, new usernames do not match");
+                                                    System.out.println("Enter New Username");
+                                                    newUsername = scanner.nextLine();
+                                                    System.out.println("Enter New Username Again");
+                                                    newUsernameCheck = scanner.nextLine();
+                                                }
+                                                bool = Account.changeUsername(newUsername, oldUsername);
+                                                if (bool) {
+                                                    System.out.println("Successfully Username Password");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
                                             break;
-                                        //Change Role    
+                                        //Change Password
                                         case "2":
-                                            System.out.println("Input Username or Email: ");
-                                            user = scanner.nextLine();
-                                            System.out.println("Enter Password: ");
-                                            password = scanner.nextLine();
-                                            System.out.println("Enter New Role: ");
-                                            String newRole = scanner.nextLine();
-                                            Account.changeRole(user, password, newRole);
+                                            bool = false;
+                                            while (!bool) {
+                                                System.out.println("Input Username or Email: ");
+                                                user = scanner.nextLine();
+                                                System.out.println("Enter Old Password: ");
+                                                String oldPassword = scanner.nextLine();
+                                                System.out.println("Enter New Password: ");
+                                                String newPassword = scanner.nextLine();
+                                                System.out.println("Enter New Password Again");
+                                                String newPasswordCheck = scanner.nextLine();
+                                                while(!(newPassword.equals(newPasswordCheck))){
+                                                    System.out.println("Error, new passwords do not match");
+                                                    System.out.println("Enter New Password: ");
+                                                    newPassword = scanner.nextLine();
+                                                    System.out.println("Enter New Password Again");
+                                                    newPasswordCheck = scanner.nextLine();
+                                                }
+                                                bool = Account.changePassword(user, oldPassword, newPassword);
+                                                if (bool) {
+                                                    System.out.println("Successfully Changed Password");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
                                             break;
-                                        //Delete Account    
+                                        //Change Role
                                         case "3":
-                                            System.out.println("Input Username or Email: ");
-                                            user = scanner.nextLine();
-                                            System.out.println("Enter Password: ");
-                                            password = scanner.nextLine();
-                                            Account.deleteAccount(user, password);
+                                            bool = false;
+                                            while (!bool) {
+                                                System.out.println("Input Username or Email: ");
+                                                user = scanner.nextLine();
+                                                System.out.println("Enter Password: ");
+                                                password = scanner.nextLine();
+                                                System.out.println("Enter New Role: ");
+                                                String newRole = scanner.nextLine();
+                                                bool = Account.changeRole(user, password, newRole);
+                                                if (bool) {
+                                                    System.out.println("Successfully Changed");
+                                                } else {
+                                                    System.out.println("Change Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
                                             break;
-                                        //Go back to previous Menu    
+                                        //Delete Account
                                         case "4":
+                                            bool = false;
+                                            while (!bool) {
+                                                System.out.println("Input Username or Email: ");
+                                                user = scanner.nextLine();
+                                                System.out.println("Enter Password: ");
+                                                password = scanner.nextLine();
+                                                bool = Account.deleteAccount(user, password);
+                                                if (bool) {
+                                                    System.out.println("Successfully Deleted");
+                                                } else {
+                                                    System.out.println("Deletion Failed");
+                                                    System.out.println("Try Again!");
+                                                }
+                                            }
+                                            break;
+                                        case "5":
                                             break;
                                         default:
                                             System.out.println("Invalid Input");
                                             break;
                                     }
-                                //Logout    
-                                case "11":
+                                //Logout
+                                case "12":
                                     isLoggedIn = false;
                                     System.out.println("Sucessfully Logged out");
                                     break;
@@ -567,7 +697,7 @@ public class MarketPlace {
                     password = scanner.nextLine();
                     System.out.println("Enter your role (customer / seller");
                     String role = scanner.nextLine();
-                    while(!role.equalsIgnoreCase("customer") || 
+                    while(!role.equalsIgnoreCase("customer") ||
                             !(role.equalsIgnoreCase("seller"))) {
                         System.out.println("Enter your role (customer / seller");
                         role = scanner.nextLine();
@@ -581,15 +711,5 @@ public class MarketPlace {
         } while (true);
     }
 
-    public static Store whichStore(String storeName) {
-        for (Store s: stores) {
-            if (s.equals(storeName)) {
-                return s;
-            }
-        }
-        return null;
-    }
 
 }
-
-

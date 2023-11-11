@@ -839,6 +839,14 @@ public abstract class Seller {
         }
         return result;
     }
+    public static Store whichStore(String storeName) {
+        for (Store s: stores) {
+            if (s.equals(storeName)) {
+                return s;
+            }
+        }
+        return null;
+    }
 
 
 }
