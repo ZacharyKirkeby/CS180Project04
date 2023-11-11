@@ -23,7 +23,7 @@ public class Product {
     // Optional Features Parameters
     private boolean onSale; // Sale status
     private int saleCap; // Amount of product on sale
-    private int saleSold;
+    private int saleSold; //Amount of product Sales during the sale
     private double salePrice; // Sale price
 
     private int orderCap; // Max number a customer can order
@@ -142,10 +142,10 @@ public class Product {
      * @return ArrayList<Product></>
      */
     public static ArrayList<Product> sortAlphabetically(ArrayList<Product> products) {
-        for (int i = 0; i < products.size(); i++) {
-            for (int j = i + 1; j < products.size(); j++) {
-                if (products.get(i).getName().compareTo(products.get(j).getName()) > 0) {
-                    Collections.swap(products, i, j);
+        for (int i = 0; i < products.size()-1; i++) { //parses through the list
+            for (int j = i + 1; j < products.size(); j++) { //takes the next element
+                if (products.get(i).getName().compareTo(products.get(j).getName()) > 0) { //compares the two elements
+                    Collections.swap(products, i, j); // makes the necessary switch
                 }
             }
         }
@@ -158,10 +158,11 @@ public class Product {
      * @return ArrayList<Product> </>
      */
     public static ArrayList<Product> sortByCheapest(ArrayList<Product> products) {
-        for (int i = 0; i < products.size(); i++) {
-            for (int j = i + 1; j < products.size(); j++) {
-                if (products.get(i).getPurchasePrice() > products.get(j).getPurchasePrice()) {
-                    Collections.swap(products, i, j);
+        for (int i = 0; i < products.size(); i++) { //parses through the list of products
+            for (int j = i + 1; j < products.size(); j++) { //takes each element of the list of products
+                if (products.get(i).getPurchasePrice() > products.get(j).getPurchasePrice()) { //compares the 
+                    // purchase price of two products
+                    Collections.swap(products, i, j); //swaps the products if one lesser than the other
                 }
             }
         }
@@ -190,12 +191,12 @@ public class Product {
     public static void readProductFile(String fileName) {
         ArrayList<String> products = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line = br.readLine();
+            String line = br.readLine(); //reads the first line of the file
             while (line != null) {
-                products.add(line + ";");
+                products.add(line + ";"); //adds this line to the ArrayList
                 line = br.readLine();
             }
-            products.remove(products.size() - 1);
+            products.remove(products.size() - 1); //removes the tailing semicolon
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -257,7 +258,9 @@ public class Product {
     }
 
 
-
+    /**
+     * A toString for the Product Class
+     */
     @Override
     public String toString() {
         return name + "," + description + "," + purchasePrice + "," + stockQuantity;
