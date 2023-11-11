@@ -1,12 +1,18 @@
 package src;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.*;
-
+/**
+ * Project 04 -- Product.java
+ * creates Product class
+ * Handles all Product related tasks
+ * and functions.
+ * @author Armaan Sayyad, 05
+ * @version November 10, 2023
+ */
 public class Product {
     private String name; // name of the product
     private String description; // description of product
@@ -22,14 +28,10 @@ public class Product {
 
     private int orderCap; // Max number a customer can order
 
-    public Product(String name, String description, int quantity, double purchasePrice, Store stores) {
-        this.name = name;
-        this.description = description;
-        this.stockQuantity = quantity;
-        this.purchasePrice = purchasePrice;
-        this.quantitySold = 0;
-    }
-
+    /**
+     *Constructors for the Product
+     * @param name, description, quantity, purchasePrice,
+     */
     public Product(String name, double purchasePrice, int quantity) {
         this.name = name;
         this.stockQuantity = quantity;
@@ -45,38 +47,62 @@ public class Product {
         this.quantitySold = 0;
 
     }
-
+    /**
+     *Getter for the Product's quantity sold
+     * @return quantitySold
+     */
     public int getQuantitySold() {
         return quantitySold;
     }
-
+    /**
+     *Setter for the Product's quantity sold
+     * @param quantitySold
+     */
     public void setQuantitySold(int quantitySold) {
         this.quantitySold = quantitySold;
     }
 
-
+    /**
+     *Getter for the Product's Name
+     * @return Name
+     */
     public String getName() {
         return name;
     }
-
+    /**
+     *Setter for the Product's Name
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+     *Getter for the Product's description
+     * @return description
+     */
     public String getDescription() {
         return description;
     }
-
+    /**
+     *Setter for the Product's description
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
-
+    /**
+     *Getter for the Product's stock quantity
+     * @return stockQuantity
+     */
     public int getStockQuantity() {
         return stockQuantity;
     }
-
-    public void setStockQuantity(int quantity) {
-        this.stockQuantity = quantity;
+    /**
+     *Setter for the Product's stockQuantity
+     * @param stockQuantity
+     */
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public void buyProduct(int quantity) {
@@ -91,7 +117,10 @@ public class Product {
             }
         }
     }
-
+    /**
+     *Getter for the Product's purchase price
+     * @return purchasePrice
+     */
     public double getPurchasePrice() {
         if (onSale) {
             return salePrice;
@@ -99,12 +128,19 @@ public class Product {
             return purchasePrice;
         }
     }
-
+    /**
+     *Setter for the Product's purchase price
+     * @param purchasePrice
+     */
     public void setPurchasePrice(double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    //returns alphabetically sorted Array List of products by name
+    /**
+     *Sorting Algorithm that sorts Products Alphabetically
+     * @param products (ArrayList<Product></>)
+     * @return ArrayList<Product></>
+     */
     public static ArrayList<Product> sortAlphabetically(ArrayList<Product> products) {
         for (int i = 0; i < products.size(); i++) {
             for (int j = i + 1; j < products.size(); j++) {
@@ -116,7 +152,11 @@ public class Product {
         return products;
     }
 
-    //returns sorted Array List of products by cheapest product
+    /**
+     *Sorting Algorithm that sorts Products from Cheapest to most Expensive
+     * @param products (ArrayList<Product></>)
+     * @return ArrayList<Product> </>
+     */
     public static ArrayList<Product> sortByCheapest(ArrayList<Product> products) {
         for (int i = 0; i < products.size(); i++) {
             for (int j = i + 1; j < products.size(); j++) {
@@ -143,6 +183,10 @@ public class Product {
         return (purchasePrice * quantitySold);
     }
 
+    /**
+     * Reads the products from a file and adds them to an ArrayList
+     * @param fileName (String)
+     */
     public static void readProductFile(String fileName) {
         ArrayList<String> products = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -162,7 +206,7 @@ public class Product {
     /**
      * Optional Feature
      * creates a sale
-     * sale cannot exceed number availible
+     * sale cannot exceed stock available
      * price cannot be negative
      * @param salePrice
      * @param saleCap
@@ -194,7 +238,6 @@ public class Product {
      * Sets order cap
      * makes sure it is greater than 0
      * @param cap
-     * @return
      */
     public String setCap(int cap) {
         if (cap > 0) {
@@ -204,7 +247,11 @@ public class Product {
         }
         return "Order Cap created successfully!";
     }
-
+    /**
+     * Gets order cap
+     * makes sure it is greater than 0
+     * @return orderCap
+     */
     public int getOrderCap() {
         return orderCap;
     }
