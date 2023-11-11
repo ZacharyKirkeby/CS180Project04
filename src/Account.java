@@ -266,10 +266,10 @@ public class Account {
     }
 
     /**
-     * Returns username or email given opposite
+     * Returns username
      *
      * @param usernameOrEmail
-     * @return String username or email
+     * @return String username
      */
     public static String getUsername(String usernameOrEmail) {
         int index = -1;
@@ -291,6 +291,12 @@ public class Account {
         return usernames.get(index);
     }
 
+    /**
+     * Returns email
+     *
+     * @param usernameOrEmail
+     * @return String email
+     */
     public static String getEmail(String usernameOrEmail) {
         int index = -1;
         if (usernameOrEmail.contains("@")) {
