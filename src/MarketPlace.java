@@ -1,4 +1,5 @@
 package src;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -77,7 +78,6 @@ public class MarketPlace {
                     int quantity;
                     boolean sorted;
                     String isSorted;
-
 
                     // loops while definite user
                     while (isLoggedIn) {
@@ -280,6 +280,42 @@ public class MarketPlace {
                                         case "5":
                                             break;
                                         default:
+                                        }
+                                        break;
+                                    // add from CSV
+                                    case "6":
+                                        System.out.println("Enter Store Name: ");
+                                        storeName = scanner.nextLine();
+                                        System.out.println("Enter file path to be written from (include .txt)");
+                                        String filePath = scanner.nextLine();
+                                        Seller.readProductsFromCSV(storeName, filePath);
+                                        break;
+                                    // go back
+                                    case "7":
+                                        break;
+                                    // handles anything else
+                                    default:
+                                        System.out.println("Invalid Option");
+                                        break;
+                                }
+                                break;
+                            // Seller Stats menu
+                            case "3":
+                                System.out.print(sellerStatisticsChoices);
+                                input = scanner.nextLine();
+                                switch (input) {
+                                    case "1":
+                                        System.out.println("Enter a store name: ");
+                                        storeName = scanner.nextLine();
+                                        System.out.println("Input Username: ");
+                                        user = scanner.nextLine();
+                                        System.out.println("Do you want to Sort the Products? (Y/N)");
+                                        isSorted = scanner.nextLine();
+                                        if (isSorted.equalsIgnoreCase("y")) {
+                                            sorted = true;
+                                        } else if (isSorted.equalsIgnoreCase("n")) {
+                                            sorted = false;
+                                        } else {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
@@ -555,3 +591,5 @@ public class MarketPlace {
     }
 
 }
+
+

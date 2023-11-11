@@ -102,6 +102,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -132,6 +133,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -163,6 +165,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -195,6 +198,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -227,6 +231,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -258,6 +263,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName) &&
                     stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -288,6 +294,7 @@ public abstract class Seller {
             for (int i = 0; i < stores.size(); i++) {
                 if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -321,6 +328,7 @@ public abstract class Seller {
             for (int i = 0; i < stores.size(); i++) {
                 if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -359,6 +367,7 @@ public abstract class Seller {
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -390,6 +399,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -442,6 +452,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -469,6 +480,7 @@ public abstract class Seller {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
                     && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
@@ -735,6 +747,12 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
+
+    /**
+     * Gets highest quantity
+     *
+     * @return highest
+     */
     public static String highestQuant() {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
@@ -766,6 +784,12 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
+
+    /**
+     * Returns lowest quantity
+     *
+     * @return lowest
+     */
     public static String lowestQuant() {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
