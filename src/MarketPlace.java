@@ -1,5 +1,3 @@
-package src;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -7,7 +5,7 @@ import java.util.Scanner;
  * Project 04 -- MarketPlace.java
  * creates a Market to manage interactions and listings in a marketplace
  * Handles all MarketPlace related tasks
- * and functions. 
+ * and functions.
  * Acts as the main interface of all the classes
  * @author Armaan Sayyad, 05
  * @version November 10, 2023
@@ -50,7 +48,7 @@ public class MarketPlace {
         return stores;
     }
     /**
-     *Main method for the Marketplace handles all the interactions 
+     *Main method for the Marketplace handles all the interactions
      * and interfaces between the classes
      * @param args (String[])
      */
@@ -78,6 +76,7 @@ public class MarketPlace {
                     int quantity;
                     boolean sorted;
                     String isSorted;
+
 
                     // loops while definite user
                     while (isLoggedIn) {
@@ -239,7 +238,7 @@ public class MarketPlace {
                                             }
                                             System.out.println(Seller.getCustomersAndPurchases(storeName, user, sorted));
                                             break;
-                                        //View Product Sales    
+                                        //View Product Sales
                                         case "2":
                                             System.out.println("Enter a store name: ");
                                             storeName = scanner.nextLine();
@@ -257,13 +256,13 @@ public class MarketPlace {
                                             }
                                             System.out.println(Seller.getProductSales(storeName, user, sorted));
                                             break;
-                                        //View Products in Shopping Cart    
+                                        //View Products in Shopping Cart
                                         case "3":
                                             System.out.println("Enter Username: ");
                                             user = scanner.nextLine();
                                             System.out.println(Seller.getShoppingCartProducts(user));
                                             break;
-                                        //Get a CSV with all the Products in a Store    
+                                        //Get a CSV with all the Products in a Store
                                         case "4":
                                             System.out.println("Enter Store Name: ");
                                             storeName = scanner.nextLine();
@@ -276,51 +275,15 @@ public class MarketPlace {
                                                 System.out.println("Failed");
                                             }
                                             break;
-                                        //Goes back to the Main menu    
+                                        //Goes back to the Main menu
                                         case "5":
                                             break;
                                         default:
-                                        }
-                                        break;
-                                    // add from CSV
-                                    case "6":
-                                        System.out.println("Enter Store Name: ");
-                                        storeName = scanner.nextLine();
-                                        System.out.println("Enter file path to be written from (include .txt)");
-                                        String filePath = scanner.nextLine();
-                                        Seller.readProductsFromCSV(storeName, filePath);
-                                        break;
-                                    // go back
-                                    case "7":
-                                        break;
-                                    // handles anything else
-                                    default:
-                                        System.out.println("Invalid Option");
-                                        break;
-                                }
-                                break;
-                            // Seller Stats menu
-                            case "3":
-                                System.out.print(sellerStatisticsChoices);
-                                input = scanner.nextLine();
-                                switch (input) {
-                                    case "1":
-                                        System.out.println("Enter a store name: ");
-                                        storeName = scanner.nextLine();
-                                        System.out.println("Input Username: ");
-                                        user = scanner.nextLine();
-                                        System.out.println("Do you want to Sort the Products? (Y/N)");
-                                        isSorted = scanner.nextLine();
-                                        if (isSorted.equalsIgnoreCase("y")) {
-                                            sorted = true;
-                                        } else if (isSorted.equalsIgnoreCase("n")) {
-                                            sorted = false;
-                                        } else {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
                                     break;
-                                //Delete Store    
+                                //Delete Store
                                 case "4":
                                     bool = false;
                                     while (!bool) {
@@ -337,14 +300,14 @@ public class MarketPlace {
                                         }
                                     }
                                     break;
-                                //View Customer Reviews    
+                                //View Customer Reviews
                                 case "5":
                                     System.out.println("Enter Product Name (Leave empty if you want to view reviews " +
                                             "of all products)");
                                     productName = scanner.nextLine();
                                     System.out.println(Seller.viewCustomerReviews(productName, user));
                                     break;
-                                //Manage the Seller's account    
+                                //Manage the Seller's account
                                 case "6":
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
@@ -368,7 +331,7 @@ public class MarketPlace {
                                                 }
                                             }
                                             break;
-                                        //Change Role    
+                                        //Change Role
                                         case "2":
                                             bool = false;
                                             while (!bool) {
@@ -387,7 +350,7 @@ public class MarketPlace {
                                                 }
                                             }
                                             break;
-                                        //Delete Account    
+                                        //Delete Account
                                         case "3":
                                             bool = false;
                                             while (!bool) {
@@ -408,7 +371,7 @@ public class MarketPlace {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
-                                //Logout    
+                                //Logout
                                 case "7":
                                     isLoggedIn = false;
                                     System.out.println("Successfully Logged out");
@@ -428,32 +391,32 @@ public class MarketPlace {
                                     input = scanner.nextLine();
                                     System.out.println(Seller.searchByStore(input));
                                     break;
-                                //Search for a Product    
+                                //Search for a Product
                                 case "2":
                                     System.out.println(SEARCH_PROMPT);
                                     input = scanner.nextLine();
                                     System.out.println(Seller.searchByProduct(input));
                                     break;
-                                //Search for a Product by Description    
+                                //Search for a Product by Description
                                 case "3":
                                     System.out.println(SEARCH_PROMPT);
                                     input = scanner.nextLine();
                                     System.out.println("Store  |  Product ");
                                     System.out.println(Seller.searchByDescription(input));
                                     break;
-                                //View All Products    
+                                //View All Products
                                 case "4":
                                     Seller.printProductAndStores();
                                     break;
-                                //Sort Products by Cheapest    
+                                //Sort Products by Cheapest
                                 case "5":
                                     System.out.println(Seller.sortCheapest());
                                     break;
-                                //Sort Products by Most Expensive    
+                                //Sort Products by Most Expensive
                                 case "6":
                                     System.out.println(Seller.sortExpensive());
                                     break;
-                                //Sort Products by Availability    
+                                //Sort Products by Availability
                                 case "7":
                                     System.out.println(AVAILABILITY);
                                     input = scanner.nextLine();
@@ -462,13 +425,13 @@ public class MarketPlace {
                                         case "1":
                                             System.out.println(Seller.highestQuant());
                                             break;
-                                        //Sort Products By Least in stock    
+                                        //Sort Products By Least in stock
                                         case "2":
                                             System.out.println(Seller.lowestQuant());
                                             break;
                                     }
                                     break;
-                                //Leave Review    
+                                //Leave Review
                                 case "8":
                                     boolean bool = false;
                                     int rating = 5;
@@ -496,7 +459,7 @@ public class MarketPlace {
                                         System.out.println("Failed");
                                     }
                                     break;
-                                //View Reviews of Products    
+                                //View Reviews of Products
                                 case "9":
                                     System.out.println("Enter Products Name to view Review");
                                     productName = scanner.nextLine();
@@ -505,7 +468,7 @@ public class MarketPlace {
                                     storeName = scanner.nextLine();
                                     System.out.println(Customer.viewReviews(storeName, productName));
                                     break;
-                                //Manage Customer Account    
+                                //Manage Customer Account
                                 case "10":
                                     System.out.print(AccountChoices);
                                     input = scanner.nextLine();
@@ -520,7 +483,7 @@ public class MarketPlace {
                                             String newPassword = scanner.nextLine();
                                             Account.changePassword(user, oldPassword, newPassword);
                                             break;
-                                        //Change Role    
+                                        //Change Role
                                         case "2":
                                             System.out.println("Input Username or Email: ");
                                             user = scanner.nextLine();
@@ -530,7 +493,7 @@ public class MarketPlace {
                                             String newRole = scanner.nextLine();
                                             Account.changeRole(user, password, newRole);
                                             break;
-                                        //Delete Account    
+                                        //Delete Account
                                         case "3":
                                             System.out.println("Input Username or Email: ");
                                             user = scanner.nextLine();
@@ -538,14 +501,14 @@ public class MarketPlace {
                                             password = scanner.nextLine();
                                             Account.deleteAccount(user, password);
                                             break;
-                                        //Go back to previous Menu    
+                                        //Go back to previous Menu
                                         case "4":
                                             break;
                                         default:
                                             System.out.println("Invalid Input");
                                             break;
                                     }
-                                //Logout    
+                                //Logout
                                 case "11":
                                     isLoggedIn = false;
                                     System.out.println("Sucessfully Logged out");
@@ -567,7 +530,7 @@ public class MarketPlace {
                     password = scanner.nextLine();
                     System.out.println("Enter your role (customer / seller");
                     String role = scanner.nextLine();
-                    while(!role.equalsIgnoreCase("customer") || 
+                    while(!role.equalsIgnoreCase("customer") ||
                             !(role.equalsIgnoreCase("seller"))) {
                         System.out.println("Enter your role (customer / seller");
                         role = scanner.nextLine();
@@ -591,5 +554,3 @@ public class MarketPlace {
     }
 
 }
-
-
