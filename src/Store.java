@@ -10,18 +10,24 @@ import java.util.ArrayList;
  * Handles routine store tasks
  *
  * @author Zachary Kirkeby, 05
- * @version November 3, 2023
+ * @version November 10, 2023
  */
 public class Store {
-    private ArrayList<Product> productList;
-    private String storeName;
-    private String storeLocation;
-    private Seller storeOwner;
-    private String sellerUsername;
-    private int totalSales = 0;
-    private double totalRevenue = 0;
+    private ArrayList<Product> productList; // list of products
+    private String storeName; // store name
+    private String storeLocation; // store location (thematic)
+    private Seller storeOwner; // who owns the store
+    private String sellerUsername; // second way of checking
+    private int totalSales = 0; // total sales
+    private double totalRevenue = 0; // total money earned
 
-    // Constructor for store based off a literal seller object
+    /**
+     * Constructor w Seller object
+     * @param name
+     * @param storeLocation
+     * @param seller
+     * @param productList
+     */
     public Store(String name, String storeLocation, Seller seller,
                  ArrayList<Product> productList) {
         this.storeName = name;
@@ -30,7 +36,13 @@ public class Store {
         this.productList = productList;
     }
 
-    // More generic Store constructor based off a named seller
+    /**
+     * Constructor w Seller username
+     * @param name
+     * @param storeLocation
+     * @param sellerUsername
+     * @param productList
+     */
     public Store(String name, String storeLocation, String sellerUsername,
                  ArrayList<Product> productList) {
         this.storeName = name;
@@ -39,7 +51,11 @@ public class Store {
         this.productList = productList;
     }
 
-    // gets total number of products sold
+    /**
+     * iterates through list
+     * adds up all sales
+     * @return
+     */
     public int getTotalSales() {
         for (Product p : productList) {
             totalSales += p.getQuantitySold();
@@ -47,7 +63,10 @@ public class Store {
         return totalSales;
     }
 
-    // calculates total revenue by getting sales * price
+    /**
+     * calculates money earned
+     * @return
+     */
     public double getTotalRevenue() {
         for (Product p : productList) {
             totalRevenue += p.getSales();
@@ -55,7 +74,10 @@ public class Store {
         return totalRevenue;
     }
 
-    // returns arraylist of products
+    /**
+     * standard getter for products
+     * @return
+     */
     public ArrayList<Product> getProductList() {
         return productList;
     }
@@ -130,6 +152,7 @@ public class Store {
      * if store name corresponds to this store name
      * adds line
      * returns end list of customers and their purchases
+     * @Author Zachary Kirkeby
      **/
 
     public String getSortedCustomersAndPurchases() {
@@ -154,6 +177,7 @@ public class Store {
      * Iterates through purchase history file
      * adds records by adding line
      * returns end list of customers and their purchases
+     * @Auther Zachary Kirkeby
      **/
     public static String getCustomersAndPurchases() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
@@ -170,6 +194,10 @@ public class Store {
         return sentence;
     }
 
+    /**
+     * calculates purchases
+     * possibly redundant
+     */
     public void Purchases() {
         double totalPurchases = 0;
         for (int i = 0; i < productList.size(); i++) {
@@ -177,6 +205,14 @@ public class Store {
         }
     }
 
+    /**
+     * reads from purchase history file
+     * checks for matches based off current store object
+     * adds details if matches
+     * includes some formatting
+     * @return
+     * @Author Zachary Kirkeby
+     */
     public String getCustomerInformationAndRevenue() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased |" +
                 " Revenue From Customer \n";
@@ -201,11 +237,14 @@ public class Store {
 
     /**
      * Finds product and calls respective product method
+     * starts sale
      * returns failure or not
+     * handler for method in product
      * @param productName
      * @param salePrice
      * @param saleCap
      * @return
+     * @Author Zachary Kirkeby
      */
     public String triggerSale(String productName, double salePrice, int saleCap) {
         String output = "";
@@ -216,7 +255,16 @@ public class Store {
         }
         return output;
     }
-
+    /**
+     * Finds product and calls respective product method
+     * starts sale
+     * returns failure or not
+     * handler for method in product
+     * @param productName
+     * @param cap
+     * @return
+     * @Author Zachary Kirkeby
+     */
     public String triggerCap(String productName, int cap) {
         String output = "";
         for (Product p:productList) {
