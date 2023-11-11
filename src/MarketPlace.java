@@ -20,7 +20,7 @@ public class MarketPlace {
             "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Start Sale \n" +
             "7. Add Purchase Limit \n 8. Back \n";
     private static final String AccountChoices = " 1. Change Username \n 2. Change Password \n 3. Change Role \n 4. " +
-            "Delete Account \n 5. Back"; 
+            "Delete Account \n 5. Back \n";
     private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
             "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
     private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
@@ -320,11 +320,6 @@ public class MarketPlace {
                                             while(!bool) {
                                                 System.out.println("Enter Old Username");
                                                 String oldUsername = scanner.nextLine();
-                                                while (!(oldUsername.equals(user))) {
-                                                    System.out.println("Incorrect Username");
-                                                    System.out.println("Enter Old Username");
-                                                    oldUsername = scanner.nextLine();
-                                                }
                                                 System.out.println("Enter New Username");
                                                 String newUsername = scanner.nextLine();
                                                 System.out.println("Enter New Username Again");
@@ -338,7 +333,7 @@ public class MarketPlace {
                                                 }
                                                 bool = Account.changeUsername(newUsername, oldUsername);
                                                 if (bool) {
-                                                    System.out.println("Successfully Username Password");
+                                                    System.out.println("Successfully Changed Username");
                                                 } else {
                                                     System.out.println("Change Failed");
                                                     System.out.println("Try Again!");
@@ -385,7 +380,7 @@ public class MarketPlace {
                                                 String newRole = scanner.nextLine();
                                                 bool = Account.changeRole(user, password, newRole);
                                                 if (bool) {
-                                                    System.out.println("Successfully Changed");
+                                                    System.out.println("Successfully Changed Role");
                                                 } else {
                                                     System.out.println("Change Failed");
                                                     System.out.println("Try Again!");
@@ -415,6 +410,7 @@ public class MarketPlace {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
+                                    break;
                                 //Logout
                                 case "7":
                                     isLoggedIn = false;
@@ -580,11 +576,6 @@ public class MarketPlace {
                                             while(!bool) {
                                                 System.out.println("Enter Old Username");
                                                 String oldUsername = scanner.nextLine();
-                                                while (!(oldUsername.equals(user))) {
-                                                    System.out.println("Incorrect Username");
-                                                    System.out.println("Enter Old Username");
-                                                    oldUsername = scanner.nextLine();
-                                                }
                                                 System.out.println("Enter New Username");
                                                 String newUsername = scanner.nextLine();
                                                 System.out.println("Enter New Username Again");
@@ -598,7 +589,7 @@ public class MarketPlace {
                                                 }
                                                 bool = Account.changeUsername(newUsername, oldUsername);
                                                 if (bool) {
-                                                    System.out.println("Successfully Username Password");
+                                                    System.out.println("Successfully Changed Username");
                                                 } else {
                                                     System.out.println("Change Failed");
                                                     System.out.println("Try Again!");
@@ -675,6 +666,7 @@ public class MarketPlace {
                                             System.out.println("Invalid Input");
                                             break;
                                     }
+                                    break;
                                 //Logout
                                 case "12":
                                     isLoggedIn = false;
@@ -697,8 +689,8 @@ public class MarketPlace {
                     password = scanner.nextLine();
                     System.out.println("Enter your role (customer / seller");
                     String role = scanner.nextLine();
-                    while(!role.equalsIgnoreCase("customer") ||
-                            !(role.equalsIgnoreCase("seller"))) {
+                    while(!(role.equalsIgnoreCase("customer") ||
+                            role.equalsIgnoreCase("seller"))) {
                         System.out.println("Enter your role (customer / seller");
                         role = scanner.nextLine();
                     }
