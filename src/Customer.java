@@ -31,40 +31,44 @@ public abstract class Customer {
         return totalQuantityOfProduct;
     }
 
-    public static Store searchedStoreExists(String storeName, ArrayList<Store> stores) {
+    public static boolean searchedStoreExists(String storeName, ArrayList<Store> stores) {
         for (Store store : MarketPlace.getStores()) {
             if (store.getStoreName().equals(storeName)) {
-                return store;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
-    public static Product searchedProductExists(String productName, ArrayList<Store> stores) {
+    public static boolean searchedProductExists(String productName, ArrayList<Store> stores) {
         for (Store store : MarketPlace.getStores()) {
             for (Product product : store.getProductList()) {
                 if (product.getName().equals(productName)) {
-                    return product;
+                    return true;
                 }
             }
         }
-        return null;
+        return false;
     }
 
-    public static void addToCart(String email, String username, Store store, Product product, int quantity) {
+    public static void addToCart(String email, String username, String store, String product, int quantity) {
         readFromShoppingCartDatabaseFile();
         emails.add(email);
         usernames.add(username);
-        storeNames.add(store.getStoreName());
-        productNames.add(product.getName());
+        storeNames.add(store);
+        productNames.add(product);
         quantities.add(quantity);
         writeToShoppingCartDatabaseFile();
     }
 
-    public static void removeFromCart(String email, String username, Store store, Product product, int quantity) {
+    public static boolean removeFromCart(String email, String username, String storeName, String productName,
+                                         int quantity) {
+        boolean successfullyRemovedFromCart = false;
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < usernames.size(); i++) {
-            if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(store.getStoreName()) && productNames.get(i).equals(product.getName()) && quantities.get(i) == quantity) {
+            if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
+                    && productNames.get(i).equals(productName) && quantities.get(i) == quantity) {
+                successfullyRemovedFromCart = true;
                 emails.remove(i);
                 usernames.remove(i);
                 storeNames.remove(i);
@@ -74,6 +78,7 @@ public abstract class Customer {
             }
         }
         writeToShoppingCartDatabaseFile();
+        return successfullyRemovedFromCart;
     }
 
     // products from different stores

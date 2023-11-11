@@ -271,7 +271,7 @@ public class Account {
      * @param usernameOrEmail
      * @return String username or email
      */
-    public static String getUsernameOrEmail(String usernameOrEmail) {
+    public static String getUsername(String usernameOrEmail) {
         int index = -1;
         if (usernameOrEmail.contains("@")) {
             for (int i = 0; i < emails.size(); i++) {
@@ -280,7 +280,6 @@ public class Account {
                     break;
                 }
             }
-            return usernames.get(index);
         } else {
             for (int i = 0; i < usernames.size(); i++) {
                 if (usernames.get(i).equalsIgnoreCase(usernameOrEmail)) {
@@ -288,8 +287,28 @@ public class Account {
                     break;
                 }
             }
-            return emails.get(index);
         }
+        return usernames.get(index);
+    }
+
+    public static String getEmail(String usernameOrEmail) {
+        int index = -1;
+        if (usernameOrEmail.contains("@")) {
+            for (int i = 0; i < emails.size(); i++) {
+                if (emails.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < usernames.size(); i++) {
+                if (usernames.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return emails.get(index);
     }
 
     /**
