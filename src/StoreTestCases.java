@@ -171,8 +171,9 @@ public class StoreTestCases {
             store.toStringProducts());
 
 
-//        store.getCustomerInformationAndRevenue();
-//        store.getSortedCustomersAndPurchases();
+        System.out.println(store.getCustomerInformationAndRevenue());
+        System.out.println(store.getAllCustomersAndPurchases());
+        System.out.println(store.getCustomersAndPurchases());
 
     }
 }
