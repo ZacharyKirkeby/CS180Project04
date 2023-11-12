@@ -130,7 +130,7 @@ public class MarketPlace {
                     // loops while definite user
                     while (isLoggedIn) {
                         //Seller Experience
-                        if (Account.getRole(user).equalsIgnoreCase("seller")) {
+                        if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("seller")) {
                             System.out.print(sellerChoices);
                             input = scanner.nextLine();
                             switch (input) {
@@ -475,7 +475,7 @@ public class MarketPlace {
                                     break;
                             }
                             // Customer Experience
-                        } else if (Account.getRole(user).equalsIgnoreCase("customer")) {
+                        } else if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("customer")) {
                             System.out.println(BUYERPROMPT);
                             input = scanner.nextLine();
                             switch (input) {
