@@ -290,7 +290,7 @@ public abstract class Customer {
 
     //Optional Method
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
-                                    String description ){
+                                      String description ){
         boolean bool = false;
         while(!bool){
             if( !(1 <= rating && rating <= 5)){
@@ -301,41 +301,48 @@ public abstract class Customer {
             else {bool = true;}
         }
         try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
-        PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt"), true)){
+            PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt", true), true)){
             String line = br.readLine();
             int count = 0;
-            while(line != null) {
-                line = br.readLine();
-                if(line == null){
-                    pw.write(String.format("%s | %s | %s | %d | %s", storeName, productName, customerName, rating,
-                            description));
+            if (line == null) {
+                pw.println(String.format("%s , %s , %s , %d , %s", storeName, productName, customerName, rating,
+                        description));
+            } else {
+                while (line != null) {
+                    line = br.readLine();
+                    if (line == null) {
+                        pw.println(String.format("%s , %s , %s , %d , %s", storeName, productName, customerName, rating,
+                                description));
+                    }
                 }
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-    return false;
+        return false;
     }
     public static String viewReviews(String storeName, String productName){
-        String result = "";
+        String result = "Store Name | Product Name | Customer Name | Rating";
         try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))){
             String line = br.readLine();
             while(line != null){
-                String[] subpart = line.split("\\|");
-                if(!(storeName.equals(""))) {
-                    if (subpart[0].equalsIgnoreCase(storeName) && subpart[1].equalsIgnoreCase(productName)) {
+                String[] subpart = line.split(",");
+                if(storeName.equals("")) {
+                    if (subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
-                } else if(storeName.equals("")){
-                    if (subpart[1].equalsIgnoreCase(productName)) {
+                } else{
+                    if (subpart[0].contains(storeName) && subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
                 }
+                line = br.readLine();
             }
         } catch (Exception e){
             e.printStackTrace();;
         }
+        result = result.replace(",", "|");
         return result;
     }
 }
