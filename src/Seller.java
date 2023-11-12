@@ -76,13 +76,9 @@ public abstract class Seller {
      * @return boolean indicating whether creation was successful
      */
     public static boolean createStore(String storeName, String storeLocation, String username) {
-        readFromFile();
-        for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
-                return false;
-            }
-        }
-        stores.add(new Store(storeName, storeLocation, username, new ArrayList<Product>()));
+        ArrayList<Product> emptyStore= new ArrayList<>();
+        emptyStore.add(new Product("","",0,0));
+        stores.add(new Store(storeName, storeLocation, username, emptyStore));
         writeToFile();
         return true;
     }
@@ -145,6 +141,7 @@ public abstract class Seller {
                 }
             }
             stores.get(index).getProductList().add(new Product(name, description, price, quantity));
+            writeToFile();
             return true;
         }
     }
@@ -394,6 +391,7 @@ public abstract class Seller {
      * @return String of product sales, can be sorted
      */
     public static String getCustomersAndPurchases(String storeName, String username, boolean sorted) {
+        readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
@@ -420,6 +418,7 @@ public abstract class Seller {
      * @return String of stores by sales (descending)
      */
     public static String storesBySales(String username) {
+        readFromFile();
         ArrayList<Store> sales = new ArrayList<>();
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
@@ -447,6 +446,7 @@ public abstract class Seller {
      * @return Store information and revenue
      */
     public static String salesByStore(String storeName, String username) {
+        readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
@@ -474,6 +474,7 @@ public abstract class Seller {
      * @return String of product sales, can be sorted
      */
     public static String getProductSales(String storeName, String username, boolean sorted) {
+        readFromFile();
         int index = -1;
         ArrayList<String> productSales = new ArrayList<>();
         for (int i = 0; i < stores.size(); i++) {
@@ -506,6 +507,7 @@ public abstract class Seller {
      * @return String of products and quantities
      */
     public static String getShoppingCartProducts(String username) {
+        readFromFile();
         String shoppingCartProducts = null;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
@@ -575,36 +577,30 @@ public abstract class Seller {
      */
     private static void readFromFile() {
         stores.clear();
-        String[] productSplit = null;
-        String[] attributeSplit = null;
-        String[] storeSplit = null;
-        ArrayList<Product> productList = new ArrayList<Product>();
-        String storeLine = null;
-        String productLine = null;
-        try {
-            BufferedReader storeBFR = new BufferedReader(new FileReader("stores.txt"));
-            BufferedReader productBFR = new BufferedReader(new FileReader("products.txt"));
-            storeLine = storeBFR.readLine();
-            productLine = productBFR.readLine();
-            while ((storeLine != null) && (!storeLine.isEmpty())) {
-                productSplit = productLine.split(";");
-                for (int i = 0; i < productSplit.length; i++) {
-                    attributeSplit = productSplit[i].split(",");
-                    productList.add(new Product(attributeSplit[0], attributeSplit[1],
-                            Double.parseDouble(attributeSplit[2]), Integer.parseInt(attributeSplit[3])));
-                }
-                storeSplit = storeLine.split(",");
+        ArrayList<Product> productList = new ArrayList<>();
+        try(BufferedReader storeBr = new BufferedReader(new FileReader("stores.txt"));
+        BufferedReader productBr = new BufferedReader(new FileReader("products.txt"))){
+            String storeLine = storeBr.readLine();
+            String productLine = productBr.readLine();
+            while(storeLine != null && productLine != null){
+                    String[] productSplit = productLine.split(";");
+                    for (int i = 0; i < productSplit.length; i++) {
+                        String[] attributeSplit = productSplit[i].split(",");
+                        productList.add(new Product(attributeSplit[0],
+                                attributeSplit[1], Double.parseDouble(attributeSplit[2]),
+                                Integer.parseInt(attributeSplit[3])));
+                    }
+                String[] storeSplit = storeLine.split(",");
                 stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
-                storeLine = storeBFR.readLine();
-                productLine = productBFR.readLine();
+                storeLine = storeBr.readLine();
+                productLine = productBr.readLine();
             }
-            storeBFR.close();
-            productBFR.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
     }
 
     /**
@@ -614,6 +610,7 @@ public abstract class Seller {
      * @return searched stores
      */
     public static String searchByStore(String storeName) {
+        readFromFile();
         String searchedStore = null;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equals(storeName)) {
@@ -633,6 +630,7 @@ public abstract class Seller {
      * @return searched products
      */
     public static String searchByProduct(String productName) {
+        readFromFile();
         String searched = null;
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
@@ -654,6 +652,7 @@ public abstract class Seller {
      * @return searched products
      */
     public static String searchByDescription(String productDescription) {
+        readFromFile();
         String searchedProduct = null;
         String searchedStore = null;
         String searched = null;
@@ -680,6 +679,7 @@ public abstract class Seller {
      * @return sorted
      */
     public static String sortCheapest() {
+        readFromFile();
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
@@ -717,6 +717,7 @@ public abstract class Seller {
      * @return sorted
      */
     public static String sortExpensive() {
+        readFromFile();
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
@@ -754,6 +755,7 @@ public abstract class Seller {
      * @return highest
      */
     public static String highestQuant() {
+        readFromFile();
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
@@ -791,6 +793,7 @@ public abstract class Seller {
      * @return lowest
      */
     public static String lowestQuant() {
+        readFromFile();
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
@@ -820,6 +823,7 @@ public abstract class Seller {
         return result;
     }
     public static String viewCustomerReviews(String productName, String user) {
+        readFromFile();
         String result = "";
         if(!(productName.equals(""))) {
             for (int i = 0; i < stores.size(); i++) {
