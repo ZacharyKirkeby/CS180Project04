@@ -1,0 +1,2 @@
+email;username;storename;strawberry;10
+email;username;storename;blueberry;12

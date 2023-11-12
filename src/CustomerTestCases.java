@@ -170,14 +170,15 @@ public class CustomerTestCases {
 
     @Test(timeout = 1000)
     public void reviewTests() {
-
+        reset();
         assertEquals(false, Customer.leaveReview("storename", "productName", "customerName", 6, "description"));
 
         assertEquals(false, Customer.leaveReview("storename", "productName", "customerName", 0, "description"));
 
         assertEquals(true, Customer.leaveReview("storename", "productName", "customerName", 3, "description"));
 
-        assertEquals("storename | productName | customerName | 3 | description", Customer.viewReviews("storename",
+        assertEquals("Store Name | Product Name | Customer Name | Rating\n" +
+            "storename | productName | customerName | 3 | description\n", Customer.viewReviews("storename",
             "productName"));
     }
 
@@ -208,6 +209,24 @@ public class CustomerTestCases {
                 System.out.println("File created: " + myObj.getName());
             } else {
                 FileOutputStream fos = new FileOutputStream("PurchaseHistoryDatabase.txt", false);
+                PrintWriter pw = new PrintWriter(fos);
+                pw.print("");
+                if (pw != null) {
+                    pw.close();
+                }
+                System.out.println("File cleared.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        try {
+            File myObj = new File("Reviews.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                FileOutputStream fos = new FileOutputStream("Reviews.txt", false);
                 PrintWriter pw = new PrintWriter(fos);
                 pw.print("");
                 if (pw != null) {
