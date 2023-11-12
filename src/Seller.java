@@ -831,13 +831,6 @@ public abstract class Seller {
         return result;
     }
 
-    /**
-     * Views reviews of a product
-     *
-     * @param productName
-     * @param user
-     * @return Reviews
-     */
     public static String viewCustomerReviews(String productName, String user) {
         readFromFile();
         String result = "";
@@ -852,9 +845,9 @@ public abstract class Seller {
         } else if (productName.equals("")) {
             for (int i = 0; i < stores.size(); i++) {
                 if (stores.get(i).getSellerUsername().equalsIgnoreCase(user)) {
-                    for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+                    for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                         result += Customer.viewReviews(stores.get(i).getStoreName(),
-                                stores.get(i).getProductList().get(j).getName() + "\n");
+                                stores.get(i).getProductList().get(j).getName()) + "\n";
                     }
                 } else {
                     result += "No store found";
@@ -864,12 +857,6 @@ public abstract class Seller {
         return result;
     }
 
-    /**
-     * Finds a store given store name
-     *
-     * @param storeName
-     * @return Store
-     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {
