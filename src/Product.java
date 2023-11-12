@@ -106,16 +106,25 @@ public class Product {
     }
 
     public void buyProduct(int quantity) {
-        if (this.saleCap > 0 && quantity < this.saleCap) {
-            this.stockQuantity -= quantity;
-        }
-        if (this.onSale && this.saleCap != 0) {
-            this.saleCap--;
-            this.saleSold++;
-            if (saleCap == 0) {
-                onSale = false;
+        if (onSale) {
+            if (this.saleCap > 0 && quantity < this.saleCap) {
+                this.stockQuantity -= quantity;
+                this.quantitySold += quantity;
+            }
+            if (this.onSale && this.saleCap != 0) {
+                this.saleCap--;
+                this.saleSold++;
+                if (saleCap == 0) {
+                    onSale = false;
+                }
+            }
+        } else {
+            if (quantity <= stockQuantity) {
+                this.stockQuantity -= quantity;
+                this.quantitySold += quantity;
             }
         }
+
     }
     /**
      *Getter for the Product's purchase price
@@ -171,17 +180,12 @@ public class Product {
 
     /**
      * get sales
-     * checks if a sale is ongoing
-     * if so, calculates sales attributed to the current sale
-     * as well as the rest of products sold
+     *
      * @return
      */
     public double getSales() {
-        if (onSale) {
-            int temp = quantitySold - saleSold;
-            return salePrice * saleSold + (purchasePrice * temp);
-        }
-        return (purchasePrice * quantitySold);
+        int temp = quantitySold - saleSold;
+        return salePrice * saleSold + (purchasePrice * temp);
     }
 
     /**
@@ -214,18 +218,22 @@ public class Product {
      *
      */
     public String startSale(double salePrice, int saleCap) {
-        onSale = true;
-        if (saleCap > this.stockQuantity) {
-            saleCap = stockQuantity;
-        } else {
-            this.saleCap = saleCap;
-        }
         if (salePrice <= 0) {
             return "Unable to Start Sale";
         } else {
             this.salePrice = salePrice;
+            if (saleCap > this.stockQuantity) {
+                this.saleCap = stockQuantity;
+            } else {
+                this.saleCap = saleCap;
+            }
         }
+        this.onSale = true;
         return "Sale Successfully Started";
+    }
+
+    public void endSale() {
+        this.onSale = false;
     }
     public int getSaleCap() {
         return saleCap;
