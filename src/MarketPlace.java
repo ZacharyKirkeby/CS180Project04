@@ -366,7 +366,7 @@ public class MarketPlace {
                                         System.out.println("Enter Product Name (Leave empty if you want to view reviews " +
                                                 "of all products)");
                                         productName = scanner.nextLine();
-                                        System.out.println(Seller.viewCustomerReviews(productName, user));
+                                        System.out.print(Seller.viewCustomerReviews(productName, user));
                                         break;
                                     //Manage the Seller's account
                                     case "6":
@@ -618,6 +618,7 @@ public class MarketPlace {
                                         } else if(!bool){
                                             System.out.println("Export Failed");
                                         }
+                                        break;
                                     //Leave Review
                                     case "10":
                                         bool = false;
@@ -653,7 +654,7 @@ public class MarketPlace {
                                         System.out.println("Enter Store Name (Leave Blank to view all stores selling " +
                                                 "that product)");
                                         storeName = scanner.nextLine();
-                                        System.out.println(Customer.viewReviews(storeName, productName));
+                                        System.out.print(Customer.viewReviews(storeName, productName));
                                         break;
                                     //Manage Customer Account
                                     case "12":
