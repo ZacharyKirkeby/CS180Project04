@@ -640,8 +640,8 @@ public abstract class Seller {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                 if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
                     searched += stores.get(i).getStoreName() + " | " + stores.get(i).getProductList().get(j).getName()
-                        + stores.get(i).getProductList().get(j).getStockQuantity()
-                        + stores.get(i).getProductList().get(j).getDescription();
+                        + " | " + stores.get(i).getProductList().get(j).getStockQuantity()
+                        + " | " + stores.get(i).getProductList().get(j).getDescription();
                 }
             }
         }
@@ -669,9 +669,9 @@ public abstract class Seller {
                     searchedProduct += stores.get(i).getProductList().get(j).getName();
                     searched +=
                         stores.get(i).getStoreName() + " | " +
-                            stores.get(i).getProductList().get(j).getName()
-                            + stores.get(i).getProductList().get(j).getStockQuantity()
-                            + stores.get(i).getProductList().get(j).getDescription() + "\n";
+                            stores.get(i).getProductList().get(j).getName() + " | " +
+                            stores.get(i).getProductList().get(j).getStockQuantity() + " | " +
+                            stores.get(i).getProductList().get(j).getDescription() + "\n";
                 }
             }
         }
