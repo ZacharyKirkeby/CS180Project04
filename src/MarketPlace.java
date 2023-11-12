@@ -56,16 +56,18 @@ public class MarketPlace {
              6.  Sort  Products By Most Expensive\s
              7.  Sort by Availability\s
              8.  Shopping Cart\s
-             9.  Leave Review\s
-             10. View Product Reviews\s
-             11. Manage Account\s
-             12. Logout\s
+             9.  Export Purchase History as file\s
+             10. Leave Review\s
+             11. View Product Reviews\s
+             12. Manage Account\s
+             13. Logout\s
             """;
     private static final String customerShoppingCartChoices = """
              1. Add product(s) to cart\s
              2. Remove product(s) from cart\s
              3. Buy products in cart\s
              4. View shopping cart\s
+             5. Back
             """;
     private static  final String AVAILABILITY = """
              1. Sort By Highest Stock\s 
@@ -226,7 +228,7 @@ public class MarketPlace {
                                             case "5":
                                                 System.out.println("Enter Store Name: ");
                                                 storeName = scanner.nextLine();
-                                                System.out.println("Enter file path to be written from (include .txt)");
+                                                System.out.println("Enter file path to be written from (include .csv)");
                                                 String filePath = scanner.nextLine();
                                                 Seller.readProductsFromCSV(storeName, filePath);
                                                 break;
@@ -325,7 +327,7 @@ public class MarketPlace {
                                             case "4":
                                                 System.out.println("Enter Store Name: ");
                                                 storeName = scanner.nextLine();
-                                                System.out.println("Enter file path to be written to (include .txt)");
+                                                System.out.println("Enter file path to be written to (include .csv)");
                                                 String filePath = scanner.nextLine();
                                                 boolean check = Seller.writeProductsToCSV(storeName, filePath);
                                                 if (check) {
@@ -607,8 +609,17 @@ public class MarketPlace {
                                                 break;
                                         }
                                         break;
-                                    //Leave Review
                                     case "9":
+                                        System.out.println("Enter Filename to be exported to (include .txt)");
+                                        String filename = scanner.nextLine();
+                                        bool = Customer.getPurchaseHistoryofCustomer(user, filename);
+                                        if(bool){
+                                            System.out.println("Exported Successfully!");
+                                        } else if(!bool){
+                                            System.out.println("Export Failed");
+                                        }
+                                    //Leave Review
+                                    case "10":
                                         bool = false;
                                         int rating = 5;
                                         System.out.println("Name of Product reviewing: ");
@@ -636,7 +647,7 @@ public class MarketPlace {
                                         }
                                         break;
                                     //View Reviews of Products
-                                    case "10":
+                                    case "11":
                                         System.out.println("Enter Products Name to view Review");
                                         productName = scanner.nextLine();
                                         System.out.println("Enter Store Name (Leave Blank to view all stores selling " +
@@ -645,7 +656,7 @@ public class MarketPlace {
                                         System.out.println(Customer.viewReviews(storeName, productName));
                                         break;
                                     //Manage Customer Account
-                                    case "11":
+                                    case "12":
                                         System.out.print(AccountChoices);
                                         input = scanner.nextLine();
                                         switch (input) {
@@ -748,7 +759,7 @@ public class MarketPlace {
                                         }
                                         break;
                                     //Logout
-                                    case "12":
+                                    case "13":
                                         isLoggedIn = false;
                                         System.out.println("Sucessfully Logged out");
                                         break;
