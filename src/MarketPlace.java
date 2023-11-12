@@ -1,4 +1,4 @@
-package src;
+pacakge src;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -77,7 +77,7 @@ public class MarketPlace {
      * @param stores (ArrayList<Stores></>)
      */
     public MarketPlace(ArrayList<Store> stores) {
-        MarketPlace.stores = stores;
+        this.stores = stores;
         // some kind of logic tbd
     }
     /**
@@ -113,7 +113,9 @@ public class MarketPlace {
                             System.out.println("Login Failed");
                             System.out.println("Try Again!");
                         }
+                        else if (logOrRegistration){
                         isLoggedIn = true;
+                    }
 
                         // Switch Var declarations
                         String storeName;
@@ -449,6 +451,7 @@ public class MarketPlace {
                                                     bool = Account.deleteAccount(user, password);
                                                     if (bool) {
                                                         System.out.println("Successfully Deleted");
+                                                        isLoggedIn = false;
                                                     } else {
                                                         System.out.println("Deletion Failed");
                                                         System.out.println("Try Again!");
@@ -723,6 +726,7 @@ public class MarketPlace {
                                                     bool = Account.deleteAccount(user, password);
                                                     if (bool) {
                                                         System.out.println("Successfully Deleted");
+                                                        isLoggedIn = false;
                                                     } else {
                                                         System.out.println("Deletion Failed");
                                                         System.out.println("Try Again!");
@@ -747,7 +751,6 @@ public class MarketPlace {
                                 }
 
                             }
-                            break;
                         }
                         break;
                     //Handles User Registration
