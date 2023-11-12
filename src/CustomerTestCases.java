@@ -15,7 +15,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class CustomerTestCases {
     public static void main(String[] args) {
@@ -33,7 +32,7 @@ public class CustomerTestCases {
     @Test(timeout = 1000)
     public void buyProductsTest() {
         reset();
-        assertFalse(Customer.buyProductsInShoppingCart("username"));
+        assertEquals(false, Customer.buyProductsInShoppingCart("username"));
 
         Customer.addToCart("email", "username", "storename", "productname", 10);
 
@@ -69,8 +68,63 @@ public class CustomerTestCases {
         } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
             e.printStackTrace();
         }
-        
+
         assertEquals("Ensure the removeFromCart method works!", 0, list1.size());
+
+        Customer.addToCart("email", "username", "storename", "strawberry", 10);
+        Customer.addToCart("email", "username", "storename", "blueberry", 12);
+
+        Seller.createStore( "storename",  "storeLocation",  "username");
+        Seller.createProduct("storename", "strawberry", "fruit", 20.0, 20, "username");
+        Seller.createProduct("storename", "blueberry", "fruit", 15.0, 20, "username");
+
+        assertEquals("Ensure the getTotalInCart method works!", 10, Customer.getTotalInCart("storename", "strawberry"));
+        assertEquals("Ensure the getTotalInCart method works!", 12, Customer.getTotalInCart("storename", "blueberry"));
+
+        Customer.addToCart("email2", "username2", "storename", "strawberry", 5);
+
+        assertEquals("Ensure the getTotalInCart method works with multiple users' shopping carts!", 15,
+            Customer.getTotalInCart(
+                "storename",
+                "strawberry"));
+        assertEquals("Ensure the getTotalInCart method works with multiple users' shopping carts!", 12, Customer.getTotalInCart("storename", "blueberry"));
+
+        // test buyproduct
+        assertEquals("Ensure the buyProduct method works with valid input!", true, Customer.buyProductsInShoppingCart("username"));
+
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        assertEquals("email;username;storename;strawberry;10;20.00", list1.get(0));
+        assertEquals("email;username;storename;blueberry;12;15.00", list1.get(1));
+
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("ShoppingCartDatabase.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        assertEquals("email2;username2;storename;strawberry;5", list1.get(0));
+
     }
 
     public static void reset() {
@@ -82,7 +136,7 @@ public class CustomerTestCases {
             } else {
                 FileOutputStream fos = new FileOutputStream("ShoppingCartDatabase.txt", false);
                 PrintWriter pw = new PrintWriter(fos);
-                pw.println();
+                pw.print("");
                 if (pw != null) {
                     pw.close();
                 }
@@ -101,7 +155,7 @@ public class CustomerTestCases {
             } else {
                 FileOutputStream fos = new FileOutputStream("PurchaseHistoryDatabase.txt", false);
                 PrintWriter pw = new PrintWriter(fos);
-                pw.println();
+                pw.print("");
                 if (pw != null) {
                     pw.close();
                 }
@@ -111,5 +165,7 @@ public class CustomerTestCases {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+
+
     }
 }

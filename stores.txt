@@ -1,2 +1,1 @@
-Store,Location,Username;
-StoreA,Location,Username;Product1,Description,10.0,10;
+storename,storeLocation,username;strawberry,fruit,20.0,20;blueberry,fruit,15.0,20;

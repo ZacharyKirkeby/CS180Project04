@@ -1,1 +1,2 @@
-
+email;username;storename;strawberry;10;20.00
+email;username;storename;blueberry;12;15.00

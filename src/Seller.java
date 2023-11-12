@@ -708,8 +708,6 @@ public abstract class Seller {
                 String temp = combined.get(k);
                 combined.remove(k);
                 combined.add(0, temp);
-
-
             }
         }
         for (int a = 0; a < combined.size(); a++) {

@@ -16,11 +16,11 @@ import java.util.*;
 
 
 public abstract class Customer {
-    private static final ArrayList<String> emails = new ArrayList<>(); // emails arraylist
-    private static final ArrayList<String> usernames = new ArrayList<>(); // usernames arraylist
-    private static final ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
-    private static final ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
-    private static final ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
+    private static ArrayList<String> emails = new ArrayList<>(); // emails arraylist
+    private static ArrayList<String> usernames = new ArrayList<>(); // usernames arraylist
+    private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
+    private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
+    private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
     private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
     //shopping cart database for all customers
     private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
