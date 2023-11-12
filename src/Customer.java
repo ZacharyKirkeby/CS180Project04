@@ -16,14 +16,14 @@ import java.util.*;
 
 
 public abstract class Customer {
-    private static ArrayList<String> emails = new ArrayList<>(); // emails arraylist
-    private static ArrayList<String> usernames = new ArrayList<>(); // usernames arraylist
-    private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
-    private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
-    private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
-    private static String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
+    private static final ArrayList<String> emails = new ArrayList<>(); // emails arraylist
+    private static final ArrayList<String> usernames = new ArrayList<>(); // usernames arraylist
+    private static final ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
+    private static final ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
+    private static final ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
+    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
     //shopping cart database for all customers
-    private static String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
+    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
     // purchase history databse for all customers
 
 
@@ -50,7 +50,7 @@ public abstract class Customer {
      */
 
     public static boolean searchedStoreExists(String storeName, ArrayList<Store> stores) {
-        for (Store store : MarketPlace.getStores()) {
+        for (Store store : Seller.getStores()) {
             if (store.getStoreName().equals(storeName)) {
                 return true;
             }
@@ -65,7 +65,7 @@ public abstract class Customer {
      */
 
     public static boolean searchedProductExists(String productName, ArrayList<Store> stores) {
-        for (Store store : MarketPlace.getStores()) {
+        for (Store store : Seller.getStores()) {
             for (Product product : store.getProductList()) {
                 if (product.getName().equals(productName)) {
                     return true;
@@ -77,6 +77,7 @@ public abstract class Customer {
 
     /**
      * Adds a product to the shopping cart database
+     *
      * @param email
      * @param username
      * @param store
@@ -96,6 +97,7 @@ public abstract class Customer {
 
     /**
      * Removes a product from the purchase history database
+     *
      * @param email
      * @param username
      * @param storeName
@@ -129,6 +131,7 @@ public abstract class Customer {
      * Decreases the product quantity
      * Updates the shopping cart database
      * Updates the purchase history database
+     *
      * @param username
      * @return boolean of whether the products in the shopping cart were purchased sucessfully
      */
@@ -138,22 +141,23 @@ public abstract class Customer {
         boolean productsBoughtSuccessfully = false;
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches'
-                for (int j = 0; j < MarketPlace.getStores().size(); j++) { // iterate through stores in marketplace
-                    if (storeNames.get(i).equals(MarketPlace.getStores().get(j).getStoreName())) {
+                for (int j = 0; j < Seller.getStores().size(); j++) { // iterate through stores in marketplace
+                    if (storeNames.get(i).equals(Seller.getStores().get(j).getStoreName())) {
                         // if storename matches
-                        for (int k = 0; k < MarketPlace.getStores().get(j).getProductList().size(); k++) {
-                            // iterrate through product list
-                            if (MarketPlace.getStores().get(j).getProductList().get(k).getName()
+                        for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
+                            // iterate through product list
+                            if (Seller.getStores().get(j).getProductList().get(k).getName()
                                     .equals(productNames.get(i))) { // if product name matches
-                                MarketPlace.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
+                                Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
+                                double unitprice =
+                                        Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
+
                                 writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
+                                        productNames.get(i), quantities.get(i), unitprice);
+
+                                removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
                                         productNames.get(i), quantities.get(i));
-                                emails.remove(i);
-                                usernames.remove(i);
-                                storeNames.remove(i);
-                                productNames.remove(i);
-                                quantities.remove(i);
-                                writeToShoppingCartDatabaseFile();
+
                                 productsBoughtSuccessfully = true;
                             }
                         }
@@ -166,6 +170,7 @@ public abstract class Customer {
 
     /**
      * Writes to the purchase history database file
+     *
      * @param email
      * @param username
      * @param storeName
@@ -174,9 +179,10 @@ public abstract class Customer {
      */
 
     public static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName,
-                                                          String productName, int quantity) {
+                                                          String productName, int quantity, double unitprice) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
-            pw.println(String.format("%s,%s;%s;%s;%d", email, username, storeName, productName, quantity));
+            pw.println(String.format("%s;%s;%s;%s;%d;%.2f", email, username, storeName, productName, quantity,
+                    unitprice));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,7 +196,7 @@ public abstract class Customer {
     public static void writeToShoppingCartDatabaseFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
-                pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
+                pw.println(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
                         productNames.get(i), quantities.get(i)));
             }
         } catch (IOException e) {
@@ -263,7 +269,7 @@ public abstract class Customer {
         ArrayList<String> customerProducts = new ArrayList<>();
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches
-                customerProducts.add(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i),
+                customerProducts.add(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i),
                         storeNames.get(i), productNames.get(i), quantities.get(i)));
             }
         }
@@ -272,6 +278,7 @@ public abstract class Customer {
 
     /**
      * Generates purchase history file for the customer identified by the username
+     *
      * @param username
      * @param fileName
      */
@@ -280,7 +287,8 @@ public abstract class Customer {
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
             for (int i = 0; i < usernames.size(); i++) {
                 if (usernames.get(i).equals(username)) { // check if username and email match
-                    pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
+                    pw.println(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
+                            productNames.get(i), quantities.get(i)));
                 }
             }
         } catch (IOException e) {
@@ -290,18 +298,19 @@ public abstract class Customer {
 
     //Optional Method
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
-                                      String description ){
+                                      String description) {
         boolean bool = false;
-        while(!bool){
-            if( !(1 <= rating && rating <= 5)){
+        while (!bool) {
+            if (!(1 <= rating && rating <= 5)) {
                 System.out.println("Invalid Input");
                 System.out.println("Try Again");
                 System.out.println("What is your Rating 1-5 ");
+            } else {
+                bool = true;
             }
-            else {bool = true;}
         }
-        try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
-            PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt", true), true)){
+        try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
+             PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt", true), true)) {
             String line = br.readLine();
             int count = 0;
             if (line == null) {
@@ -322,25 +331,26 @@ public abstract class Customer {
         }
         return false;
     }
-    public static String viewReviews(String storeName, String productName){
+
+    public static String viewReviews(String storeName, String productName) {
         String result = "Store Name | Product Name | Customer Name | Rating";
-        try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))){
+        try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))) {
             String line = br.readLine();
-            while(line != null){
+            while (line != null) {
                 String[] subpart = line.split(",");
-                if(storeName.equals("")) {
+                if (storeName.equals("")) {
                     if (subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
-                } else{
+                } else {
                     if (subpart[0].contains(storeName) && subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
                 }
                 line = br.readLine();
             }
-        } catch (Exception e){
-            e.printStackTrace();;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         result = result.replace(",", "|");
         return result;

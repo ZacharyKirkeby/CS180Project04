@@ -16,35 +16,19 @@ public class Store {
     private ArrayList<Product> productList; // list of products
     private String storeName; // store name
     private String storeLocation; // store location (thematic)
-    private Seller storeOwner; // who owns the store
     private String sellerUsername; // second way of checking
     private int totalSales = 0; // total sales
     private double totalRevenue = 0; // total money earned
 
     /**
-     * Constructor w Seller object
-     * @param name
-     * @param storeLocation
-     * @param seller
-     * @param productList
-     */
-    public Store(String name, String storeLocation, Seller seller,
-                 ArrayList<Product> productList) {
-        this.storeName = name;
-        this.storeLocation = storeLocation;
-        this.storeOwner = seller;
-        this.productList = productList;
-    }
-
-    /**
      * Constructor w Seller username
+     *
      * @param name
      * @param storeLocation
      * @param sellerUsername
      * @param productList
      */
-    public Store(String name, String storeLocation, String sellerUsername,
-                 ArrayList<Product> productList) {
+    public Store(String name, String storeLocation, String sellerUsername, ArrayList<Product> productList) {
         this.storeName = name;
         this.storeLocation = storeLocation;
         this.sellerUsername = sellerUsername;
@@ -59,11 +43,10 @@ public class Store {
     }
 
     /**
-     * iterates through list
-     * adds up all sales
-     * @return
+     * @return the total number of sales across all products
      */
     public int getTotalSales() {
+        totalSales = 0;
         for (Product p : productList) {
             totalSales += p.getQuantitySold();
         }
@@ -71,19 +54,18 @@ public class Store {
     }
 
     /**
-     * calculates money earned
-     * @return
+     * @return total revenue across all products
      */
     public double getTotalRevenue() {
+        totalRevenue = 0;
         for (Product p : productList) {
-            totalRevenue += p.getSales();
+            totalRevenue += p.getRevenue();
         }
         return totalRevenue;
     }
 
     /**
-     * standard getter for products
-     * @return
+     * @return list of products
      */
     public ArrayList<Product> getProductList() {
         return productList;
@@ -94,7 +76,9 @@ public class Store {
         this.productList = productList;
     }
 
-    // returns store name
+    /**
+     * @return store name
+     */
     public String getStoreName() {
         return storeName;
     }
@@ -104,7 +88,9 @@ public class Store {
         this.storeName = storeName;
     }
 
-    // generic getter
+    /**
+     * @return store location
+     */
     public String getStoreLocation() {
         return storeLocation;
     }
@@ -114,14 +100,9 @@ public class Store {
         this.storeLocation = storeLocation;
     }
 
-    public Seller getStoreOwner() {
-        return storeOwner;
-    }
-
-    public void setStoreOwner(Seller storeOwner) {
-        this.storeOwner = storeOwner;
-    }
-
+    /**
+     * @return username of the seller/store owner
+     */
     public String getSellerUsername() {
         return sellerUsername;
     }
@@ -130,28 +111,30 @@ public class Store {
         this.sellerUsername = sellerUsername;
     }
 
+    /**
+     * @return store name, store location, seller username
+     */
     public String toString() {
         return storeName + "," + storeLocation + "," + sellerUsername;
     }
 
+    /**
+     * @return store name and the list of all products separated by a |
+     */
     public String toStringProducts() {
         String products = "";
-        for (Product p: productList) {
+        for (Product p : productList) {
             products += p.getName() + " | ";
         }
-        return storeName + "," + products;
+        String result = storeName + ":" + products;
+        return result.substring(0, result.length() - 3);
     }
 
-    public ArrayList<Product> cheapestProduct(ArrayList<Product> products) {
-        return Product.sortByCheapest(products);
-    }
-
-    public String getSellserUsername() {
-        return sellerUsername;
-    }
-
-    public void setSellserUsername(String sellserUsername) {
-        this.sellerUsername = sellserUsername;
+    /**
+     * @return sorted arraylist of products from cheapest to most expensive
+     */
+    public ArrayList<Product> getProductsSortedByCheapest() {
+        return Product.sortByCheapest(productList);
     }
 
     /**
@@ -159,18 +142,17 @@ public class Store {
      * if store name corresponds to this store name
      * adds line
      * returns end list of customers and their purchases
+     *
      * @Author Zachary Kirkeby
      **/
-
-    public String getSortedCustomersAndPurchases() {
+    public String getCustomersAndPurchases() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
                 String[] subpart = line.split(";");
                 if (subpart[2].equals(storeName)) {
-                    sentence += line + "\n";
-                    sentence.replace(";", " | ");
+                    sentence += line.replaceAll(";", " | ") + "\n";
                 }
                 line = reader.readLine();
             }
@@ -184,15 +166,15 @@ public class Store {
      * Iterates through purchase history file
      * adds records by adding line
      * returns end list of customers and their purchases
+     *
      * @Auther Zachary Kirkeby
      **/
-    public static String getCustomersAndPurchases() {
+    public static String getAllCustomersAndPurchases() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
-                sentence += line + "\n";
-                sentence.replace(";", " | ");
+                sentence += line.replaceAll(";", " | ") + "\n";
                 line = reader.readLine();
             }
         } catch (Exception e) {
@@ -201,15 +183,9 @@ public class Store {
         return sentence;
     }
 
-    /**
-     * calculates purchases
-     * possibly redundant
-     */
-    public void Purchases() {
-        double totalPurchases = 0;
-        for (int i = 0; i < productList.size(); i++) {
-            totalPurchases += productList.get(i).getSales();
-        }
+    public String getSortedCustomersAndPurchases() {
+        // TODO
+        return null;
     }
 
     /**
@@ -217,21 +193,24 @@ public class Store {
      * checks for matches based off current store object
      * adds details if matches
      * includes some formatting
+     *
      * @return
      * @Author Zachary Kirkeby
      */
     public String getCustomerInformationAndRevenue() {
-        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased |" +
-                " Revenue From Customer \n";
+        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased |"
+            + " Revenue From Customer \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
                 String[] subpart = line.split(";");
                 String productName = subpart[3];
-                for (Product p:productList) {
+                for (Product p : productList) {
                     if (p.getName().equals(productName) && (subpart[2].equals(storeName))) {
-                        double revenue = Integer.parseInt(subpart[4]) * p.getPurchasePrice();
-                        sentence += line + " | " + revenue + "\n";
+                        double revenue = Integer.parseInt(subpart[4]) * Double.parseDouble(subpart[5]); // only gets
+                        // current
+                        // price and doesn't know what the price at sale was
+                        sentence += line.replaceAll(";", " | ") + " | " + revenue + "\n";
                     }
                 }
                 line = reader.readLine();
@@ -245,42 +224,55 @@ public class Store {
     /**
      * Finds product and calls respective product method
      * starts sale
-     * returns failure or not
+     * returns same values as startSale method in product
      * handler for method in product
+     *
      * @param productName
      * @param salePrice
      * @param saleCap
      * @return
      * @Author Zachary Kirkeby
      */
-    public String triggerSale(String productName, double salePrice, int saleCap) {
-        String output = "";
-        for (Product p:productList) {
+    public boolean triggerSale(String productName, double salePrice, int saleCap) {
+        boolean result = false;
+        for (Product p : productList) {
             if (p.getName().equals(productName)) {
-                output = p.startSale(salePrice, saleCap);
+                result = p.startSale(salePrice, saleCap);
             }
         }
-        return output;
+        return result;
     }
+
     /**
-     * Finds product and calls respective product method
-     * starts sale
-     * returns failure or not
-     * handler for method in product
+     * @param productName of product you want to end sale for
+     * @return true if product found and sale ended, false if not
+     */
+    public boolean triggerEndSale(String productName) {
+        boolean result = false;
+        for (Product p : productList) {
+            if (p.getName().equals(productName)) {
+                result = p.endSale();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * sets the order capacity for each order
+     * (NOT FOR CUSTOMER, customer can still place multiple order and bypass this)
+     *
      * @param productName
      * @param cap
-     * @return
+     * @return true if successful false if not
      * @Author Zachary Kirkeby
      */
-    public String triggerCap(String productName, int cap) {
-        String output = "";
-        for (Product p:productList) {
+    public boolean triggerOrderCap(String productName, int cap) {
+        boolean result = false;
+        for (Product p : productList) {
             if (p.getName().equals(productName)) {
-                output = p.setCap(cap);
+                result = p.setCap(cap);
             }
         }
-        return output;
+        return result;
     }
-
-
 }

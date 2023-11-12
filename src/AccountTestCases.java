@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * A set of test cases.
@@ -40,36 +40,26 @@ public class AccountTestCases {
     @Test(timeout = 1000)
     public void createAccountTest() {
         reset();
-        assertEquals("Ensure that invalid email format is being checked!", false,
-            Account.createAccount("InvalidEmailFormat", "username", "password", "customer"));
+        assertFalse("Ensure that invalid email format is being checked!", Account.createAccount("InvalidEmailFormat", "username", "password", "customer"));
 
-        assertEquals("Ensure that invalid email format is being checked!", false,
-            Account.createAccount("InvalidEmail Format", "username", "password", "customer"));
+        assertFalse("Ensure that invalid email format is being checked!", Account.createAccount("InvalidEmail Format", "username", "password", "customer"));
 
-        assertEquals("Ensure that invalid email format is being checked!", false,
-            Account.createAccount("InvalidEmail @Format", "username", "password", "customer"));
+        assertFalse("Ensure that invalid email format is being checked!", Account.createAccount("InvalidEmail @Format", "username", "password", "customer"));
 
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("ValidEmailFormat@gmail.com", "username", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("ValidEmailFormat@gmail.com", "username", "password", "customer"));
 
-        assertEquals("Ensure that repeat emails are being checked!", false,
-            Account.createAccount("ValidEmailFormat@gmail.com", "username1", "password", "customer"));
+        assertFalse("Ensure that repeat emails are being checked!", Account.createAccount("ValidEmailFormat@gmail.com", "username1", "password", "customer"));
 
         // should have account added to database (persistent file) now
-        assertEquals("Ensure that invalid username format is being checked!", false,
-            Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse rname", "password", "customer"));
+        assertFalse("Ensure that invalid username format is being checked!", Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse rname", "password", "customer"));
 
-        assertEquals("Ensure that invalid username format is being checked!", false,
-            Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse@rname", "password", "customer"));
+        assertFalse("Ensure that invalid username format is being checked!", Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse@rname", "password", "customer"));
 
-        assertEquals("Ensure that invalid username format is being checked!", false,
-            Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse.rname", "password", "customer"));
+        assertFalse("Ensure that invalid username format is being checked!", Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse.rname", "password", "customer"));
 
-        assertEquals("Ensure that invalid username format is being checked!", false,
-            Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse\\rname", "password", "customer"));
+        assertFalse("Ensure that invalid username format is being checked!", Account.createAccount("ValidEmailFormat@gmail.com", "invaliduse\\rname", "password", "customer"));
 
-        assertEquals("Ensure that repeat usernames are being checked!", false,
-            Account.createAccount("ValidEmailFormat1@gmail.com", "username", "password", "customer"));
+        assertFalse("Ensure that repeat usernames are being checked!", Account.createAccount("ValidEmailFormat1@gmail.com", "username", "password", "customer"));
     }
 
     @Test(timeout = 1000)
@@ -77,27 +67,20 @@ public class AccountTestCases {
         reset();
 
         // create a test account to log into
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("ValidEmailFormat@gmail.com", "username", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("ValidEmailFormat@gmail.com", "username", "password", "customer"));
 
         // test
-        assertEquals("Ensure that invalid usernames are being checked!", false,
-            Account.login("invalidUsername", "password"));
+        assertFalse("Ensure that invalid usernames are being checked!", Account.login("invalidUsername", "password"));
 
-        assertEquals("Ensure that invalid emails are being checked!", false,
-            Account.login("invalidEmail@gmail.com", "password"));
+        assertFalse("Ensure that invalid emails are being checked!", Account.login("invalidEmail@gmail.com", "password"));
 
-        assertEquals("Ensure that valid usernames are being passed!", true,
-            Account.login("username", "password"));
+        assertTrue("Ensure that valid usernames are being passed!", Account.login("username", "password"));
 
-        assertEquals("Ensure that valid emails are being passed!", true,
-            Account.login("ValidEmailFormat@gmail.com", "password"));
+        assertTrue("Ensure that valid emails are being passed!", Account.login("ValidEmailFormat@gmail.com", "password"));
 
-        assertEquals("Ensure that invalid passwords are being checked with email!", false,
-            Account.login("ValidEmailFormat@gmail.com", "invalidPassword"));
+        assertFalse("Ensure that invalid passwords are being checked with email!", Account.login("ValidEmailFormat@gmail.com", "invalidPassword"));
 
-        assertEquals("Ensure that invalid passwords are being checked with username!", false,
-            Account.login("username", "invalidPassword"));
+        assertFalse("Ensure that invalid passwords are being checked with username!", Account.login("username", "invalidPassword"));
     }
 
     @Test(timeout = 1000)
@@ -105,28 +88,21 @@ public class AccountTestCases {
         reset();
 
         // create a test account to delete
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("ValidEmailFormat@gmail.com", "username1", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("ValidEmailFormat@gmail.com", "username1", "password", "customer"));
 
         // create a second test account to delete
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("testing@gmail.com", "username2", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("testing@gmail.com", "username2", "password", "customer"));
 
         //test
-        assertEquals("Ensure that invalid usernames are being checked!", false,
-            Account.deleteAccount("invalidUsername", "password"));
+        assertFalse("Ensure that invalid usernames are being checked!", Account.deleteAccount("invalidUsername", "password"));
 
-        assertEquals("Ensure that invalid emails are being checked!", false,
-            Account.deleteAccount("invalidEmail@gmail.com", "password"));
+        assertFalse("Ensure that invalid emails are being checked!", Account.deleteAccount("invalidEmail@gmail.com", "password"));
 
-        assertEquals("Ensure that invalid passwords are being checked with email!", false,
-            Account.deleteAccount("ValidEmailFormat@gmail.com", "invalidPassword"));
+        assertFalse("Ensure that invalid passwords are being checked with email!", Account.deleteAccount("ValidEmailFormat@gmail.com", "invalidPassword"));
 
-        assertEquals("Ensure that invalid passwords are being checked with username!", false,
-            Account.deleteAccount("username", "invalidPassword"));
+        assertFalse("Ensure that invalid passwords are being checked with username!", Account.deleteAccount("username", "invalidPassword"));
 
-        assertEquals("Ensure that valid usernames are being passed!", true,
-            Account.deleteAccount("username1", "password"));
+        assertTrue("Ensure that valid usernames are being passed!", Account.deleteAccount("username1", "password"));
 
         // account1 should have been deleted by now so check file to see if it has been updated
         ArrayList<String> list1 = new ArrayList<>();
@@ -144,9 +120,7 @@ public class AccountTestCases {
 
         assertEquals("Ensure the AccountData.txt file is updated after deleting account!", 1, list1.size());
 
-        assertEquals("Ensure that valid emails are being passed!",
-            Account.deleteAccount("testing@gmail.com", "password"),
-            true);
+        assertTrue("Ensure that valid emails are being passed!", Account.deleteAccount("testing@gmail.com", "password"));
 
         // account2 should have been deleted by now so check file to see if its empty
         ArrayList<String> list2 = new ArrayList<>();
@@ -169,18 +143,14 @@ public class AccountTestCases {
         reset();
 
         // create a test account1
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
 
         // create a second test account2
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("email2@gmail.com", "username2", "password", "seller"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("email2@gmail.com", "username2", "password", "seller"));
 
-        assertEquals("Ensure that the old username exists!", false,
-            Account.changeUsername("newusername", "oldusername"));
+        assertFalse("Ensure that the old username exists!", Account.changeUsername("newusername", "oldusername"));
 
-        assertEquals("Ensure that the old username exists!", true,
-            Account.changeUsername("newusername", "username1"));
+        assertTrue("Ensure that the old username exists!", Account.changeUsername("newusername", "username1"));
 
         ArrayList<String> list1 = new ArrayList<>();
         try (BufferedReader bfr = new BufferedReader(new FileReader("AccountData.txt"))) {
@@ -203,8 +173,7 @@ public class AccountTestCases {
                 "seller", list1.get(1));
 
 
-        assertEquals("Ensure that the method also works for seller!", true,
-            Account.changeUsername("newusername2", "username2"));
+        assertTrue("Ensure that the method also works for seller!", Account.changeUsername("newusername2", "username2"));
 
 
         // check file contents
@@ -234,33 +203,24 @@ public class AccountTestCases {
         reset();
 
         // create a test account
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
 
         // create a second test account
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("email2@gmail.com", "username2", "password", "seller"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("email2@gmail.com", "username2", "password", "seller"));
 
-        assertEquals("Ensure that the username is valid!", false,
-            Account.changePassword("username", "password", "newpassword"));
+        assertFalse("Ensure that the username is valid!", Account.changePassword("username", "password", "newpassword"));
 
-        assertEquals("Ensure that the email is valid!", false,
-            Account.changePassword("fakeemail@gmail.com", "password", "newpassword"));
+        assertFalse("Ensure that the email is valid!", Account.changePassword("fakeemail@gmail.com", "password", "newpassword"));
 
-        assertEquals("Ensure that the old password is valid!", false,
-            Account.changePassword("username1", "incorrectpassword", "newpassword"));
+        assertFalse("Ensure that the old password is valid!", Account.changePassword("username1", "incorrectpassword", "newpassword"));
 
-        assertEquals("Ensure that the new password is valid!", false,
-            Account.changePassword("username1", "password", ""));
+        assertFalse("Ensure that the new password is valid!", Account.changePassword("username1", "password", ""));
 
-        assertEquals("Ensure that the new password is valid!", false,
-            Account.changePassword("username1", "password", " "));
+        assertFalse("Ensure that the new password is valid!", Account.changePassword("username1", "password", " "));
 
-        assertEquals("Ensure that the new password is valid!", false,
-            Account.changePassword("username1", "password", "    "));
+        assertFalse("Ensure that the new password is valid!", Account.changePassword("username1", "password", "    "));
 
-        assertEquals("Ensure that the arguments are valid!", true,
-            Account.changePassword("username1", "password", "newpassword"));
+        assertTrue("Ensure that the arguments are valid!", Account.changePassword("username1", "password", "newpassword"));
 
         ArrayList<String> list1 = new ArrayList<>();
         try (BufferedReader bfr = new BufferedReader(new FileReader("AccountData.txt"))) {
@@ -283,8 +243,7 @@ public class AccountTestCases {
                 "seller", list1.get(1));
 
 
-        assertEquals("Ensure that the method also works with an email!", true,
-            Account.changePassword("email2@gmail.com", "password", "newpassword"));
+        assertTrue("Ensure that the method also works with an email!", Account.changePassword("email2@gmail.com", "password", "newpassword"));
 
 
         // check file contents
@@ -314,24 +273,18 @@ public class AccountTestCases {
         reset();
 
         // create a test account
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
 
         // create a second test account
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("email2@gmail.com", "username2", "password", "seller"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("email2@gmail.com", "username2", "password", "seller"));
 
-        assertEquals("Ensure that the username is valid!", false,
-            Account.changeRole("username", "password", "seller"));
+        assertFalse("Ensure that the username is valid!", Account.changeRole("username", "password", "seller"));
 
-        assertEquals("Ensure that the email is valid!", false,
-            Account.changeRole("fakeemail@gmail.com", "password", "seller"));
+        assertFalse("Ensure that the email is valid!", Account.changeRole("fakeemail@gmail.com", "password", "seller"));
 
-        assertEquals("Ensure that the password is valid!", false,
-            Account.changeRole("username1", "incorrectpassword", "seller"));
+        assertFalse("Ensure that the password is valid!", Account.changeRole("username1", "incorrectpassword", "seller"));
 
-        assertEquals("Ensure that the arguments are valid!", true,
-            Account.changeRole("username1", "password", "seller"));
+        assertTrue("Ensure that the arguments are valid!", Account.changeRole("username1", "password", "seller"));
 
         ArrayList<String> list1 = new ArrayList<>();
         try (BufferedReader bfr = new BufferedReader(new FileReader("AccountData.txt"))) {
@@ -354,8 +307,7 @@ public class AccountTestCases {
                 "seller", list1.get(1));
 
 
-        assertEquals("Ensure that the method also works with an email!", true,
-            Account.changeRole("email2@gmail.com", "password", "customer"));
+        assertTrue("Ensure that the method also works with an email!", Account.changeRole("email2@gmail.com", "password", "customer"));
 
 
         // check file contents
@@ -385,14 +337,11 @@ public class AccountTestCases {
         reset();
 
         // create a test account
-        assertEquals("Ensure that valid format is being passed!", true,
-            Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
+        assertTrue("Ensure that valid format is being passed!", Account.createAccount("email1@gmail.com", "username1", "password", "customer"));
 
-        assertEquals("Ensure that the username is valid!", null,
-            Account.getRole("username"));
+        assertNull("Ensure that the username is valid!", Account.getRole("username"));
 
-        assertEquals("Ensure that the email is valid!", null,
-            Account.getRole("fakeemail@gmail.com"));
+        assertNull("Ensure that the email is valid!", Account.getRole("fakeemail@gmail.com"));
 
         assertEquals("Ensure that the argument is valid!", "customer",
             Account.getRole("email1@gmail.com"));

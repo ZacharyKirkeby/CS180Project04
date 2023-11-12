@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 Store,Location,Username;
 StoreA,Location,Username;Product1,Description,10.0,10;
+=======
+Store,Location,Username
+foodspot,internet,hello
+>>>>>>> 3c708895797275202f11e6a22e53f37c27c57e38

@@ -1,1 +1,1 @@
-test1@test.com;Tester;d9b5f58f0b38198293971865a14074f59eba3e82595becbe86ae51f1d9f1f65e;seller
+email1@gmail.com;username1;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;customer

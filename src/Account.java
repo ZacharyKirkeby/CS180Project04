@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,10 +17,10 @@ import java.util.regex.Pattern;
 
 public class Account {
 
-    private static ArrayList<String> emails = new ArrayList<>(); // email arraylist
-    private static ArrayList<String> usernames = new ArrayList<>(); // username arraylist
-    private static ArrayList<String> passwords = new ArrayList<>(); // password arraylist
-    private static ArrayList<String> roles = new ArrayList<>(); // roles arraylist
+    private static final ArrayList<String> emails = new ArrayList<>(); // email arraylist
+    private static final ArrayList<String> usernames = new ArrayList<>(); // username arraylist
+    private static final ArrayList<String> passwords = new ArrayList<>(); // password arraylist
+    private static final ArrayList<String> roles = new ArrayList<>(); // roles arraylist
 
     /**
      * Creates new account if username and email are unique (case-insensitive) and stores
@@ -81,18 +80,10 @@ public class Account {
             if (index == -1) {
                 return false;
             } else {
-                if (encrypt(password).equals(passwords.get(index))) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return encrypt(password).equals(passwords.get(index));
             }
         } else {
-            if (encrypt(password).equals(passwords.get(index))) {
-                return true;
-            } else {
-                return false;
-            }
+            return encrypt(password).equals(passwords.get(index));
         }
     }
 
@@ -175,9 +166,6 @@ public class Account {
             return false; // should not happen
         }
         usernames.set(index, newUsername);
-        if (roles.get(index).equalsIgnoreCase("seller")) {
-            Seller.changeStoreUsernames(newUsername, oldUsername);
-        }
         writeToFile();
         return true;
     }
