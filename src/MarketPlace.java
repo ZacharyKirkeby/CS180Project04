@@ -67,7 +67,10 @@ public class MarketPlace {
              3. Buy products in cart\s
              4. View shopping cart\s
             """;
-    private static  final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
+    private static  final String AVAILABILITY = """
+             1. Sort By Highest Stock\s 
+             2. Sort By Low On Stock\s
+             """;
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores = new ArrayList<>();
     private static boolean isLoggedIn;
@@ -98,9 +101,9 @@ public class MarketPlace {
         do {
             boolean logOrRegistration = false;
             while(!logOrRegistration) {
-            System.out.println(WELCOME_PROMPT);
-            String input = scanner.nextLine().toLowerCase();
-            isLoggedIn = false;
+                System.out.println(WELCOME_PROMPT);
+                String input = scanner.nextLine().toLowerCase();
+                isLoggedIn = false;
                 switch (input) { // handles user case of login or register and directs to the next relevant step
                     // Authenticates User, begins use loop
                     case "login":
@@ -115,8 +118,8 @@ public class MarketPlace {
                             System.out.println("Try Again!");
                         }
                         else if (logOrRegistration){
-                        isLoggedIn = true;
-                    }
+                            isLoggedIn = true;
+                        }
 
                         // Switch Var declarations
                         String storeName;
@@ -501,6 +504,9 @@ public class MarketPlace {
                                     //View All Products
                                     case "4":
                                         Seller.printProductAndStores();
+                                        System.out.println("Which Product would you like to view?");
+                                        input = scanner.nextLine();
+                                        System.out.println(Seller.searchByProduct(input));
                                         break;
                                     //Sort Products by Cheapest
                                     case "5":
