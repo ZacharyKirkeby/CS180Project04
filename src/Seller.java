@@ -497,7 +497,7 @@ public abstract class Seller {
         } else {
             for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
-                        stores.get(index).getProductList().get(i).getSales());
+                        stores.get(index).getProductList().get(i).getRevenue());
             }
         }
         if (sorted) {
@@ -634,11 +634,12 @@ public abstract class Seller {
      */
     public static String searchByProduct(String productName) {
         readFromFile();
-        String searched = "Store Name | Product Name \n";
+        String searched = "Store Name | Product Name | Quantity Available \n";
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                 if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
-                    searched += stores.get(i).getStoreName() + " | " + stores.get(i).getProductList().get(j).getName();
+                    searched += stores.get(i).getStoreName() + " | " + stores.get(i).getProductList().get(j).getName()
+                        + stores.get(i).getProductList().get(j).getStockQuantity();
                 }
             }
         }
