@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class CustomerTestCases {
     public static void main(String[] args) {
@@ -32,7 +33,7 @@ public class CustomerTestCases {
     @Test(timeout = 1000)
     public void buyProductsTest() {
         reset();
-        assertEquals(false, Customer.buyProductsInShoppingCart("username"));
+        assertFalse(Customer.buyProductsInShoppingCart("username"));
 
         Customer.addToCart("email", "username", "storename", "productname", 10);
 

@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.sql.Array;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * A set of product test cases.
@@ -41,7 +41,6 @@ public class StoreTestCases {
     public void createStoreTest() {
 
         ArrayList<Product> productList = new ArrayList<>();
-        ;
 
         Product strawberry = new Product("strawberry", "fruit", 15.0, 10);
         Product blueberry = new Product("blueberry", "fruit", 10.0, 10);
@@ -114,15 +113,15 @@ public class StoreTestCases {
             store.getTotalRevenue(), 0.001);
 
         // start sale for raspberry and strawberry
-        assertEquals(true, store.triggerSale("raspberry", 3.0, 10));
-        assertEquals(true, store.triggerSale("strawberry", 12.0, 10));
-        assertEquals(false, store.triggerSale("fakename", 8.0, 10));
-        assertEquals(false, store.triggerSale("raspberry", 8.0, -10));
-        assertEquals(false, store.triggerSale("raspberry", -8.0, 10));
+        assertTrue(store.triggerSale("raspberry", 3.0, 10));
+        assertTrue(store.triggerSale("strawberry", 12.0, 10));
+        assertFalse(store.triggerSale("fakename", 8.0, 10));
+        assertFalse(store.triggerSale("raspberry", 8.0, -10));
+        assertFalse(store.triggerSale("raspberry", -8.0, 10));
 
         // end sale for blueberry
-        assertEquals(true, store.triggerEndSale("blueberry"));
-        assertEquals(false, store.triggerEndSale("fakename"));
+        assertTrue(store.triggerEndSale("blueberry"));
+        assertFalse(store.triggerEndSale("fakename"));
 
         // buy 2 blueberries at regular price (10.0)
         store.getProductList().get(1).buyProduct(2);
@@ -142,12 +141,12 @@ public class StoreTestCases {
             5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2 + 10.0 * 2 + 3.0 * 5, store.getTotalRevenue(),
             0.001);
 
-        assertEquals("Ensure triggerOrderCap method works!", true, store.triggerOrderCap("strawberry", 3));
+        assertTrue("Ensure triggerOrderCap method works!", store.triggerOrderCap("strawberry", 3));
 
         // try to buy 4 strawberries at sale price 12.0 each
-        assertEquals("Ensure triggerOrderCap method works!", false, store.getProductList().get(2).buyProduct(4));
+        assertFalse("Ensure triggerOrderCap method works!", store.getProductList().get(2).buyProduct(4));
 
-        assertEquals("Ensure triggerOrderCap method works!", true, store.getProductList().get(2).buyProduct(3));
+        assertTrue("Ensure triggerOrderCap method works!", store.getProductList().get(2).buyProduct(3));
 
         assertEquals("Ensure getTotalSales is working correctly!", 27, store.getTotalSales());
 
@@ -172,7 +171,7 @@ public class StoreTestCases {
 
 
         System.out.println(store.getCustomerInformationAndRevenue());
-        System.out.println(store.getAllCustomersAndPurchases());
+        System.out.println(Store.getAllCustomersAndPurchases());
         System.out.println(store.getCustomersAndPurchases());
 
     }

@@ -16,7 +16,7 @@ import java.util.*;
 
 public abstract class Seller {
 
-    private static ArrayList<Store> stores = new ArrayList<Store>(); // store arraylist
+    private static final ArrayList<Store> stores = new ArrayList<Store>(); // store arraylist
 
     /**
      * Prints all stores
@@ -652,7 +652,6 @@ public abstract class Seller {
                 if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
                     searched += stores.get(i).getStoreName() + " | " +
                             Seller.printProducts(stores.get(i).getStoreName()) + "\n";
-                    ;
                 }
             }
         }
@@ -712,7 +711,7 @@ public abstract class Seller {
             }
         }
         for (int k = 0; k < combined.size(); k++) {
-            double min = (double) Integer.MAX_VALUE;
+            double min = Integer.MAX_VALUE;
             String[] subpart = combined.get(k).split(";");
             double purchasePrice = Double.parseDouble(subpart[2]);
             if (purchasePrice < min) {
@@ -750,7 +749,7 @@ public abstract class Seller {
             }
         }
         for (int k = 0; k < combined.size(); k++) {
-            double min = (double) Integer.MIN_VALUE;
+            double min = Integer.MIN_VALUE;
             String[] subpart = combined.get(k).split(";");
             double purchasePrice = Double.parseDouble(subpart[2]);
             if (purchasePrice > min) {
@@ -788,7 +787,7 @@ public abstract class Seller {
             }
         }
         for (int k = 0; k < combined.size(); k++) {
-            double min = (double) Integer.MIN_VALUE;
+            double min = Integer.MIN_VALUE;
             String[] subpart = combined.get(k).split(";");
             double quant = Double.parseDouble(subpart[3]);
             if (quant > min) {
@@ -826,7 +825,7 @@ public abstract class Seller {
             }
         }
         for (int k = 0; k < combined.size(); k++) {
-            double min = (double) Integer.MAX_VALUE;
+            double min = Integer.MAX_VALUE;
             String[] subpart = combined.get(k).split(";");
             double quant = Double.parseDouble(subpart[3]);
             if (quant < min) {

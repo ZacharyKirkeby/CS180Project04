@@ -77,7 +77,7 @@ public class MarketPlace {
      * @param stores (ArrayList<Stores></>)
      */
     public MarketPlace(ArrayList<Store> stores) {
-        this.stores = stores;
+        MarketPlace.stores = stores;
         // some kind of logic tbd
     }
     /**
