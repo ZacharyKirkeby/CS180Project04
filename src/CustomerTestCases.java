@@ -125,6 +125,60 @@ public class CustomerTestCases {
 
         assertEquals("email2;username2;storename;strawberry;5", list1.get(0));
 
+        assertEquals("[]", Customer.getShoppingCartofCustomer("username").toString());
+
+        assertEquals("[email2;username2;storename;strawberry;5]", Customer.getShoppingCartofCustomer("username2").toString());
+
+
+        Customer.getPurchaseHistoryofCustomer("username", "Customer1PurchaseHistory.txt");
+
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("Customer1PurchaseHistory.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        assertEquals("email;username;storename;strawberry;10", list1.get(0));
+        assertEquals("email;username;storename;blueberry;12", list1.get(1));
+
+        Customer.getPurchaseHistoryofCustomer("username2", "Customer2PurchaseHistory.txt");
+
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("Customer2PurchaseHistory.txt"))) {
+            String line = bfr.readLine();
+            while (line != null && !line.isEmpty()) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        assertEquals(0, list1.size());
+    }
+
+    @Test(timeout = 1000)
+    public void reviewTests() {
+
+        assertEquals(false, Customer.leaveReview("storename", "productName", "customerName", 6, "description"));
+
+        assertEquals(false, Customer.leaveReview("storename", "productName", "customerName", 0, "description"));
+
+        assertEquals(true, Customer.leaveReview("storename", "productName", "customerName", 3, "description"));
+
+        assertEquals("storename | productName | customerName | 3 | description", Customer.viewReviews("storename",
+            "productName"));
     }
 
     public static void reset() {
@@ -165,7 +219,7 @@ public class CustomerTestCases {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-
     }
+
+
 }
