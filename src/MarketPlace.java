@@ -48,15 +48,15 @@ public class MarketPlace {
              5. Back\s
             """;
     private static final String BUYERPROMPT = """
-             1. Search for a store\s
-             2. Search for a product\s
-             3. Search Product by Description\s
-             4. View All Products\s
-             5. Sort Products By Cheapest\s
-             6. Sort  Products By Most Expensive\s
-             7. Sort by Availability\s
-             8. Shopping Cart\s
-             9. Leave Review\s
+             1.  Search for a store\s
+             2.  Search for a product\s
+             3.  Search Product by Description\s
+             4.  View All Products\s
+             5.  Sort Products By Cheapest\s
+             6.  Sort  Products By Most Expensive\s
+             7.  Sort by Availability\s
+             8.  Shopping Cart\s
+             9.  Leave Review\s
              10. View Product Reviews\s
              11. Manage Account\s
              12. Logout\s
@@ -487,7 +487,6 @@ public class MarketPlace {
                                 case "3":
                                     System.out.println(SEARCH_PROMPT);
                                     input = scanner.nextLine();
-                                    System.out.println("Store  |  Product ");
                                     System.out.println(Seller.searchByDescription(input));
                                     break;
                                 //View All Products
