@@ -138,15 +138,14 @@ public class Store {
      *
      * @Author Zachary Kirkeby
      **/
-    public String getSortedCustomersAndPurchases() {
+    public String getCustomersAndPurchases() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
                 String[] subpart = line.split(";");
                 if (subpart[2].equals(storeName)) {
-                    sentence += line + "\n";
-                    sentence.replace(";", " | ");
+                    sentence += line.replaceAll(";", " | ") + "\n";
                 }
                 line = reader.readLine();
             }
@@ -163,13 +162,12 @@ public class Store {
      *
      * @Auther Zachary Kirkeby
      **/
-    public static String getCustomersAndPurchases() {
+    public static String getAllCustomersAndPurchases() {
         String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
-                sentence += line + "\n";
-                sentence.replace(";", " | ");
+                sentence += line.replaceAll(";", " | ") + "\n";
                 line = reader.readLine();
             }
         } catch (Exception e) {
@@ -188,7 +186,8 @@ public class Store {
      * @Author Zachary Kirkeby
      */
     public String getCustomerInformationAndRevenue() {
-        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased |" + " Revenue From Customer \n";
+        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased |"
+            + " Revenue From Customer \n";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
@@ -196,8 +195,10 @@ public class Store {
                 String productName = subpart[3];
                 for (Product p : productList) {
                     if (p.getName().equals(productName) && (subpart[2].equals(storeName))) {
-                        double revenue = Integer.parseInt(subpart[4]) * p.getPurchasePrice();
-                        sentence += line + " | " + revenue + "\n";
+                        double revenue = Integer.parseInt(subpart[4]) * Double.parseDouble(subpart[5]); // only gets
+                        // current
+                        // price and doesn't know what the price at sale was
+                        sentence += line.replaceAll(";", " | ") + " | " + revenue + "\n";
                     }
                 }
                 line = reader.readLine();

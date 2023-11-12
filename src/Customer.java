@@ -21,6 +21,7 @@ public abstract class Customer {
     private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
     private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
     private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
+    private static ArrayList<Integer> purchasePrices = new ArrayList<>(); // purchase prices arraylist
     private static String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
     //shopping cart database for all customers
     private static String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
@@ -142,12 +143,14 @@ public abstract class Customer {
                     if (storeNames.get(i).equals(MarketPlace.getStores().get(j).getStoreName())) {
                         // if storename matches
                         for (int k = 0; k < MarketPlace.getStores().get(j).getProductList().size(); k++) {
-                            // iterrate through product list
+                            // iterate through product list
                             if (MarketPlace.getStores().get(j).getProductList().get(k).getName()
                                     .equals(productNames.get(i))) { // if product name matches
                                 MarketPlace.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
+                                double unitprice =
+                                    MarketPlace.getStores().get(j).getProductList().get(k).getPurchasePrice();
                                 writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
-                                        productNames.get(i), quantities.get(i));
+                                        productNames.get(i), quantities.get(i), unitprice);
                                 emails.remove(i);
                                 usernames.remove(i);
                                 storeNames.remove(i);
@@ -174,9 +177,10 @@ public abstract class Customer {
      */
 
     public static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName,
-                                                          String productName, int quantity) {
+                                                          String productName, int quantity, double unitprice) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
-            pw.println(String.format("%s,%s;%s;%s;%d", email, username, storeName, productName, quantity));
+            pw.println(String.format("%s;%s;%s;%s;%d;%.2f", email, username, storeName, productName, quantity,
+                unitprice));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,7 +194,7 @@ public abstract class Customer {
     public static void writeToShoppingCartDatabaseFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
-                pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
+                pw.println(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
                         productNames.get(i), quantities.get(i)));
             }
         } catch (IOException e) {
@@ -263,7 +267,7 @@ public abstract class Customer {
         ArrayList<String> customerProducts = new ArrayList<>();
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches
-                customerProducts.add(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i),
+                customerProducts.add(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i),
                         storeNames.get(i), productNames.get(i), quantities.get(i)));
             }
         }
@@ -280,7 +284,8 @@ public abstract class Customer {
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
             for (int i = 0; i < usernames.size(); i++) {
                 if (usernames.get(i).equals(username)) { // check if username and email match
-                    pw.println(String.format("%s,%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i), productNames.get(i), quantities.get(i)));
+                    pw.println(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
+                        productNames.get(i), quantities.get(i)));
                 }
             }
         } catch (IOException e) {
