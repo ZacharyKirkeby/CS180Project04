@@ -38,11 +38,11 @@ public abstract class Seller {
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
-                System.out.println("Store not found");
+                index = i;
             }
         }
         if (index == -1) {
-            throw new IllegalArgumentException();
+            System.out.println("Store not found");
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 System.out.println(stores.get(index).getProductList().get(i).getName());
@@ -376,8 +376,10 @@ public abstract class Seller {
                 }
             }
             stores.get(index).getProductList().add(new Product(name, description, price, quantity));
+            writeToFile();
             return true;
         }
+
     }
 
     /**
