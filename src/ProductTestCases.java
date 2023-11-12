@@ -47,6 +47,10 @@ public class ProductTestCases {
 
         assertEquals("Ensure that setStockQuantity method works!", 10, product1.getStockQuantity());
 
+        product1.setPurchasePrice(15.0);
+
+        assertEquals("Ensure that setStockQuantity method works!", 15.0, product1.getPurchasePrice(), 0.001);
+
         product1.setName("productname");
 
         assertEquals("Ensure that setName method works!", "productname", product1.getName());
@@ -55,9 +59,16 @@ public class ProductTestCases {
 
         assertEquals("Ensure that setDescription method works!", "product description", product1.getDescription());
 
-//        product1.set("product description");
-//
-//        assertEquals("Ensure that setName method works!", "product description", product1.getDescription());
+        product1.buyProduct(10);
+
+        assertEquals("Ensure that buyProduct method updates stock quantity!", 0, product1.getStockQuantity());
+
+        assertEquals("Ensure that buyProduct method updates quantity sold!", 10, product1.getQuantitySold());
+
+        assertEquals("Ensure that getSales method works correctly!", 15.0 * 10, product1.getSales(), 0.001);
     }
+
+    // make sure to test getSales to see if a sale affects return value or not and also if anything changes if
+    // the sale ends.
 
 }
