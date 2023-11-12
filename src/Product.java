@@ -105,26 +105,28 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    public void buyProduct(int quantity) {
+    public boolean buyProduct(int quantity) {
         if (onSale) {
-            if (this.saleCap > 0 && quantity < this.saleCap) {
+            if (this.saleCap > 0 && quantity <= this.saleCap) {
                 this.stockQuantity -= quantity;
                 this.quantitySold += quantity;
+                this.saleSold += quantity;
+                this.saleCap -= quantity;
+            } else {
+                return false;
             }
-            if (this.onSale && this.saleCap != 0) {
-                this.saleCap--;
-                this.saleSold++;
-                if (saleCap == 0) {
-                    onSale = false;
-                }
+            if (saleCap == 0) {
+                onSale = false;
             }
         } else {
             if (quantity <= stockQuantity) {
                 this.stockQuantity -= quantity;
                 this.quantitySold += quantity;
+            } else {
+                return false;
             }
         }
-
+        return true;
     }
     /**
      *Getter for the Product's purchase price
@@ -218,7 +220,7 @@ public class Product {
      *
      */
     public String startSale(double salePrice, int saleCap) {
-        if (salePrice <= 0) {
+        if (salePrice <= 0 || saleCap <= 0) {
             return "Unable to Start Sale";
         } else {
             this.salePrice = salePrice;
@@ -265,7 +267,9 @@ public class Product {
         return orderCap;
     }
 
-
+    public boolean getOnSale() {
+        return onSale;
+    }
     /**
      * A toString for the Product Class
      */
