@@ -68,10 +68,10 @@ public class ProductTestCases {
 
         assertEquals("Ensure that buyProduct method updates quantity sold!", 10, product1.getQuantitySold());
 
-        assertEquals("Ensure that getSales method works correctly!", 15.0 * 10, product1.getSales(), 0.001);
+        assertEquals("Ensure that getRevenue method works correctly!", 15.0 * 10, product1.getRevenue(), 0.001);
     }
 
-    // make sure to test getSales to see if a sale affects return value or not and also if anything changes if
+    // make sure to test getRevenue to see if a sale affects return value or not and also if anything changes if
     // the sale ends.
     @Test(timeout = 1000)
     public void productSaleTest() {
@@ -84,7 +84,7 @@ public class ProductTestCases {
 
         assertEquals("Ensure that buyProduct method updates quantity sold!", 5, product1.getQuantitySold());
 
-        assertEquals("Ensure that getSales method works correctly!", 10.0 * 5, product1.getSales(), 0.001);
+        assertEquals("Ensure that getSales method works correctly!", 10.0 * 5, product1.getRevenue(), 0.001);
 
         assertEquals("Ensure that startSale method handles invalid inputs", "Unable to Start Sale",
             product1.startSale(0.0, 3));
@@ -102,10 +102,9 @@ public class ProductTestCases {
         assertEquals("Ensure that buyProduct method updates quantity sold even on sale!", 6,
             product1.getQuantitySold());
 
-        assertEquals("Ensure that getSales method works correctly even on sale!", 10.0 * 5 + 8.0 * 1, product1.getSales(), 0.001);
+        assertEquals("Ensure that getRevenue method works correctly even on sale!", 10.0 * 5 + 8.0 * 1, product1.getRevenue(), 0.001);
 
-        assertEquals("Ensure that getSales method works correctly even on sale!", true, product1.getOnSale());
-
+        assertEquals("Ensure that getRevenue method works correctly even on sale!", true, product1.getOnSale());
 
 
         assertEquals("Ensure that buyProduct method works even on sale!", true, product1.buyProduct(2));
@@ -116,8 +115,8 @@ public class ProductTestCases {
         assertEquals("Ensure that buyProduct method updates quantity sold even on sale!", 8,
             product1.getQuantitySold());
 
-        assertEquals("Ensure that getSales method works correctly even on sale!", 10.0 * 5 + 8.0 * 3,
-            product1.getSales(), 0.001);
+        assertEquals("Ensure that getRevenue method works correctly even on sale!", 10.0 * 5 + 8.0 * 3,
+            product1.getRevenue(), 0.001);
 
         assertEquals("Ensure that buyProduct method ends sale when all sale items are sold!", false,
             product1.getOnSale());
@@ -132,7 +131,7 @@ public class ProductTestCases {
 
         assertEquals("Ensure that buyProduct method updates quantity sold!", 10, product1.getQuantitySold());
 
-        assertEquals("Ensure that getSales method works correctly!", 10.0 * 7 + 8.0 * 3, product1.getSales(), 0.001);
+        assertEquals("Ensure that getRevenue method works correctly!", 10.0 * 7 + 8.0 * 3, product1.getRevenue(), 0.001);
     }
 
     @Test(timeout = 1000)
@@ -200,10 +199,10 @@ public class ProductTestCases {
         ArrayList<Product> sortByCheapestList;
         sortByCheapestList = Product.sortByCheapest(arrayList);
 
-        assertEquals("Ensure that sortAlphabetically method works!", product3, sortByCheapestList.get(0));
+        assertEquals("Ensure that sortByCheapest method works!", product3, sortByCheapestList.get(0));
 
-        assertEquals("Ensure that sortAlphabetically method works!", product2, sortByCheapestList.get(1));
+        assertEquals("Ensure that sortByCheapest method works!", product2, sortByCheapestList.get(1));
 
-        assertEquals("Ensure that sortAlphabetically method works!", product1, sortByCheapestList.get(2));
+        assertEquals("Ensure that sortByCheapest method works!", product1, sortByCheapestList.get(2));
     }
 }

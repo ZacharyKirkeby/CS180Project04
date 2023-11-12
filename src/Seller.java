@@ -494,7 +494,7 @@ public abstract class Seller {
         } else {
             for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
-                    stores.get(index).getProductList().get(i).getSales());
+                    stores.get(index).getProductList().get(i).getRevenue());
             }
         }
         if (sorted) {
