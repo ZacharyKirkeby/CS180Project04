@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Array;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -132,5 +133,77 @@ public class ProductTestCases {
         assertEquals("Ensure that buyProduct method updates quantity sold!", 10, product1.getQuantitySold());
 
         assertEquals("Ensure that getSales method works correctly!", 10.0 * 7 + 8.0 * 3, product1.getSales(), 0.001);
+    }
+
+    @Test(timeout = 1000)
+    public void sortAlphabeticallyTest() {
+        Product strawberry = new Product("strawberry", "fruit", 15.0, 10);
+        Product blueberry = new Product("blueberry", "fruit", 10.0, 10);
+        Product raspberry = new Product("raspberry", "fruit", 5.0, 10);
+
+        ArrayList<Product> arrayList = new ArrayList<>();
+
+        arrayList.add(strawberry);
+        arrayList.add(blueberry);
+        arrayList.add(raspberry);
+
+        ArrayList<Product> sortAlphabeticallyList;
+        sortAlphabeticallyList = Product.sortAlphabetically(arrayList);
+
+        // should be in order "blueberry, raspberry, strawberry"
+
+        assertEquals("Ensure that sortAlphabetically method works!", blueberry, sortAlphabeticallyList.get(0));
+
+        assertEquals("Ensure that sortAlphabetically method works!", raspberry, sortAlphabeticallyList.get(1));
+
+        assertEquals("Ensure that sortAlphabetically method works!", strawberry, sortAlphabeticallyList.get(2));
+
+
+        // test with more
+        Product strawhat = new Product("strawhat", "hat", 15.0, 10);
+        Product blue = new Product("blue", "color", 10.0, 10);
+        Product raspy = new Product("raspy", "status", 5.0, 10);
+
+        arrayList.add(strawhat);
+        arrayList.add(blue);
+        arrayList.add(raspy);
+
+        sortAlphabeticallyList = Product.sortAlphabetically(arrayList);
+
+        // should be in order "blue, blueberry, raspberry, raspy, strawberry, strawhat"
+
+        assertEquals("Ensure that sortAlphabetically method works!", blue, sortAlphabeticallyList.get(0));
+
+        assertEquals("Ensure that sortAlphabetically method works!", blueberry, sortAlphabeticallyList.get(1));
+
+        assertEquals("Ensure that sortAlphabetically method works!", raspberry, sortAlphabeticallyList.get(2));
+
+        assertEquals("Ensure that sortAlphabetically method works!", raspy, sortAlphabeticallyList.get(3));
+
+        assertEquals("Ensure that sortAlphabetically method works!", strawberry, sortAlphabeticallyList.get(4));
+
+        assertEquals("Ensure that sortAlphabetically method works!", strawhat, sortAlphabeticallyList.get(5));
+    }
+
+    @Test(timeout = 1000)
+    public void sortByCheapestTest() {
+        Product product1 = new Product("strawberry", "fruit", 15.0, 10);
+        Product product2 = new Product("blueberry", "fruit", 10.0, 10);
+        Product product3 = new Product("raspberry", "fruit", 5.0, 10);
+
+        ArrayList<Product> arrayList = new ArrayList<>();
+
+        arrayList.add(product1);
+        arrayList.add(product2);
+        arrayList.add(product3);
+
+        ArrayList<Product> sortByCheapestList;
+        sortByCheapestList = Product.sortByCheapest(arrayList);
+
+        assertEquals("Ensure that sortAlphabetically method works!", product3, sortByCheapestList.get(0));
+
+        assertEquals("Ensure that sortAlphabetically method works!", product2, sortByCheapestList.get(1));
+
+        assertEquals("Ensure that sortAlphabetically method works!", product1, sortByCheapestList.get(2));
     }
 }
