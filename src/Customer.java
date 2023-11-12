@@ -21,7 +21,6 @@ public abstract class Customer {
     private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
     private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
     private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
-    private static ArrayList<Integer> purchasePrices = new ArrayList<>(); // purchase prices arraylist
     private static String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
     //shopping cart database for all customers
     private static String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
