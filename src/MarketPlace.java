@@ -750,6 +750,7 @@ public class MarketPlace {
                                     break;
                             }
                         }
+                        break;
                     }
                     break;
                 //Handles User Registration
