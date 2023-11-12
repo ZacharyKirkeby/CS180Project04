@@ -1,1 +1,2 @@
-Store,Location,Username
+Store,Location,Username;
+StoreA,Location,Username;Product1,Description,10.0,10;
