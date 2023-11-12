@@ -68,7 +68,16 @@ public class MarketPlace {
                     String user = scanner.nextLine();
                     System.out.println("Enter your password: ");
                     String password = scanner.nextLine();
-                    Account.login(user, password);
+                    boolean bool = Account.login(user, password);
+                    while(!bool){
+                        System.out.println("Login Failed");
+                        System.out.println("Try Again!");
+                        System.out.println("Input Username or Email: ");
+                        user = scanner.nextLine();
+                        System.out.println("Enter your password: ");
+                        password = scanner.nextLine();
+                        bool = Account.login(user, password);
+                    }
                     isLoggedIn = true;
 
                     // Switch Var declarations
@@ -84,7 +93,6 @@ public class MarketPlace {
                     while (isLoggedIn) {
                         //Seller Experience
                         if (Account.getRole(user).equalsIgnoreCase("seller")) {
-                            boolean bool;
                             System.out.print(sellerChoices);
                             input = scanner.nextLine();
                             switch (input) {
@@ -530,7 +538,7 @@ public class MarketPlace {
                                     }
                                 //Leave Review
                                 case "9":
-                                    boolean bool = false;
+                                    bool = false;
                                     int rating = 5;
                                     System.out.println("Name of Product reviewing: ");
                                     productName = scanner.nextLine();
