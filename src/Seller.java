@@ -33,8 +33,9 @@ public abstract class Seller {
      *
      * @param storeName
      */
-    public static void printProducts(String storeName) {
+    public static String printProducts(String storeName) {
         readFromFile();
+        String result = "";
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
@@ -42,12 +43,13 @@ public abstract class Seller {
             }
         }
         if (index == -1) {
-            System.out.println("Store not found");
+            result += "Store not found";
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                System.out.println(stores.get(index).getProductList().get(i).getName());
+                result += stores.get(index).getProductList().get(i).getName();
             }
         }
+        return result;
     }
 
     /**
@@ -55,12 +57,13 @@ public abstract class Seller {
      */
     public static void printProductAndStores() {
         readFromFile();
+        System.out.println("Store Name | Product Name | Product Price | Qty Left in Stock");
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                System.out.println(stores.get(i).getProductList().get(j).getName() +
-                        "Price: $" + stores.get(i).getProductList().get(j).getPurchasePrice() +
-                        "Quantity: " + stores.get(i).getProductList().get(j).getStockQuantity() +
-                        " | " + stores.get(i).getStoreName());
+                System.out.println( stores.get(i).getStoreName() + " | " +
+                        stores.get(i).getProductList().get(j).getName() + " | " +
+                        stores.get(i).getProductList().get(j).getPurchasePrice() + " | " +
+                        stores.get(i).getProductList().get(j).getStockQuantity());
             }
         }
     }
@@ -77,7 +80,6 @@ public abstract class Seller {
      */
     public static boolean createStore(String storeName, String storeLocation, String username) {
         ArrayList<Product> emptyStore= new ArrayList<>();
-        emptyStore.add(new Product("","",0,0));
         stores.add(new Store(storeName, storeLocation, username, emptyStore));
         writeToFile();
         return true;
@@ -581,10 +583,18 @@ public abstract class Seller {
         stores.clear();
         ArrayList<Product> productList = new ArrayList<>();
         try(BufferedReader storeBr = new BufferedReader(new FileReader("stores.txt"));
-        BufferedReader productBr = new BufferedReader(new FileReader("products.txt"))){
+            BufferedReader productBr = new BufferedReader(new FileReader("products.txt"))) {
             String storeLine = storeBr.readLine();
             String productLine = productBr.readLine();
-            while(storeLine != null && productLine != null){
+            if(productLine == null || productLine.isEmpty()){
+                while(storeLine != null){
+                    String[] storeSplit = storeLine.split(",");
+                    stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
+                    storeLine = storeBr.readLine();
+                }
+
+        } else {
+                while (storeLine != null && productLine != null) {
                     String[] productSplit = productLine.split(";");
                     for (int i = 0; i < productSplit.length; i++) {
                         String[] attributeSplit = productSplit[i].split(",");
@@ -592,10 +602,11 @@ public abstract class Seller {
                                 attributeSplit[1], Double.parseDouble(attributeSplit[2]),
                                 Integer.parseInt(attributeSplit[3])));
                     }
-                String[] storeSplit = storeLine.split(",");
-                stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
-                storeLine = storeBr.readLine();
-                productLine = productBr.readLine();
+                    String[] storeSplit = storeLine.split(",");
+                    stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
+                    storeLine = storeBr.readLine();
+                    productLine = productBr.readLine();
+                }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -613,16 +624,17 @@ public abstract class Seller {
      */
     public static String searchByStore(String storeName) {
         readFromFile();
-        String searchedStore = null;
+        String searchedStore = "Store Name | Product Name \n";
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equals(storeName)) {
-                searchedStore += stores.get(i).getStoreName() + ",";
+                searchedStore += stores.get(i).getStoreName() + " | " +
+                        Seller.printProducts(stores.get(i).getStoreName()) + "\n";
             }
         }
-        if (searchedStore == null) {
+        if (searchedStore.equals("Store Name | Product Name \n")) {
             searchedStore = "No Store Found ";
         }
-        return (searchedStore.substring(0, (searchedStore.length() - 1)));
+        return (searchedStore);
     }
 
     /**
