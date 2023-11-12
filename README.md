@@ -1,5 +1,79 @@
 # CS180Project04
 
+## Running Instructions
+
+## Submission Log
+
+## Class Descriptions
+
+### Product.java
+
+### Store.java
+***
+The store class handles the creation of the Store object. A Store object contains an arraylist of Products,
+seller name, seller location, and the store name. Store.java has the standard getters/setters for a java class, allowing for the modification of the name, location, sales and revenue. 
+
+The store keeps track of purchases, can return product options, and hosts the sorting methods on a store
+by store basis. Store has a toString method to print out all products contained within that specific store. Store facilitates sorting products within the store by price and by alphabetical order. 
+
+The store object also calculates store based statistics for the seller. It can access and display customer history, revenue from past purchases. 
+
+For optional features, store manages starting a sale for a specific product as well as the implementation of a cap on the number of any one item that you can purchase. 
+***
+### Account.java
+
+### Customer.java
+
+### Seller.java
+
+### MarketPlace.java
+***
+Overarching handler for Sellers, Store, and Customer classes. Creates a looping menu with options depending on user
+designation. First prompts the user to login or register a new account. From there, a looping menu is created showing 
+options based on user designation. 
+
+#### Seller Options
+***
+If the user is designated as a seller, options are presented to create a new store, manage an existing store, view
+statistics, delete an existing store, modify their account, or logout. Modify account and logout are not unique to 
+seller designated accounts. 
+
+Creating a new store calls the Seller class, see Seller section. Most store actions are handled through seller. 
+Within editing/modifying a store, the options to update products, change prices, and change quantities are presented. 
+The Seller can also create or delete products, ie add/remove it from their store. File support is included, products can
+be added via CSV file. 
+
+The statistics menu presents sorting options, customers and purchase records, shopping cart records, and the ability to 
+export product listings to a file. 
+
+#### Customer Options
+***
+The customer designated users are prompted with search options. They can search by store specifically, by product, or
+just return everything. 
+
+Lastly, the customer can purchase items, add to a shopping cart, view their shopping cart ... 
+
+#### Account Management (General Feature)
+***
+Users, regardless of designation can change their username, role, password and can also logout. 
+***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## TODO List
 
 Add Documentation to each class
