@@ -645,18 +645,19 @@ public abstract class Seller {
      */
     public static String searchByProduct(String productName) {
         readFromFile();
-        String searched = null;
+        String searched = "Store Name | Product Name \n";
         for (int i = 0; i < stores.size(); i++) {
-            for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                 if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
-                    searched += stores.get(i).getStoreName() + ",";
+                    searched += stores.get(i).getStoreName() +  " | " +
+                            Seller.printProducts(stores.get(i).getStoreName()) + "\n";;
                 }
             }
         }
-        if (searched == null) {
+        if (searched.equals("Store Name | Product Name \n")) {
             searched = "No locations found selling this product ";
         }
-        return (searched.substring(0, (searched.length() - 1)));
+        return (searched);
     }
 
     /**
@@ -669,20 +670,23 @@ public abstract class Seller {
         readFromFile();
         String searchedProduct = null;
         String searchedStore = null;
-        String searched = null;
+        String searched = "Store Name | Product Name \n";
         for (int i = 0; i < stores.size(); i++) {
-            for (int j = 0; j < stores.get(i).getProductList().size(); i++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                 if (stores.get(i).getProductList().get(j).getDescription().contains(productDescription)) {
                     searchedStore += stores.get(i).getStoreName();
                     searchedProduct += stores.get(i).getProductList().get(j).getName();
                     searched +=
                             stores.get(i).getStoreName() + " | " +
-                                    stores.get(i).getProductList().get(j).getName() + "|\n";
+                                    stores.get(i).getProductList().get(j).getName() + "\n";
                 }
             }
         }
         if (searchedProduct == null) {
             searched = "No Product found ";
+        }
+        if (searched.equals("Store Name | Product Name \n")){
+            searched = "No product with that description found";
         }
         return (searched.substring(0, (searched.length() - 1)));
     }
