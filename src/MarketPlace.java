@@ -240,7 +240,11 @@ public class MarketPlace {
                                             System.out.println("Enter Quantity on sale: ");
                                             int numOnSale = scanner.nextInt();
                                             scanner.nextLine();
-                                            System.out.println(store.triggerSale(input, salePrice, numOnSale));
+                                            if (store.triggerSale(input, salePrice, numOnSale)) {
+                                                System.out.println("Sale Successfully Started!");
+                                            } else {
+                                                System.out.println("Failed to start Sale!");
+                                            }
                                             break;
                                         // put a purchase cap on a product
                                         case "7":
@@ -252,7 +256,11 @@ public class MarketPlace {
                                             System.out.println("Enter Sales cap ");
                                             int cap = scanner.nextInt();
                                             scanner.nextLine();
-                                            System.out.println(store.triggerCap(input, cap));
+                                            if (store.triggerOrderCap(input, cap)) {
+                                                System.out.println("Order Cap created successfully!");
+                                            } else {
+                                                System.out.println("There was a problem implementing an order cap");
+                                            }
                                             break;
                                         // back
                                         case "8":

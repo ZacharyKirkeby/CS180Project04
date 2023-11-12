@@ -1,15 +1,18 @@
 package src;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.*;
+
 /**
  * Project 04 -- Product.java
  * creates Product class
  * Handles all Product related tasks
  * and functions.
+ *
  * @author Armaan Sayyad, 05
  * @version November 10, 2023
  */
@@ -29,7 +32,8 @@ public class Product {
     private int orderCap; // Max number a customer can order
 
     /**
-     *Constructors for the Product
+     * Constructors for the Product
+     *
      * @param name, description, quantity, purchasePrice,
      */
     public Product(String name, double purchasePrice, int quantity) {
@@ -37,6 +41,7 @@ public class Product {
         this.stockQuantity = quantity;
         this.purchasePrice = purchasePrice;
         this.quantitySold = 0;
+        this.orderCap = Integer.MAX_VALUE;
     }
 
     public Product(String name, String description, double purchasePrice, int quantity) {
@@ -45,17 +50,21 @@ public class Product {
         this.purchasePrice = purchasePrice;
         this.stockQuantity = quantity;
         this.quantitySold = 0;
-
+        this.orderCap = Integer.MAX_VALUE;
     }
+
     /**
-     *Getter for the Product's quantity sold
+     * Getter for the Product's quantity sold
+     *
      * @return quantitySold
      */
     public int getQuantitySold() {
         return quantitySold;
     }
+
     /**
-     *Setter for the Product's quantity sold
+     * Setter for the Product's quantity sold
+     *
      * @param quantitySold
      */
     public void setQuantitySold(int quantitySold) {
@@ -63,42 +72,53 @@ public class Product {
     }
 
     /**
-     *Getter for the Product's Name
+     * Getter for the Product's Name
+     *
      * @return Name
      */
     public String getName() {
         return name;
     }
+
     /**
-     *Setter for the Product's Name
+     * Setter for the Product's Name
+     *
      * @param name
      */
     public void setName(String name) {
         this.name = name;
     }
+
     /**
-     *Getter for the Product's description
+     * Getter for the Product's description
+     *
      * @return description
      */
     public String getDescription() {
         return description;
     }
+
     /**
-     *Setter for the Product's description
+     * Setter for the Product's description
+     *
      * @param description
      */
     public void setDescription(String description) {
         this.description = description;
     }
+
     /**
-     *Getter for the Product's stock quantity
+     * Getter for the Product's stock quantity
+     *
      * @return stockQuantity
      */
     public int getStockQuantity() {
         return stockQuantity;
     }
+
     /**
-     *Setter for the Product's stockQuantity
+     * Setter for the Product's stockQuantity
+     *
      * @param stockQuantity
      */
     public void setStockQuantity(int stockQuantity) {
@@ -107,7 +127,7 @@ public class Product {
 
     public boolean buyProduct(int quantity) {
         if (onSale) {
-            if (this.saleCap > 0 && quantity <= this.saleCap) {
+            if (this.saleCap > 0 && quantity <= this.saleCap && quantity <= this.orderCap) {
                 this.stockQuantity -= quantity;
                 this.quantitySold += quantity;
                 this.saleSold += quantity;
@@ -119,7 +139,7 @@ public class Product {
                 onSale = false;
             }
         } else {
-            if (quantity <= stockQuantity) {
+            if (quantity <= stockQuantity && quantity <= this.orderCap) {
                 this.stockQuantity -= quantity;
                 this.quantitySold += quantity;
             } else {
@@ -128,8 +148,10 @@ public class Product {
         }
         return true;
     }
+
     /**
-     *Getter for the Product's purchase price
+     * Getter for the Product's purchase price
+     *
      * @return purchasePrice
      */
     public double getPurchasePrice() {
@@ -139,8 +161,10 @@ public class Product {
             return purchasePrice;
         }
     }
+
     /**
-     *Setter for the Product's purchase price
+     * Setter for the Product's purchase price
+     *
      * @param purchasePrice
      */
     public void setPurchasePrice(double purchasePrice) {
@@ -148,12 +172,13 @@ public class Product {
     }
 
     /**
-     *Sorting Algorithm that sorts Products Alphabetically
+     * Sorting Algorithm that sorts Products Alphabetically
+     *
      * @param products (ArrayList<Product></>)
      * @return ArrayList<Product></>
      */
     public static ArrayList<Product> sortAlphabetically(ArrayList<Product> products) {
-        for (int i = 0; i < products.size()-1; i++) { //parses through the list
+        for (int i = 0; i < products.size() - 1; i++) { //parses through the list
             for (int j = i + 1; j < products.size(); j++) { //takes the next element
                 if (products.get(i).getName().compareTo(products.get(j).getName()) > 0) { //compares the two elements
                     Collections.swap(products, i, j); // makes the necessary switch
@@ -164,7 +189,8 @@ public class Product {
     }
 
     /**
-     *Sorting Algorithm that sorts Products from Cheapest to most Expensive
+     * Sorting Algorithm that sorts Products from Cheapest to most Expensive
+     *
      * @param products (ArrayList<Product></>)
      * @return ArrayList<Product> </>
      */
@@ -181,17 +207,18 @@ public class Product {
     }
 
     /**
-     * get sales
+     * get revenue
      *
      * @return
      */
-    public double getSales() {
+    public double getRevenue() {
         int temp = quantitySold - saleSold;
         return salePrice * saleSold + (purchasePrice * temp);
     }
 
     /**
      * Reads the products from a file and adds them to an ArrayList
+     *
      * @param fileName (String)
      */
     public static void readProductFile(String fileName) {
@@ -215,13 +242,13 @@ public class Product {
      * creates a sale
      * sale cannot exceed stock available
      * price cannot be negative
+     *
      * @param salePrice
      * @param saleCap
-     *
      */
-    public String startSale(double salePrice, int saleCap) {
+    public boolean startSale(double salePrice, int saleCap) {
         if (salePrice <= 0 || saleCap <= 0) {
-            return "Unable to Start Sale";
+            return false;
         } else {
             this.salePrice = salePrice;
             if (saleCap > this.stockQuantity) {
@@ -231,36 +258,42 @@ public class Product {
             }
         }
         this.onSale = true;
-        return "Sale Successfully Started";
+        return true;
     }
 
-    public void endSale() {
+    public boolean endSale() {
         this.onSale = false;
+        return true;
     }
+
     public int getSaleCap() {
         return saleCap;
     }
+
     public double getSalePrice() {
         return salePrice;
     }
 
 
     /**
-     * Sets order cap
+     * Sets order capacity for each order
      * makes sure it is greater than 0
+     *
      * @param cap
      */
-    public String setCap(int cap) {
+    public boolean setCap(int cap) {
         if (cap > 0) {
             this.orderCap = cap;
         } else {
-            return "There was a problem implementing an order cap";
+            return false;
         }
-        return "Order Cap created successfully!";
+        return true;
     }
+
     /**
      * Gets order cap
      * makes sure it is greater than 0
+     *
      * @return orderCap
      */
     public int getOrderCap() {
@@ -270,6 +303,7 @@ public class Product {
     public boolean getOnSale() {
         return onSale;
     }
+
     /**
      * A toString for the Product Class
      */

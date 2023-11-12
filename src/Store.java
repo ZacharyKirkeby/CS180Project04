@@ -50,8 +50,9 @@ public class Store {
      * @return total revenue across all products
      */
     public double getTotalRevenue() {
+        totalRevenue = 0;
         for (Product p : productList) {
-            totalRevenue += p.getSales();
+            totalRevenue += p.getRevenue();
         }
         return totalRevenue;
     }
@@ -118,14 +119,15 @@ public class Store {
         for (Product p : productList) {
             products += p.getName() + " | ";
         }
-        return storeName + "," + products;
+        String result = storeName + ":" + products;
+        return result.substring(0, result.length() - 3);
     }
 
     /**
      * @return sorted arraylist of products from cheapest to most expensive
      */
-    public ArrayList<Product> cheapestProduct(ArrayList<Product> products) {
-        return Product.sortByCheapest(products);
+    public ArrayList<Product> getProductsSortedByCheapest() {
+        return Product.sortByCheapest(productList);
     }
 
     /**
@@ -218,34 +220,46 @@ public class Store {
      * @return
      * @Author Zachary Kirkeby
      */
-    public String triggerSale(String productName, double salePrice, int saleCap) {
-        String output = "";
+    public boolean triggerSale(String productName, double salePrice, int saleCap) {
+        boolean result = false;
         for (Product p : productList) {
             if (p.getName().equals(productName)) {
-                output = p.startSale(salePrice, saleCap);
+                result = p.startSale(salePrice, saleCap);
             }
         }
-        return output;
+        return result;
     }
 
     /**
-     * Finds product and calls respective product method
-     * starts sale
-     * returns failure or not
-     * handler for method in product
+     * @param productName of product you want to end sale for
+     * @return true if product found and sale ended, false if not
+     */
+    public boolean triggerEndSale(String productName) {
+        boolean result = false;
+        for (Product p : productList) {
+            if (p.getName().equals(productName)) {
+                result = p.endSale();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * sets the order capacity for each order
+     * (NOT FOR CUSTOMER, customer can still place multiple order and bypass this)
      *
      * @param productName
      * @param cap
-     * @return
+     * @return true if successful false if not
      * @Author Zachary Kirkeby
      */
-    public String triggerCap(String productName, int cap) {
-        String output = "";
+    public boolean triggerOrderCap(String productName, int cap) {
+        boolean result = false;
         for (Product p : productList) {
             if (p.getName().equals(productName)) {
-                output = p.setCap(cap);
+                result = p.setCap(cap);
             }
         }
-        return output;
+        return result;
     }
 }
