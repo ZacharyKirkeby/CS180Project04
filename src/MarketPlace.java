@@ -9,64 +9,26 @@ import java.util.Scanner;
  * and functions.
  * Acts as the main interface of all the classes
  * @author Armaan Sayyad, 05
- * @author Zachary Kirkeby, 05
  * @version November 10, 2023
  */
 public class MarketPlace {
     private static final String WELCOME_PROMPT = "Login or Register an Account (Login / Register)";
-    private static final String sellerChoices = """
-             1. Create Store\s
-             2. Modify Store\s
-             3. View Store Statistics\s
-             4. Delete Store\s
-             5. View Customer Reviews\s
-             6. Manage Account\s
-             7. Logout\s
-            """;
-    private static final String sellerModificationChoices = """
-             1. Create Product\s
-             2. Change Product Price\s
-             3. Change Product Quantity\s
-             4. Delete Product\s
-             5. Add products to Store from CSV\s
-             6. Start Sale\s
-             7. Add Purchase Limit\s
-             8. Back\s
-            """;
-    private static final String AccountChoices = """
-             1. Change Username\s
-             2. Change Password\s
-             3. Change Role\s
-             4. Delete Account\s
-             5. Back\s
-            """;
-    private static final String sellerStatisticsChoices = """
-             1. View Customer Purchases\s
-             2. View Product Sales\s
-             3. View Products in Shopping Cart\s
-             4. View Products in Store as CSV file\s
-             5. Back\s
-            """;
-    private static final String BUYERPROMPT = """
-             1. Search for a store\s
-             2. Search for a product\s
-             3. Search Product by Description\s
-             4. View All Products\s
-             5. Sort Products By Cheapest\s
-             6. Sort  Products By Most Expensive\s
-             7. Sort by Availability\s
-             8. Shopping Cart\s
-             9. Leave Review\s
-             10. View Product Reviews\s
-             11. Manage Account\s
-             12. Logout\s
-            """;
-    private static final String customerShoppingCartChoices = """
-             1. Add product(s) to cart\s
-             2. Remove product(s) from cart\s
-             3. Buy products in cart\s
-             4. View shopping cart\s
-            """;
+    private static final String sellerChoices = " 1. Create Store \n 2. Modify Store " +
+            "\n 3. View Store Statistics \n 4. Delete Store \n 5. View Customer Reviews \n 6. Manage Account \n 7. " +
+            "Logout \n";
+    private static final String sellerModificationChoices = " 1. Create Product \n 2. Change Product Price \n " +
+            "3. Change Product Quantity \n 4. Delete Product \n 5. Add products to Store from CSV \n 6. Start Sale \n" +
+            "7. Add Purchase Limit \n 8. Back \n";
+    private static final String AccountChoices = " 1. Change Username \n 2. Change Password \n 3. Change Role \n 4. " +
+            "Delete Account \n 5. Back \n";
+    private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n 2. View Product Sales \n " +
+            "3. View Products in Shopping Cart \n 4. View Products in Store as CSV file \n 5. Back \n";
+    private static final String BUYERPROMPT = " 1. Search for a store \n 2. Search for a product \n" +
+            "3. Search Product by Description \n 4. View All Products \n 5. Sort Products By Cheapest \n 6. Sort " +
+            " Products By Most Expensive \n 7. Sort by Availability \n  8. Shopping Cart \n 9. Leave Review \n 10. " +
+            "View Product Reviews \n 11. Manage Account \n 12. Logout \n";
+    private static final String customerShoppingCartChoices = " 1. Add product(s) to cart \n" +
+            "2. Remove product(s) from cart \n 3. Buy products in cart \n 4. View shopping cart \n";
     private static  final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores;
@@ -167,7 +129,7 @@ public class MarketPlace {
                                             String description = scanner.nextLine();
                                             bool = Seller.createProduct(storeName, productName, description, price, quantity, user);
                                             if (bool) {
-                                                System.out.println("Successfully Deleted");
+                                                System.out.println("Successfully Added Product");
                                             } else {
                                                 System.out.println("Deletion Failed");
                                             }
@@ -574,6 +536,7 @@ public class MarketPlace {
                                             }
                                             break;
                                     }
+                                    break;
                                 //Leave Review
                                 case "9":
                                     bool = false;
