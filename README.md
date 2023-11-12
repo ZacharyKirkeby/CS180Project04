@@ -19,7 +19,7 @@ by store basis. Store has a toString method to print out all products contained 
 The store object also calculates store based statistics for the seller. It can access and display customer history, revenue from past purchases. 
 
 For optional features, store manages starting a sale for a specific product as well as the implementation of a cap on the number of any one item that you can purchase. 
-***
+
 ### Account.java
 
 ### Customer.java
@@ -56,7 +56,7 @@ Lastly, the customer can purchase items, add to a shopping cart, view their shop
 #### Account Management (General Feature)
 ***
 Users, regardless of designation can change their username, role, password and can also logout. 
-***
+
 
 
 
