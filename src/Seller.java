@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.util.*;
 
@@ -79,8 +80,12 @@ public abstract class Seller {
      * @return boolean indicating whether creation was successful
      */
     public static boolean createStore(String storeName, String storeLocation, String username) {
-        ArrayList<Product> emptyStore = new ArrayList<>();
-        stores.add(new Store(storeName, storeLocation, username, emptyStore));
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+                return false;
+            }
+        }
+        stores.add(new Store(storeName, storeLocation, username));
         writeToFile();
         return true;
     }
@@ -558,19 +563,15 @@ public abstract class Seller {
      */
     private static void writeToFile() {
         try {
-            PrintWriter storePW = new PrintWriter(new FileWriter("stores.txt", false));
+            PrintWriter pw = new PrintWriter(new FileWriter("stores.txt", false));
             for (int i = 0; i < stores.size(); i++) {
-                storePW.println(stores.get(i).toString());
-            }
-            storePW.close();
-            PrintWriter productPW = new PrintWriter(new FileWriter("products.txt", false));
-            for (int i = 0; i < stores.size(); i++) {
+                pw.print(stores.get(i).toString() + ";");
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                    productPW.print(stores.get(i).getProductList().get(j).toString() + ";");
+                    pw.print(stores.get(i).getProductList().get(j).toString() + ";");
                 }
-                productPW.println();
+                pw.println();
             }
-            productPW.close();
+            pw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -582,39 +583,27 @@ public abstract class Seller {
      */
     private static void readFromFile() {
         stores.clear();
-        ArrayList<Product> productList = new ArrayList<>();
-        try (BufferedReader storeBr = new BufferedReader(new FileReader("stores.txt"));
-             BufferedReader productBr = new BufferedReader(new FileReader("products.txt"))) {
-            String storeLine = storeBr.readLine();
-            String productLine = productBr.readLine();
-            if (productLine == null || productLine.isEmpty()) {
-                while (storeLine != null) {
-                    String[] storeSplit = storeLine.split(",");
-                    stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
-                    storeLine = storeBr.readLine();
+        int index = 0;
+        try (BufferedReader bfr = new BufferedReader(new FileReader("stores.txt"))) {
+            String line = bfr.readLine();
+            while ((line != null) && !line.isEmpty()) {
+                String[] split = line.split(";");
+                String[] storeSplit = split[0].split(",");
+                stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2]));
+                for (int i = 1; i < split.length; i++) {
+                    String[] attributeSplit = split[i].split(",");
+                    stores.get(index).getProductList().add(new Product(attributeSplit[0],
+                            attributeSplit[1], Double.parseDouble(attributeSplit[2]),
+                            Integer.parseInt(attributeSplit[3])));
                 }
-
-            } else {
-                while (storeLine != null && productLine != null) {
-                    String[] productSplit = productLine.split(";");
-                    for (int i = 0; i < productSplit.length; i++) {
-                        String[] attributeSplit = productSplit[i].split(","); // out of index error here
-                        productList.add(new Product(attributeSplit[0],
-                                attributeSplit[1], Double.parseDouble(attributeSplit[2]),
-                                Integer.parseInt(attributeSplit[3])));
-                    }
-                    String[] storeSplit = storeLine.split(",");
-                    stores.add(new Store(storeSplit[0], storeSplit[1], storeSplit[2], productList));
-                    storeLine = storeBr.readLine();
-                    productLine = productBr.readLine();
-                }
+                index++;
+                line = bfr.readLine();
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**

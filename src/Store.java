@@ -35,6 +35,13 @@ public class Store {
         this.productList = productList;
     }
 
+    public Store(String name, String storeLocation, String sellerUsername) {
+        this.storeName = name;
+        this.storeLocation = storeLocation;
+        this.sellerUsername = sellerUsername;
+        this.productList = new ArrayList<>();
+    }
+
     /**
      * @return the total number of sales across all products
      */
