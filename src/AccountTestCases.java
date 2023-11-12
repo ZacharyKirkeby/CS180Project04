@@ -24,9 +24,9 @@ import static org.junit.Assert.assertEquals;
  * @author William Hyun
  * @version November 9, 2023
  */
-public class TestCases {
+public class AccountTestCases {
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(TestCases.class);
+        Result result = JUnitCore.runClasses(AccountTestCases.class);
         if (result.wasSuccessful()) {
             System.out.println("Excellent - Test ran successfully");
         } else {

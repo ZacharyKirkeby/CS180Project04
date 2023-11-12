@@ -4,17 +4,16 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.regex.Pattern;
 
 /**
  * src.Account
  * <p>
  * Allows for creation of accounts, login, and deletion of accounts
- * Create emails.txt, usernames.txt, passwords.txt, and roles.txt before using
+ * Create AccountData.txt before using
  *
  * @author Alexander Chen, 05
- * @version November 2, 2023
+ * @version November 10, 2023
  */
 
 public class Account {
@@ -69,12 +68,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -112,12 +113,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -165,15 +168,13 @@ public class Account {
             }
             if (usernames.get(i).equals(oldUsername)) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             return false; // should not happen
         }
         usernames.set(index, newUsername);
-        if (roles.get(index).equalsIgnoreCase("seller")) {
-            Seller.changeStoreUsernames(newUsername, oldUsername);
-        }
         writeToFile();
         return true;
     }
@@ -198,12 +199,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -236,12 +239,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
@@ -255,6 +260,58 @@ public class Account {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Returns username
+     *
+     * @param usernameOrEmail
+     * @return String username
+     */
+    public static String getUsername(String usernameOrEmail) {
+        int index = -1;
+        if (usernameOrEmail.contains("@")) {
+            for (int i = 0; i < emails.size(); i++) {
+                if (emails.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < usernames.size(); i++) {
+                if (usernames.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return usernames.get(index);
+    }
+
+    /**
+     * Returns email
+     *
+     * @param usernameOrEmail
+     * @return String email
+     */
+    public static String getEmail(String usernameOrEmail) {
+        int index = -1;
+        if (usernameOrEmail.contains("@")) {
+            for (int i = 0; i < emails.size(); i++) {
+                if (emails.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+        } else {
+            for (int i = 0; i < usernames.size(); i++) {
+                if (usernames.get(i).equalsIgnoreCase(usernameOrEmail)) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return emails.get(index);
     }
 
     /**
@@ -272,12 +329,14 @@ public class Account {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernameOrEmail.equalsIgnoreCase(usernames.get(i))) {
                 index = i;
+                break;
             }
         }
         if (index == -1) {
             for (int i = 0; i < emails.size(); i++) {
                 if (usernameOrEmail.equalsIgnoreCase(emails.get(i))) {
                     index = i;
+                    break;
                 }
             }
             if (index == -1) {
