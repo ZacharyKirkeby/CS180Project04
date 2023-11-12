@@ -176,6 +176,11 @@ public class Store {
         return sentence;
     }
 
+    public String getSortedCustomersAndPurchases() {
+        // TODO
+        return null;
+    }
+
     /**
      * reads from purchase history file
      * checks for matches based off current store object
