@@ -100,6 +100,7 @@ public class MarketPlace {
             while(!logOrRegistration) {
             System.out.println(WELCOME_PROMPT);
             String input = scanner.nextLine().toLowerCase();
+            isLoggedIn = false;
                 switch (input) { // handles user case of login or register and directs to the next relevant step
                     // Authenticates User, begins use loop
                     case "login":
