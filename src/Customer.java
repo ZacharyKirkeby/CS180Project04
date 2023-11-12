@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.util.*;
 
@@ -77,6 +78,7 @@ public abstract class Customer {
 
     /**
      * Adds a product to the shopping cart database
+     *
      * @param email
      * @param username
      * @param store
@@ -96,6 +98,7 @@ public abstract class Customer {
 
     /**
      * Removes a product from the purchase history database
+     *
      * @param email
      * @param username
      * @param storeName
@@ -110,7 +113,7 @@ public abstract class Customer {
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < usernames.size(); i++) {
             if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
-                    && productNames.get(i).equals(productName) && quantities.get(i) == quantity) {
+                && productNames.get(i).equals(productName) && quantities.get(i) == quantity) {
                 successfullyRemovedFromCart = true;
                 emails.remove(i);
                 usernames.remove(i);
@@ -129,6 +132,7 @@ public abstract class Customer {
      * Decreases the product quantity
      * Updates the shopping cart database
      * Updates the purchase history database
+     *
      * @param username
      * @return boolean of whether the products in the shopping cart were purchased sucessfully
      */
@@ -144,12 +148,12 @@ public abstract class Customer {
                         for (int k = 0; k < MarketPlace.getStores().get(j).getProductList().size(); k++) {
                             // iterate through product list
                             if (MarketPlace.getStores().get(j).getProductList().get(k).getName()
-                                    .equals(productNames.get(i))) { // if product name matches
+                                .equals(productNames.get(i))) { // if product name matches
                                 MarketPlace.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
                                 double unitprice =
                                     MarketPlace.getStores().get(j).getProductList().get(k).getPurchasePrice();
                                 writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
-                                        productNames.get(i), quantities.get(i), unitprice);
+                                    productNames.get(i), quantities.get(i), unitprice);
                                 emails.remove(i);
                                 usernames.remove(i);
                                 storeNames.remove(i);
@@ -168,6 +172,7 @@ public abstract class Customer {
 
     /**
      * Writes to the purchase history database file
+     *
      * @param email
      * @param username
      * @param storeName
@@ -194,7 +199,7 @@ public abstract class Customer {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
                 pw.println(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
-                        productNames.get(i), quantities.get(i)));
+                    productNames.get(i), quantities.get(i)));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -267,7 +272,7 @@ public abstract class Customer {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches
                 customerProducts.add(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i),
-                        storeNames.get(i), productNames.get(i), quantities.get(i)));
+                    storeNames.get(i), productNames.get(i), quantities.get(i)));
             }
         }
         return customerProducts;
@@ -275,6 +280,7 @@ public abstract class Customer {
 
     /**
      * Generates purchase history file for the customer identified by the username
+     *
      * @param username
      * @param fileName
      */
@@ -294,29 +300,30 @@ public abstract class Customer {
 
     //Optional Method
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
-                                      String description ){
+                                      String description) {
         boolean bool = false;
-        while(!bool){
-            if( !(1 <= rating && rating <= 5)){
+        while (!bool) {
+            if (!(1 <= rating && rating <= 5)) {
                 System.out.println("Invalid Input");
                 System.out.println("Try Again");
                 System.out.println("What is your Rating 1-5 ");
+            } else {
+                bool = true;
             }
-            else {bool = true;}
         }
-        try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
-            PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt", true), true)){
+        try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
+             PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt", true), true)) {
             String line = br.readLine();
             int count = 0;
             if (line == null) {
                 pw.println(String.format("%s , %s , %s , %d , %s", storeName, productName, customerName, rating,
-                        description));
+                    description));
             } else {
                 while (line != null) {
                     line = br.readLine();
                     if (line == null) {
                         pw.println(String.format("%s , %s , %s , %d , %s", storeName, productName, customerName, rating,
-                                description));
+                            description));
                     }
                 }
             }
@@ -326,25 +333,27 @@ public abstract class Customer {
         }
         return false;
     }
-    public static String viewReviews(String storeName, String productName){
+
+    public static String viewReviews(String storeName, String productName) {
         String result = "Store Name | Product Name | Customer Name | Rating";
-        try(BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))){
+        try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))) {
             String line = br.readLine();
-            while(line != null){
+            while (line != null) {
                 String[] subpart = line.split(",");
-                if(storeName.equals("")) {
+                if (storeName.equals("")) {
                     if (subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
-                } else{
+                } else {
                     if (subpart[0].contains(storeName) && subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
                 }
                 line = br.readLine();
             }
-        } catch (Exception e){
-            e.printStackTrace();;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ;
         }
         result = result.replace(",", "|");
         return result;

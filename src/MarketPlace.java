@@ -69,7 +69,7 @@ public class MarketPlace {
             """;
     private static  final String AVAILABILITY = "1. Sort By Highest Stock \n 2. Sort By Low On Stock";
     private static final String SEARCH_PROMPT = "Enter search term: ";
-    private static ArrayList<Store> stores;
+    private static ArrayList<Store> stores = new ArrayList<>();
     private static boolean isLoggedIn;
 
     /**

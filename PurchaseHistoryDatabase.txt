@@ -1,2 +1,1 @@
-email;username;storename;blueberry;6;10.0
-email2;username2;storename2;blueberry;6;10.0
+
