@@ -348,7 +348,7 @@ public abstract class Customer {
     }
 
     public static String viewReviews(String storeName, String productName) {
-        String result = "Store Name | Product Name | Customer Name | Rating";
+        String result = "Store Name | Product Name | Customer Name | Rating \n";
         try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))) {
             String line = br.readLine();
             while (line != null) {
