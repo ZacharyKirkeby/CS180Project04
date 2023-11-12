@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -498,7 +497,7 @@ public abstract class Seller {
         } else {
             for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
-                        stores.get(index).getProductList().get(i).getRevenue());
+                        stores.get(index).getProductList().get(i).getSales());
             }
         }
         if (sorted) {
@@ -698,53 +697,23 @@ public abstract class Seller {
                 combined.add(element);
             }
         }
-        combined.sort(Comparator.comparing(s -> s.substring(s.indexOf(";", s.indexOf(";")+1) + ";".length(),
-                        s.indexOf(";", s.indexOf(";", s.indexOf(";")+1)+1)),
-                Comparator.reverseOrder()));
 
-        /*for (int k = 0; k < combined.size(); k++) {
-            double min = Integer.MAX_VALUE;
-            String[] subpart = combined.get(k).split(";");
-            double purchasePrice = Double.parseDouble(subpart[2]);
-            if (purchasePrice < min) {
-                min = purchasePrice;
-                String temp = combined.get(k);
-                combined.remove(k);
-                combined.add(0, temp);
-
-
+        for (int k = 0; k < combined.size(); k++) {
+            for (int c = k + 1; c < combined.size(); c++) {
+                String[] subpartK = combined.get(k).split(";");
+                String[] subpartC = combined.get(c).split(";");
+                double purchasePriceK = Double.parseDouble(subpartK[2]);
+                double purchasePriceC = Double.parseDouble(subpartC[2]);
+                if (purchasePriceK > purchasePriceC) {
+                    Collections.swap(combined, k, c);
+                }
             }
-        }*/
+        }
         for (int a = 0; a < combined.size(); a++) {
             result += combined.get(a) + "\n";
         }
         result = result.replace(";", " | ");
         return result;
-
-        /*
-        readFromFile();
-        int index = -1;
-        ArrayList<String> productSales = new ArrayList<>();
-        for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
-                index = i;
-                break;
-            }
-        }
-        if (index == -1) {
-            return "Error: Invalid parameters";
-        } else {
-            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
-                productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
-                        stores.get(index).getProductList().get(i).getRevenue());
-            }
-        }
-        if (sorted) {
-            productSales.sort(Comparator.comparing(s -> s.substring(s.indexOf(":") + 2),
-                    Comparator.reverseOrder()));
-        }
-         */
     }
 
     /**
@@ -765,22 +734,17 @@ public abstract class Seller {
                 combined.add(element);
             }
         }
-        combined.sort(Comparator.comparing(s -> s.substring(s.indexOf(";", s.indexOf(";")+1) + ";".length(),
-                        s.indexOf(";", s.indexOf(";", s.indexOf(";")+1)+1))));
-
-        /*for (int k = 0; k < combined.size(); k++) {
-            double min = Integer.MAX_VALUE;
-            String[] subpart = combined.get(k).split(";");
-            double purchasePrice = Double.parseDouble(subpart[2]);
-            if (purchasePrice < min) {
-                min = purchasePrice;
-                String temp = combined.get(k);
-                combined.remove(k);
-                combined.add(0, temp);
-
-
+        for (int k = 0; k < combined.size(); k++) {
+            for (int c = k + 1; c < combined.size(); c++) {
+                String[] subpartK = combined.get(k).split(";");
+                String[] subpartC = combined.get(c).split(";");
+                double purchasePriceK = Double.parseDouble(subpartK[2]);
+                double purchasePriceC = Double.parseDouble(subpartC[2]);
+                if (purchasePriceK < purchasePriceC) {
+                    Collections.swap(combined, k, c);
+                }
             }
-        }*/
+        }
         for (int a = 0; a < combined.size(); a++) {
             result += combined.get(a) + "\n";
         }
@@ -799,25 +763,23 @@ public abstract class Seller {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
-            for (int j = 0; j < stores.size(); j++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                 String element = stores.get(i).getStoreName() + ";"
                         + stores.get(i).getProductList().get(j).getName() + ";"
-                        + stores.get(i).getProductList().get(j).getPurchasePrice()
+                        + stores.get(i).getProductList().get(j).getPurchasePrice() + ";"
                         + stores.get(i).getProductList().get(j).getStockQuantity();
                 combined.add(element);
             }
         }
         for (int k = 0; k < combined.size(); k++) {
-            double min = Integer.MIN_VALUE;
-            String[] subpart = combined.get(k).split(";");
-            double quant = Double.parseDouble(subpart[3]);
-            if (quant > min) {
-                min = quant;
-                String temp = combined.get(k);
-                combined.remove(k);
-                combined.add(0, temp);
-
-
+            for (int c = k + 1; c < combined.size(); c++) {
+                String[] subpartK = combined.get(k).split(";");
+                String[] subpartC = combined.get(c).split(";");
+                double purchasePriceK = Double.parseDouble(subpartK[3]);
+                double purchasePriceC = Double.parseDouble(subpartC[3]);
+                if (purchasePriceK < purchasePriceC) {
+                    Collections.swap(combined, k, c);
+                }
             }
         }
         for (int a = 0; a < combined.size(); a++) {
@@ -837,23 +799,24 @@ public abstract class Seller {
         ArrayList<String> combined = new ArrayList<>();
         String result = "";
         for (int i = 0; i < stores.size(); i++) {
-            for (int j = 0; j < stores.size(); j++) {
+            for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                 String element = stores.get(i).getStoreName() + ";"
                         + stores.get(i).getProductList().get(j).getName() + ";"
-                        + stores.get(i).getProductList().get(j).getPurchasePrice()
+                        + stores.get(i).getProductList().get(j).getPurchasePrice() + ";"
                         + stores.get(i).getProductList().get(j).getStockQuantity();
                 combined.add(element);
             }
         }
+
         for (int k = 0; k < combined.size(); k++) {
-            double min = Integer.MAX_VALUE;
-            String[] subpart = combined.get(k).split(";");
-            double quant = Double.parseDouble(subpart[3]);
-            if (quant < min) {
-                min = quant;
-                String temp = combined.get(k);
-                combined.remove(k);
-                combined.add(0, temp);
+            for (int c = k + 1; c < combined.size(); c++) {
+                String[] subpartK = combined.get(k).split(";");
+                String[] subpartC = combined.get(c).split(";");
+                double purchasePriceK = Double.parseDouble(subpartK[3]);
+                double purchasePriceC = Double.parseDouble(subpartC[3]);
+                if (purchasePriceK > purchasePriceC) {
+                    Collections.swap(combined, k, c);
+                }
             }
         }
         for (int a = 0; a < combined.size(); a++) {
