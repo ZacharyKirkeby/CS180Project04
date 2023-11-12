@@ -1,5 +1,4 @@
 package src;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -197,7 +196,7 @@ public class Product {
     public static ArrayList<Product> sortByCheapest(ArrayList<Product> products) {
         for (int i = 0; i < products.size(); i++) { //parses through the list of products
             for (int j = i + 1; j < products.size(); j++) { //takes each element of the list of products
-                if (products.get(i).getPurchasePrice() > products.get(j).getPurchasePrice()) { //compares the 
+                if (products.get(i).getPurchasePrice() > products.get(j).getPurchasePrice()) { //compares the
                     // purchase price of two products
                     Collections.swap(products, i, j); //swaps the products if one lesser than the other
                 }
