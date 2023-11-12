@@ -133,8 +133,9 @@ public abstract class Customer {
                 quantities.remove(i);
                 break;
             } else if(emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
-                    && productNames.get(i).equals(productName) && quantities.get(i) < quantity){
+                    && productNames.get(i).equals(productName) && quantities.get(i) > quantity){
                 quantities.set(i, quantities.get(i)-quantity);
+                successfullyRemovedFromCart = true;
             }
         }
         writeToShoppingCartDatabaseFile();
@@ -174,6 +175,7 @@ public abstract class Customer {
                                         productNames.get(i), quantities.get(i));
 
                                 productsBoughtSuccessfully = true;
+                                return true;
                             }
                         }
                     }
