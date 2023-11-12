@@ -51,6 +51,10 @@ public class StoreTestCases {
         productList.add(raspberry);
 
         Store store = new Store("name", "storeLocation",  "seller", productList);
-        
+
+        store.getStoreName();
+
+        store.getStoreLocation();
+
     }
 }
