@@ -1,4 +1,3 @@
-package src;
 import java.io.*;
 import java.util.*;
 
@@ -76,12 +75,6 @@ public abstract class Seller {
      * @return boolean indicating whether creation was successful
      */
     public static boolean createStore(String storeName, String storeLocation, String username) {
-        readFromFile();
-        for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
-                return false;
-            }
-        }
         ArrayList<Product> emptyStore= new ArrayList<>();
         emptyStore.add(new Product("","",0,0));
         stores.add(new Store(storeName, storeLocation, username, emptyStore));
@@ -147,6 +140,7 @@ public abstract class Seller {
                 }
             }
             stores.get(index).getProductList().add(new Product(name, description, price, quantity));
+            writeToFile();
             return true;
         }
     }
