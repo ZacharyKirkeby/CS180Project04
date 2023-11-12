@@ -534,6 +534,7 @@ public class MarketPlace {
                                                     "you want to add to cart: ");
                                             storeName = scanner.nextLine();
                                             if (Customer.searchedStoreExists(storeName, stores)) {
+                                                bool = false;
                                                 System.out.println("Enter the name of the product " +
                                                         "you want to add to cart: ");
                                                 productName = scanner.nextLine();
@@ -542,11 +543,20 @@ public class MarketPlace {
                                                             , productName);
                                                     quantity = scanner.nextInt();
                                                     scanner.nextLine();
-                                                    Customer.addToCart(Account.getEmail(user), Account.getUsername(user),
+                                                    Customer.addToCart(Account.getEmail(user),
+                                                            Account.getUsername(user),
                                                             storeName, productName, quantity);
-                                                    System.out.println("Product added to cart");
+                                                    bool = true;
                                                 }
+                                                if(bool){
+                                                    System.out.println("Product added to cart!");
+                                                } else if(!bool){
+                                                    System.out.println("Error, could not find Product!");
+                                                }
+                                            } else {
+                                                System.out.println("Error, could not find store!");
                                             }
+
                                             break;
                                         case "2": // remove product from cart
                                             System.out.println("Enter the store name of the product you want to " +
@@ -572,12 +582,21 @@ public class MarketPlace {
                                             }
                                             break;
                                         case "3": // buy products in cart
-                                            Customer.buyProductsInShoppingCart(Account.getUsername(user));
-                                            System.out.println("Products in cart purchased successfully!");
+                                            bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
+                                            if(bool) {
+                                                System.out.println("Products in cart purchased successfully!");
+                                            }
+                                            else if (!bool){
+                                                System.out.println("Checkout failed");
+                                            }
                                             break;
                                         case "4": // view shopping cart
                                             for (String s : Customer.getShoppingCartofCustomer(user)) {
-                                                System.out.println(s);
+                                                String[] view = s.split(";");
+                                                System.out.println("Customer Name | Store Name | Product Name | Qty");
+                                                String output =
+                                                        view[1] + " | " + view[2] + " | " + view[3] + " | " + view[4];
+                                                System.out.println(output);
                                             }
                                             break;
                                     }
