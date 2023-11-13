@@ -39,8 +39,8 @@ public class SellerTestCases {
         assertEquals("Make sure editProductPrice method does invalid argument handling!", false,
                 Seller.editProductDescription("invalidstorename", "invalidname", "description", "invalidusername"));
 
-        assertEquals("Make sure createStore method works with valid arguments!", true,
-                Seller.createStore("store name", "store location", "sellerUsername"));
+        assertEquals("Make sure createStore method works with valid arguments!", true, Seller.createStore("store " +
+                "name", "store location", "sellerUsername"));
 
         // check to see if stores.txt database has been updated
         ArrayList<String> list1 = new ArrayList<>();
@@ -63,20 +63,20 @@ public class SellerTestCases {
                 Seller.createStore("store name", "store location1", "username1"));
 
 
-        assertEquals("Make sure createProduct method checks invalid arguments!", false,
-                Seller.createProduct("invalid store name", "product name", "product", 10, 10, "sellerUsername"));
+        assertEquals("Make sure createProduct method checks invalid arguments!", false, Seller.createProduct("invalid" +
+                " store name", "product name", "product", 10, 10, "sellerUsername"));
 
-        assertEquals("Make sure createProduct method checks invalid arguments!", false,
-                Seller.createProduct("store name", "product name", "product", -1, 10, "sellerUsername"));
+        assertEquals("Make sure createProduct method checks invalid arguments!", false, Seller.createProduct("store " +
+                "name", "product name", "product", -1, 10, "sellerUsername"));
 
-        assertEquals("Make sure createProduct method checks invalid arguments!", false,
-                Seller.createProduct("store name", "product name", "product", 1, -10, "sellerUsername"));
+        assertEquals("Make sure createProduct method checks invalid arguments!", false, Seller.createProduct("store " +
+                "name", "product name", "product", 1, -10, "sellerUsername"));
 
-        assertEquals("Make sure createProduct method checks invalid arguments!", false,
-                Seller.createProduct("store name", "product name", "product", 1, 10, "invalidUsername"));
+        assertEquals("Make sure createProduct method checks invalid arguments!", false, Seller.createProduct("store " +
+                "name", "product name", "product", 1, 10, "invalidUsername"));
 
-        assertEquals("Make sure createProduct method works with valid arguments!", true,
-                Seller.createProduct("store name", "product name", "product", 10, 10, "sellerUsername"));
+        assertEquals("Make sure createProduct method works with valid arguments!", true, Seller.createProduct("store " +
+                "name", "product name", "product", 10, 10, "sellerUsername"));
 
         // check to see if stores.txt database has been updated
         list1.clear();
@@ -92,25 +92,24 @@ public class SellerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals("Ensure that createStore updates store.txt!", "store name,store location,sellerUsername;product " +
-                "name," +
-                "product,10.0,10;", list1.get(0));
+        assertEquals("Ensure that createStore updates store.txt!", "store name,store location,sellerUsername;product "
+                + "name," + "product,10.0,10;", list1.get(0));
 
 
-        assertEquals("Make sure editProductPrice method checks invalid arguments!", false,
-                Seller.editProductPrice("invalid store name", "product name", 8, "sellerUsername"));
+        assertEquals("Make sure editProductPrice method checks invalid arguments!", false, Seller.editProductPrice(
+                "invalid store name", "product name", 8, "sellerUsername"));
 
-        assertEquals("Make sure editProductPrice method checks invalid arguments!", false,
-                Seller.editProductPrice("store name", "invalid product name", 8, "sellerUsername"));
+        assertEquals("Make sure editProductPrice method checks invalid arguments!", false, Seller.editProductPrice(
+                "store name", "invalid product name", 8, "sellerUsername"));
 
-        assertEquals("Make sure editProductPrice method checks invalid arguments!", false,
-                Seller.editProductPrice("store name", "product name", -8, "sellerUsername"));
+        assertEquals("Make sure editProductPrice method checks invalid arguments!", false, Seller.editProductPrice(
+                "store name", "product name", -8, "sellerUsername"));
 
-        assertEquals("Make sure editProductPrice method checks invalid arguments!", false,
-                Seller.editProductPrice("store name", "product name", -8, "invalid username"));
+        assertEquals("Make sure editProductPrice method checks invalid arguments!", false, Seller.editProductPrice(
+                "store name", "product name", -8, "invalid username"));
 
-        assertEquals("Make sure editProductPrice method works with valid arguments!", true,
-                Seller.editProductPrice("store name", "product name", 8, "sellerUsername"));
+        assertEquals("Make sure editProductPrice method works with valid arguments!", true, Seller.editProductPrice(
+                "store name", "product name", 8, "sellerUsername"));
 
         assertEquals("Make sure editProductDescription method checks invalid arguments!", false,
                 Seller.editProductDescription("invalid store name", "product name", "new description",
@@ -155,12 +154,11 @@ public class SellerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals("Ensure that createStore updates store.txt!", "store name,store location,sellerUsername;product " +
-                "name," +
-                "new description,8.0,20;", list1.get(0));
+        assertEquals("Ensure that createStore updates store.txt!", "store name,store location,sellerUsername;product "
+                + "name," + "new description,8.0,20;", list1.get(0));
 
-        assertEquals("Make sure createProduct method works with valid arguments!", true,
-                Seller.createProduct("store name", "second product", "product", 10, 10, "sellerUsername"));
+        assertEquals("Make sure createProduct method works with valid arguments!", true, Seller.createProduct("store " +
+                "name", "second product", "product", 10, 10, "sellerUsername"));
 
         System.out.println("\nprintProductAndStores method test:");
         Seller.printProductAndStores();
@@ -194,18 +192,14 @@ public class SellerTestCases {
         assertEquals("Ensure the buyProduct method works with valid input!", true,
                 Customer.buyProductsInShoppingCart("username2"));
 
-        assertEquals("Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased | Revenue " +
-                "From Customer \n" +
-                "email2 | username2 | store name | product name | 5 | 8.00 | 40.0\n", Seller.salesByStore("store name",
-                "sellerUsername"));
+        assertEquals("Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased | Revenue " + "From Customer \n" + "email2 | username2 | store name | product name | 5 | 8.00 | 40.0\n", Seller.salesByStore("store name", "sellerUsername"));
 
         // getProductSales is broken as of now
         System.out.println(Seller.getProductSales("store name", "sellerUsername", false));
         System.out.println(Seller.getProductSales("store name", "sellerUsername", true));
 
-        assertEquals("store name - product name | in stock: 15 | in shopping cart: 1\n" +
-                "store name - second product | in stock: 10 | in shopping cart: 0\n", Seller.getShoppingCartProducts(
-                "sellerUsername"));
+        assertEquals("store name - product name | in stock: 15 | in shopping cart: 1\n" + "store name - second " +
+                "product | in stock: 10 | in shopping cart: 0\n", Seller.getShoppingCartProducts("sellerUsername"));
 
 
         assertEquals("Make sure editProductDescription method checks invalid arguments!", false,
@@ -217,8 +211,8 @@ public class SellerTestCases {
         assertEquals("Make sure editProductDescription method checks invalid arguments!", false,
                 Seller.deleteProduct("store name", "product name", "invalid username"));
 
-        assertEquals("Make sure editProductDescription method works!", true,
-                Seller.deleteProduct("store name", "product name", "sellerUsername"));
+        assertEquals("Make sure editProductDescription method works!", true, Seller.deleteProduct("store name",
+                "product name", "sellerUsername"));
 
         // check to see if stores.txt database has been updated
         list1.clear();
@@ -234,9 +228,8 @@ public class SellerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals("Ensure that createStore updates store.txt!", "store name,store location,sellerUsername;second " +
-                        "product,product,10.0,10;",
-                list1.get(0));
+        assertEquals("Ensure that createStore updates store.txt!",
+                "store name,store location,sellerUsername;second " + "product,product,10.0,10;", list1.get(0));
 
         assertEquals(false, Seller.deleteStore("invalid store name", "sellerUsername"));
         assertEquals(false, Seller.deleteStore("store name", "invalid username"));

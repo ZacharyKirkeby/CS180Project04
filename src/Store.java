@@ -1,4 +1,5 @@
 package src;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class Store {
 
     /**
      * Creates a new Store object
+     *
      * @param name
      * @param storeLocation
      * @param sellerUsername
@@ -199,7 +201,6 @@ public class Store {
     }
 
     /**
-     *
      * @return All customers and purchases sorted by the amount spend per customer
      */
     public String getSortedCustomersAndPurchases() {

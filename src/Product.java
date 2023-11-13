@@ -1,4 +1,5 @@
 package src;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -32,6 +33,7 @@ public class Product {
 
     /**
      * Creats a new Product Class
+     *
      * @param name
      * @param purchasePrice
      * @param quantity
@@ -46,6 +48,7 @@ public class Product {
 
     /**
      * Creats a new Product Class
+     *
      * @param name
      * @param description
      * @param purchasePrice
@@ -133,7 +136,6 @@ public class Product {
     }
 
     /**
-     *
      * @param quantity
      * @return true if success in buying product false if not
      */
@@ -273,15 +275,30 @@ public class Product {
         return true;
     }
 
+    /**
+     * Ends sale
+     *
+     * @return
+     */
     public boolean endSale() {
         this.onSale = false;
         return true;
     }
 
+    /**
+     * Returns sale cap
+     *
+     * @return
+     */
     public int getSaleCap() {
         return saleCap;
     }
 
+    /**
+     * Gets sale price
+     *
+     * @return
+     */
     public double getSalePrice() {
         return salePrice;
     }
@@ -312,6 +329,11 @@ public class Product {
         return orderCap;
     }
 
+    /**
+     * Gets onSale
+     *
+     * @return
+     */
     public boolean getOnSale() {
         return onSale;
     }

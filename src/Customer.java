@@ -21,11 +21,9 @@ public abstract class Customer {
     private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
     private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
     private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
-    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
-    //shopping cart database for all customers
-    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
-    // purchase history databse for all customers
-    private static boolean bool;
+    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt"; //shopping cart database
+    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt"; // purchase history
+    private static boolean bool; //
 
 
     /**
@@ -114,6 +112,13 @@ public abstract class Customer {
         return true;
     }
 
+    /**
+     * Check if already in cart
+     *
+     * @param store
+     * @param product
+     * @return
+     */
     public static boolean alreadyInCart(String store, String product) {
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < storeNames.size(); i++) {
@@ -124,17 +129,33 @@ public abstract class Customer {
         return false;
     }
 
+    /**
+     * Check if already in cart
+     *
+     * @param store
+     * @param product
+     * @param username
+     * @return
+     */
     public static boolean alreadyInCartOfUser(String store, String product, String username) {
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < storeNames.size(); i++) {
             if (storeNames.get(i).equals(store) && productNames.get(i).equalsIgnoreCase(product)
-                && usernames.get(i).equalsIgnoreCase(username)) {
+                    && usernames.get(i).equalsIgnoreCase(username)) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Adds to cart
+     *
+     * @param storeName
+     * @param productName
+     * @param quantity
+     * @return
+     */
     public static boolean addToCartChangeCheckoutQuantity(String storeName, String productName, int quantity) {
         boolean bool = true;
         if (alreadyInCart(storeName, productName)) {
@@ -172,7 +193,7 @@ public abstract class Customer {
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < usernames.size(); i++) {
             if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
-                && productNames.get(i).equals(productName) && quantities.get(i) == quantity) {
+                    && productNames.get(i).equals(productName) && quantities.get(i) == quantity) {
                 successfullyRemovedFromCart = true;
                 Seller.changeQuantity(storeName, productName, quantity);
                 emails.remove(i);
@@ -182,7 +203,7 @@ public abstract class Customer {
                 quantities.remove(i);
                 break;
             } else if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
-                && productNames.get(i).equals(productName) && quantities.get(i) > quantity) {
+                    && productNames.get(i).equals(productName) && quantities.get(i) > quantity) {
                 quantities.set(i, quantities.get(i) - quantity);
                 Seller.changeQuantity(storeName, productName, quantity);
                 successfullyRemovedFromCart = true;
@@ -213,14 +234,14 @@ public abstract class Customer {
                         for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
                             // iterate through product list
                             if (Seller.getStores().get(j).getProductList().get(k).getName()
-                                .equals(productNames.get(i))) { // if product name matches
+                                    .equals(productNames.get(i))) { // if product name matches
                                 Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
                                 double unitprice =
-                                    Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
+                                        Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
                                 writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
-                                    productNames.get(i), quantities.get(i), unitprice);
+                                        productNames.get(i), quantities.get(i), unitprice);
                                 removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
-                                    productNames.get(i), quantities.get(i));
+                                        productNames.get(i), quantities.get(i));
 
                                 productsBoughtSuccessfully = true;
                                 return true;
@@ -246,7 +267,7 @@ public abstract class Customer {
                                                           String productName, int quantity, double unitprice) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
             pw.println(String.format("%s;%s;%s;%s;%d;%.2f", email, username, storeName, productName, quantity,
-                unitprice));
+                    unitprice));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -260,7 +281,7 @@ public abstract class Customer {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
                 pw.println(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
-                    productNames.get(i), quantities.get(i)));
+                        productNames.get(i), quantities.get(i)));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -334,7 +355,7 @@ public abstract class Customer {
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches
                 customerProducts.add(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i),
-                    storeNames.get(i), productNames.get(i), quantities.get(i)));
+                        storeNames.get(i), productNames.get(i), quantities.get(i)));
             }
         }
         return customerProducts;
@@ -353,7 +374,7 @@ public abstract class Customer {
             for (int i = 0; i < usernames.size(); i++) {
                 if (usernames.get(i).equals(username)) { // check if username and email match
                     pw.println(String.format("%s;%s;%s;%s;%d", emails.get(i), usernames.get(i), storeNames.get(i),
-                        productNames.get(i), quantities.get(i)));
+                            productNames.get(i), quantities.get(i)));
                 }
             }
             bool = true;
@@ -364,7 +385,6 @@ public abstract class Customer {
     }
 
     /**
-     *
      * @param storeName
      * @param productName
      * @param customerName
@@ -385,13 +405,13 @@ public abstract class Customer {
             int count = 0;
             if (line == null) {
                 pw.println(String.format("%s , %s , %s , %d , %s", storeName, productName, customerName, rating,
-                    description));
+                        description));
             } else {
                 while (line != null) {
                     line = br.readLine();
                     if (line == null) {
                         pw.println(String.format("%s , %s , %s , %d , %s", storeName, productName, customerName, rating,
-                            description));
+                                description));
                     }
                 }
             }
@@ -403,7 +423,6 @@ public abstract class Customer {
     }
 
     /**
-     *
      * @param storeName
      * @param productName
      * @return the reviews of the specified product passed in

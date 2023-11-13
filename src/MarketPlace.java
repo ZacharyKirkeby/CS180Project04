@@ -1,4 +1,5 @@
 package src;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ import java.util.Scanner;
 public class MarketPlace {
     private static final String WELCOME_PROMPT = "Welcome to the Fruit Market!";
     private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register / " +
-        "Exit)";
+            "Exit)";
     private static final String sellerChoices = """
              1. Create Store\s
              2. Modify Store\s
@@ -148,7 +149,7 @@ public class MarketPlace {
                         while (isLoggedIn) {
                             //Seller Experience
                             if (Account.getRole(user) != null
-                                && Account.getRole(user).equalsIgnoreCase("seller")) {
+                                    && Account.getRole(user).equalsIgnoreCase("seller")) {
                                 System.out.print(sellerChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -212,7 +213,7 @@ public class MarketPlace {
                                                 System.out.println("Enter Product Description: ");
                                                 String description = scanner.nextLine();
                                                 bool = Seller.createProduct(storeName, productName, description,
-                                                    price, quantity, user);
+                                                        price, quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Added Product");
                                                 } else {
@@ -263,7 +264,7 @@ public class MarketPlace {
                                                     }
                                                 }
                                                 bool = Seller.editProductQuantity(storeName, productName,
-                                                    quantity, user);
+                                                        quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Edited");
                                                 } else {
@@ -389,7 +390,7 @@ public class MarketPlace {
                                                     break;
                                                 }
                                                 System.out.println(Seller.getCustomersAndPurchases(storeName,
-                                                    user, sorted));
+                                                        user, sorted));
                                                 break;
                                             //View Product Sales
                                             case "2":
@@ -408,8 +409,8 @@ public class MarketPlace {
                                                     break;
                                                 }
                                                 if (Seller.getProductSales(storeName, user, sorted).equals("Customer " +
-                                                    "Email | Customer Username | Store Name | Product Name | " +
-                                                    "Quantity Purchased ")) {
+                                                        "Email | Customer Username | Store Name | Product Name | " +
+                                                        "Quantity Purchased ")) {
                                                     System.out.println("No Product Sales Found!");
                                                 } else {
                                                     System.out.println(Seller.getProductSales(storeName, user, sorted));
@@ -463,10 +464,10 @@ public class MarketPlace {
                                     //View Customer Reviews
                                     case "5":
                                         System.out.println("Enter Product Name (Leave empty if you want to " +
-                                            "view reviews of all products)");
+                                                "view reviews of all products)");
                                         productName = scanner.nextLine();
                                         if (Seller.viewCustomerReviews(productName, user).equals("Store Name | " +
-                                            "Product Name | Customer Name | Rating ")) {
+                                                "Product Name | Customer Name | Rating ")) {
                                             System.out.println("Could not find any reviews!");
                                         } else {
                                             System.out.print(Seller.viewCustomerReviews(productName, user));
@@ -586,7 +587,7 @@ public class MarketPlace {
                                 }
                                 // Customer Experience
                             } else if (Account.getRole(user) != null
-                                && Account.getRole(user).equalsIgnoreCase("customer")) {
+                                    && Account.getRole(user).equalsIgnoreCase("customer")) {
                                 System.out.print(BUYERPROMPT);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -729,8 +730,8 @@ public class MarketPlace {
                                                             }
                                                         }
                                                         boolean productRemoved = Customer.removeFromCart(
-                                                            Account.getEmail(user), Account.getUsername(user),
-                                                            storeName, productName, quantity);
+                                                                Account.getEmail(user), Account.getUsername(user),
+                                                                storeName, productName, quantity);
                                                         if (productRemoved) {
                                                             System.out.println("Product removed from cart");
                                                         } else {
@@ -744,7 +745,7 @@ public class MarketPlace {
                                                 ArrayList<String> check = Customer.getShoppingCartofCustomer(user);
                                                 while (!check.isEmpty()) {
                                                     bool = Customer.buyProductsInShoppingCart(
-                                                        Account.getUsername(user));
+                                                            Account.getUsername(user));
                                                     check = Customer.getShoppingCartofCustomer(user);
                                                 }
                                                 if (bool) {
@@ -757,10 +758,10 @@ public class MarketPlace {
                                                 for (String s : Customer.getShoppingCartofCustomer(user)) {
                                                     String[] view = s.split(";");
                                                     System.out.println("Customer Name | Store Name " +
-                                                        "| Product Name | Qty");
+                                                            "| Product Name | Qty");
                                                     String output =
                                                             view[1] + " | " + view[2] +
-                                                                " | " + view[3] + " | " + view[4];
+                                                                    " | " + view[3] + " | " + view[4];
                                                     System.out.println(output);
                                                 }
                                                 break;

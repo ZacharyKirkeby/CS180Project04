@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.util.*;
 
@@ -542,7 +543,7 @@ public abstract class Seller {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + " | in stock: "
-                        + stores.get(i).getProductList().get(j).getStockQuantity() + " | in shopping cart: " +
+                            + stores.get(i).getProductList().get(j).getStockQuantity() + " | in shopping cart: " +
                             Customer.getTotalInCart(stores.get(i).getStoreName(),
                                     stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
@@ -852,7 +853,6 @@ public abstract class Seller {
     }
 
     /**
-     *
      * @param productName
      * @param user
      * @return String of all reviews of the product
@@ -884,7 +884,6 @@ public abstract class Seller {
     }
 
     /**
-     *
      * @param storeName
      * @return
      */
@@ -899,6 +898,7 @@ public abstract class Seller {
 
     /**
      * Changes the quantity of the product passed in
+     *
      * @param storeName
      * @param productName
      * @param quantity
@@ -927,6 +927,7 @@ public abstract class Seller {
 
     /**
      * Returns the total spending per customer for a certain product
+     *
      * @param storeName
      * @param productName
      * @param quantity

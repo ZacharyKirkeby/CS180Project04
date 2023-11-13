@@ -50,8 +50,8 @@ public class CustomerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals("Ensure the addToCart method works!", "email;username;storename;" +
-                "productname;10", list1.get(0));
+        assertEquals("Ensure the addToCart method works!", "email;username;storename;" + "productname;10",
+                list1.get(0));
 
         Customer.removeFromCart("email", "username", "storename", "productname", 10);
 
@@ -75,8 +75,8 @@ public class CustomerTestCases {
         Seller.createProduct("storename", "strawberry", "fruit", 20.0, 20, "username");
         Seller.createProduct("storename", "blueberry", "fruit", 15.0, 20, "username");
 
-        assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username1", "storename",
-                "strawberry", 10));
+        assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username1", "storename"
+                , "strawberry", 10));
         assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username1", "storename"
                 , "blueberry", 12));
 
@@ -84,9 +84,8 @@ public class CustomerTestCases {
         assertEquals("Ensure the getTotalInCart method works!", 10, Customer.getTotalInCart("storename", "strawberry"));
         assertEquals("Ensure the getTotalInCart method works!", 12, Customer.getTotalInCart("storename", "blueberry"));
 
-        assertEquals("Ensure the addtoCart method does not stop different customers from adding multiple of the same " +
-                        "product!", true,
-                Customer.addToCart("email2", "username2", "storename", "strawberry", 5));
+        assertEquals("Ensure the addtoCart method does not stop different customers from adding multiple of the same "
+                + "product!", true, Customer.addToCart("email2", "username2", "storename", "strawberry", 5));
 
 
         assertEquals("Ensure the getTotalInCart method works with multiple users' shopping carts!", 15,
@@ -208,8 +207,9 @@ public class CustomerTestCases {
         }
 
         //
-        assertEquals("Make sure buyProduct is updating stores.txt!", "storename,storeLocation,username;strawberry," +
-                "fruit,20.0,10;blueberry,fruit,15.0,20;", list1.get(0));
+        assertEquals("Make sure buyProduct is updating stores.txt!",
+                "storename,storeLocation,username;strawberry," + "fruit,20.0,10;blueberry,fruit,15.0,20;",
+                list1.get(0));
 
     }
 
@@ -222,9 +222,8 @@ public class CustomerTestCases {
 
         assertEquals(true, Customer.leaveReview("storename", "productName", "customerName", 3, "description"));
 
-        assertEquals("Store Name | Product Name | Customer Name | Rating \n" +
-                "storename | productName | customerName | 3 | description\n", Customer.viewReviews("storename",
-                "productName"));
+        assertEquals("Store Name | Product Name | Customer Name | Rating \n" + "storename | productName | " +
+                "customerName | 3 | description\n", Customer.viewReviews("storename", "productName"));
     }
 
     @Test(timeout = 1000)

@@ -62,7 +62,7 @@ public class MarketPlaceTestCases {
     // Each of the correct outputs
     private static final String WELCOME_PROMPT = "Welcome to the Fruit Market!";
     private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register / " +
-        "Exit)";
+            "Exit)";
     private static final String sellerChoices = """
              1. Create Store\s
              2. Modify Store\s
@@ -150,68 +150,68 @@ public class MarketPlaceTestCases {
                 "10\n" +
                 "red fruit\n" +
                 "7\n" +
-            "exit";
+                "exit";
 
         // Pair the input with the expected result
         String expected = "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Enter an email: \n" +
-            "Input Username: \n" +
-            "Enter your password: \n" +
-            "Enter your role (customer / seller)\n" +
-            "Account Made Successfully\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Input Username or Email: \n" +
-            "Enter your password: \n" +
-            "Login Successful!\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            "Enter a store name: \n" +
-            "Enter a store location: \n" +
-            "Successfully Created\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            " 1. Create Product \n" +
-            " 2. Change Product Price \n" +
-            " 3. Change Product Quantity \n" +
-            " 4. Delete Product \n" +
-            " 5. Add products to Store from CSV \n" +
-            " 6. Start Sale \n" +
-            " 7. Add Purchase Limit \n" +
-            " 8. Back \n" +
-            "Enter Store Name: \n" +
-            "Enter Product Name: \n" +
-            "Enter Product Price: \n" +
-            "Enter Product Quantity: \n" +
-            "Enter Product Description: \n" +
-            "Successfully Added Product\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            "Successfully Logged out\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Thank You For Using Our Fruit Market!";
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Enter an email: \n" +
+                "Input Username: \n" +
+                "Enter your password: \n" +
+                "Enter your role (customer / seller)\n" +
+                "Account Made Successfully\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Input Username or Email: \n" +
+                "Enter your password: \n" +
+                "Login Successful!\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                "Enter a store name: \n" +
+                "Enter a store location: \n" +
+                "Successfully Created\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                " 1. Create Product \n" +
+                " 2. Change Product Price \n" +
+                " 3. Change Product Quantity \n" +
+                " 4. Delete Product \n" +
+                " 5. Add products to Store from CSV \n" +
+                " 6. Start Sale \n" +
+                " 7. Add Purchase Limit \n" +
+                " 8. Back \n" +
+                "Enter Store Name: \n" +
+                "Enter Product Name: \n" +
+                "Enter Product Price: \n" +
+                "Enter Product Quantity: \n" +
+                "Enter Product Description: \n" +
+                "Successfully Added Product\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                "Successfully Logged out\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Thank You For Using Our Fruit Market!";
 
         // Runs the program with the input values
         receiveInput(input);
@@ -231,66 +231,66 @@ public class MarketPlaceTestCases {
         AccountTestCases.reset();
         CustomerTestCases.reset();
         String input = "\n" +
-            "7\n" +
-            "register\n" +
-            "email@gmail.com\n" +
-            "username\n" +
-            "password\n" +
-            "seller\n" +
-            "login\n" +
-            "username\n" +
-            "password\n" +
-            "8\n" +
-            "1\n" +
-            "\n" +
-            "\n" +
-            "1\n" +
-            "validname\n" +
-            "\n" +
-            "7\n" +
-            "exit";
+                "7\n" +
+                "register\n" +
+                "email@gmail.com\n" +
+                "username\n" +
+                "password\n" +
+                "seller\n" +
+                "login\n" +
+                "username\n" +
+                "password\n" +
+                "8\n" +
+                "1\n" +
+                "\n" +
+                "\n" +
+                "1\n" +
+                "validname\n" +
+                "\n" +
+                "7\n" +
+                "exit";
 
         // Pair the input with the expected result
         String expected = "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            WELCOME_PROMPT + "\n" +
-            LOGIN_PROMPT + "\n" +
-            "Invalid Input\n" +
-            WELCOME_PROMPT + "\n" +
-            LOGIN_PROMPT + "\n" +
-            "Invalid Input\n" +
-            WELCOME_PROMPT + "\n" +
-            LOGIN_PROMPT + "\n" +
-            "Enter an email: \n" +
-            "Input Username: \n" +
-            "Enter your password: \n" +
-            "Enter your role (customer / seller)\n" +
-            "Account Made Successfully\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Input Username or Email: \n" +
-            "Enter your password: \n" +
-            "Login Successful!\n" +
-            sellerChoices +
-            "Invalid Input\n" +
-            sellerChoices +
-            "Enter a store name: \n" +
-            "Enter a store location: \n" +
-            "Creation Failed\n" +
-            "Try Again!\n" +
-            sellerChoices +
-            "Enter a store name: \n" +
-            "Enter a store location: \n" +
-            "Creation Failed\n" +
-            "Try Again!\n" +
-            sellerChoices +
-            "Successfully Logged out\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Thank You For Using Our Fruit Market!";
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                WELCOME_PROMPT + "\n" +
+                LOGIN_PROMPT + "\n" +
+                "Invalid Input\n" +
+                WELCOME_PROMPT + "\n" +
+                LOGIN_PROMPT + "\n" +
+                "Invalid Input\n" +
+                WELCOME_PROMPT + "\n" +
+                LOGIN_PROMPT + "\n" +
+                "Enter an email: \n" +
+                "Input Username: \n" +
+                "Enter your password: \n" +
+                "Enter your role (customer / seller)\n" +
+                "Account Made Successfully\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Input Username or Email: \n" +
+                "Enter your password: \n" +
+                "Login Successful!\n" +
+                sellerChoices +
+                "Invalid Input\n" +
+                sellerChoices +
+                "Enter a store name: \n" +
+                "Enter a store location: \n" +
+                "Creation Failed\n" +
+                "Try Again!\n" +
+                sellerChoices +
+                "Enter a store name: \n" +
+                "Enter a store location: \n" +
+                "Creation Failed\n" +
+                "Try Again!\n" +
+                sellerChoices +
+                "Successfully Logged out\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Thank You For Using Our Fruit Market!";
 
         // Runs the program with the input values
         receiveInput(input);
@@ -302,7 +302,7 @@ public class MarketPlaceTestCases {
         // Trims the output and verifies it is correct.
         stuOut = stuOut.replace("\r\n", "\n");
         assertEquals("Make sure marketplace is implemented correctly!",
-            expected.trim(), stuOut.trim());
+                expected.trim(), stuOut.trim());
     }
 
     @Test(timeout = 1000)
@@ -311,162 +311,162 @@ public class MarketPlaceTestCases {
         CustomerTestCases.reset();
         // Set the input
         String input = "register\n" +
-            "email@gmail.com\n" +
-            "username\n" +
-            "password\n" +
-            "seller\n" +
-            "login\n" +
-            "username\n" +
-            "password\n" +
-            "1\n" +
-            "fruit stand\n" +
-            "IN\n" +
-            "2\n" +
-            "1\n" +
-            "fruit stand\n" +
-            "apple\n" +
-            "5\n" +
-            "10\n" +
-            "red fruit\n" +
-            "2\n" +
-            "1\n" +
-            "fruit stand\n" +
-            "blueberry\n" +
-            "3\n" +
-            "20\n" +
-            "blue fruit\n" +
-            "2\n" +
-            "2\n" +
-            "fruit stand\n" +
-            "apple\n" +
-            "7\n" +
-            "2\n" +
-            "3\n" +
-            "fruit stand\n" +
-            "blueberry\n" +
-            "15\n" +
-            "7\n" +
-            "exit";
+                "email@gmail.com\n" +
+                "username\n" +
+                "password\n" +
+                "seller\n" +
+                "login\n" +
+                "username\n" +
+                "password\n" +
+                "1\n" +
+                "fruit stand\n" +
+                "IN\n" +
+                "2\n" +
+                "1\n" +
+                "fruit stand\n" +
+                "apple\n" +
+                "5\n" +
+                "10\n" +
+                "red fruit\n" +
+                "2\n" +
+                "1\n" +
+                "fruit stand\n" +
+                "blueberry\n" +
+                "3\n" +
+                "20\n" +
+                "blue fruit\n" +
+                "2\n" +
+                "2\n" +
+                "fruit stand\n" +
+                "apple\n" +
+                "7\n" +
+                "2\n" +
+                "3\n" +
+                "fruit stand\n" +
+                "blueberry\n" +
+                "15\n" +
+                "7\n" +
+                "exit";
 
         // Pair the input with the expected result
         String expected = "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "File cleared.\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Enter an email: \n" +
-            "Input Username: \n" +
-            "Enter your password: \n" +
-            "Enter your role (customer / seller)\n" +
-            "Account Made Successfully\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Input Username or Email: \n" +
-            "Enter your password: \n" +
-            "Login Successful!\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            "Enter a store name: \n" +
-            "Enter a store location: \n" +
-            "Successfully Created\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            " 1. Create Product \n" +
-            " 2. Change Product Price \n" +
-            " 3. Change Product Quantity \n" +
-            " 4. Delete Product \n" +
-            " 5. Add products to Store from CSV \n" +
-            " 6. Start Sale \n" +
-            " 7. Add Purchase Limit \n" +
-            " 8. Back \n" +
-            "Enter Store Name: \n" +
-            "Enter Product Name: \n" +
-            "Enter Product Price: \n" +
-            "Enter Product Quantity: \n" +
-            "Enter Product Description: \n" +
-            "Successfully Added Product\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            " 1. Create Product \n" +
-            " 2. Change Product Price \n" +
-            " 3. Change Product Quantity \n" +
-            " 4. Delete Product \n" +
-            " 5. Add products to Store from CSV \n" +
-            " 6. Start Sale \n" +
-            " 7. Add Purchase Limit \n" +
-            " 8. Back \n" +
-            "Enter Store Name: \n" +
-            "Enter Product Name: \n" +
-            "Enter Product Price: \n" +
-            "Enter Product Quantity: \n" +
-            "Enter Product Description: \n" +
-            "Successfully Added Product\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            " 1. Create Product \n" +
-            " 2. Change Product Price \n" +
-            " 3. Change Product Quantity \n" +
-            " 4. Delete Product \n" +
-            " 5. Add products to Store from CSV \n" +
-            " 6. Start Sale \n" +
-            " 7. Add Purchase Limit \n" +
-            " 8. Back \n" +
-            "Enter Store Name: \n" +
-            "Enter Product Name: \n" +
-            "Enter New Product Price: \n" +
-            "Successfully edited\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            " 1. Create Product \n" +
-            " 2. Change Product Price \n" +
-            " 3. Change Product Quantity \n" +
-            " 4. Delete Product \n" +
-            " 5. Add products to Store from CSV \n" +
-            " 6. Start Sale \n" +
-            " 7. Add Purchase Limit \n" +
-            " 8. Back \n" +
-            "Enter Store Name: \n" +
-            "Enter Product Name: \n" +
-            "Enter New Quantity: \n" +
-            "Successfully Edited\n" +
-            " 1. Create Store \n" +
-            " 2. Modify Store \n" +
-            " 3. View Store Statistics \n" +
-            " 4. Delete Store \n" +
-            " 5. View Customer Reviews \n" +
-            " 6. Manage Account \n" +
-            " 7. Logout \n" +
-            "Successfully Logged out\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
-            "Thank You For Using Our Fruit Market!";
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Enter an email: \n" +
+                "Input Username: \n" +
+                "Enter your password: \n" +
+                "Enter your role (customer / seller)\n" +
+                "Account Made Successfully\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Input Username or Email: \n" +
+                "Enter your password: \n" +
+                "Login Successful!\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                "Enter a store name: \n" +
+                "Enter a store location: \n" +
+                "Successfully Created\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                " 1. Create Product \n" +
+                " 2. Change Product Price \n" +
+                " 3. Change Product Quantity \n" +
+                " 4. Delete Product \n" +
+                " 5. Add products to Store from CSV \n" +
+                " 6. Start Sale \n" +
+                " 7. Add Purchase Limit \n" +
+                " 8. Back \n" +
+                "Enter Store Name: \n" +
+                "Enter Product Name: \n" +
+                "Enter Product Price: \n" +
+                "Enter Product Quantity: \n" +
+                "Enter Product Description: \n" +
+                "Successfully Added Product\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                " 1. Create Product \n" +
+                " 2. Change Product Price \n" +
+                " 3. Change Product Quantity \n" +
+                " 4. Delete Product \n" +
+                " 5. Add products to Store from CSV \n" +
+                " 6. Start Sale \n" +
+                " 7. Add Purchase Limit \n" +
+                " 8. Back \n" +
+                "Enter Store Name: \n" +
+                "Enter Product Name: \n" +
+                "Enter Product Price: \n" +
+                "Enter Product Quantity: \n" +
+                "Enter Product Description: \n" +
+                "Successfully Added Product\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                " 1. Create Product \n" +
+                " 2. Change Product Price \n" +
+                " 3. Change Product Quantity \n" +
+                " 4. Delete Product \n" +
+                " 5. Add products to Store from CSV \n" +
+                " 6. Start Sale \n" +
+                " 7. Add Purchase Limit \n" +
+                " 8. Back \n" +
+                "Enter Store Name: \n" +
+                "Enter Product Name: \n" +
+                "Enter New Product Price: \n" +
+                "Successfully edited\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                " 1. Create Product \n" +
+                " 2. Change Product Price \n" +
+                " 3. Change Product Quantity \n" +
+                " 4. Delete Product \n" +
+                " 5. Add products to Store from CSV \n" +
+                " 6. Start Sale \n" +
+                " 7. Add Purchase Limit \n" +
+                " 8. Back \n" +
+                "Enter Store Name: \n" +
+                "Enter Product Name: \n" +
+                "Enter New Quantity: \n" +
+                "Successfully Edited\n" +
+                " 1. Create Store \n" +
+                " 2. Modify Store \n" +
+                " 3. View Store Statistics \n" +
+                " 4. Delete Store \n" +
+                " 5. View Customer Reviews \n" +
+                " 6. Manage Account \n" +
+                " 7. Logout \n" +
+                "Successfully Logged out\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Thank You For Using Our Fruit Market!";
 
         // Runs the program with the input values
         receiveInput(input);
@@ -478,6 +478,6 @@ public class MarketPlaceTestCases {
         // Trims the output and verifies it is correct.
         stuOut = stuOut.replace("\r\n", "\n");
         assertEquals("Make sure marketplace is implemented correctly!",
-            expected.trim(), stuOut.trim());
+                expected.trim(), stuOut.trim());
     }
 }
