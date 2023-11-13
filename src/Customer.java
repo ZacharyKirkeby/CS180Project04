@@ -85,7 +85,7 @@ public abstract class Customer {
      * @param quantity
      */
 
-    public static void addToCart(String email, String username, String store, String product, int quantity) {
+    public static boolean addToCart(String email, String username, String store, String product, int quantity) {
         readFromShoppingCartDatabaseFile();
         for(int i = 0; i < Seller.getStores().size(); i++){
             if(Seller.getStores().get(i).getStoreName().equals(store)) {
@@ -94,6 +94,10 @@ public abstract class Customer {
                         if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity){
                             quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
                             System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
+                            return true;
+                        } if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() == 0){
+                            System.out.println("Error out of Stock");
+                            return false;
                         }
                     }
                 }
@@ -105,6 +109,7 @@ public abstract class Customer {
         productNames.add(product);
         quantities.add(quantity);
         writeToShoppingCartDatabaseFile();
+        return true;
     }
 
     /**
@@ -126,6 +131,7 @@ public abstract class Customer {
             if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
                     && productNames.get(i).equals(productName) && quantities.get(i) == quantity) {
                 successfullyRemovedFromCart = true;
+                Seller.changeQuantity(storeName, productName, quantity);
                 emails.remove(i);
                 usernames.remove(i);
                 storeNames.remove(i);
@@ -135,8 +141,10 @@ public abstract class Customer {
             } else if(emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
                     && productNames.get(i).equals(productName) && quantities.get(i) > quantity){
                 quantities.set(i, quantities.get(i)-quantity);
+                Seller.changeQuantity(storeName, productName, quantity);
                 successfullyRemovedFromCart = true;
             }
+
         }
         writeToShoppingCartDatabaseFile();
         return successfullyRemovedFromCart;
@@ -320,10 +328,10 @@ public abstract class Customer {
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
                                       String description) {
         boolean bool = false;
-            if (!(1 <= rating && rating <= 5)) {
-                System.out.println("Invalid Input");
-                return false;
-            }
+        if (!(1 <= rating && rating <= 5)) {
+            System.out.println("Invalid Input");
+            return false;
+        }
         try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
              PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt", true), true)) {
             String line = br.readLine();
