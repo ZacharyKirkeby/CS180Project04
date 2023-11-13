@@ -84,7 +84,7 @@ public abstract class Customer {
      * @param quantity
      */
     public static boolean addToCart(String email, String username, String store, String product, int quantity) {
-        if (alreadyInCart(store, product)) {
+        if (alreadyInCartOfUser(store, product, username)) {
             System.out.println("This product is already in the Cart!");
             return false;
         } else {
@@ -118,6 +118,17 @@ public abstract class Customer {
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < storeNames.size(); i++) {
             if (storeNames.get(i).equals(store) && productNames.get(i).equalsIgnoreCase(product)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean alreadyInCartOfUser(String store, String product, String username) {
+        readFromShoppingCartDatabaseFile();
+        for (int i = 0; i < storeNames.size(); i++) {
+            if (storeNames.get(i).equals(store) && productNames.get(i).equalsIgnoreCase(product)
+                && usernames.get(i).equalsIgnoreCase(username)) {
                 return true;
             }
         }
