@@ -85,16 +85,16 @@ public abstract class Seller {
      *
      * @param storeName
      * @param storeLocation
-     * @param username
+     * @param sellerUsername
      * @return boolean indicating whether creation was successful
      */
-    public static boolean createStore(String storeName, String storeLocation, String username) {
+    public static boolean createStore(String storeName, String storeLocation, String sellerUsername) {
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 return false;
             }
         }
-        stores.add(new Store(storeName, storeLocation, username));
+        stores.add(new Store(storeName, storeLocation, sellerUsername));
         writeToFile();
         return true;
     }
@@ -497,17 +497,17 @@ public abstract class Seller {
      * Username should be stored from user input and inputted automatically
      *
      * @param storeName
-     * @param username
+     * @param sellerUsername
      * @param sorted
      * @return String of product sales, can be sorted
      */
-    public static String getProductSales(String storeName, String username, boolean sorted) {
+    public static String getProductSales(String storeName, String sellerUsername, boolean sorted) {
         readFromFile();
         int index = -1;
         ArrayList<String> productSales = new ArrayList<>();
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(sellerUsername)) {
                 index = i;
                 break;
             }
@@ -515,9 +515,10 @@ public abstract class Seller {
         if (index == -1) {
             return "Error: Invalid parameters";
         } else {
-            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
-                        stores.get(index).getProductList().get(i).getRevenue());
+                        stores.get(index).getProductList().get(i).getRevenue()); // .getRevenue returns nothing of
+                // use since the product itself doesnt know its own revenue
             }
         }
         if (sorted) {
@@ -531,14 +532,14 @@ public abstract class Seller {
      * Returns a String of all products and quantities in customer shopping carts for a given seller's products
      * Username should be stored from user input and inputted automatically
      *
-     * @param username
+     * @param sellerUsername
      * @return String of products and quantities
      */
-    public static String getShoppingCartProducts(String username) {
+    public static String getShoppingCartProducts(String sellerUsername) {
         readFromFile();
-        String shoppingCartProducts = null;
+        String shoppingCartProducts = "";
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+            if (stores.get(i).getSellerUsername().equalsIgnoreCase(sellerUsername)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + ": " +

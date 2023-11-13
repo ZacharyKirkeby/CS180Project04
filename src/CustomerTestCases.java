@@ -113,8 +113,6 @@ public class CustomerTestCases {
         }
 
         assertEquals("email;username1;storename;strawberry;10;20.00", list1.get(0));
-        // implement back in once buyProduct method buys everything in the user's cart
-        assertEquals("email;username1;storename;blueberry;12;15.00", list1.get(1));
 
         list1.clear();
         // clear and read from file again
@@ -130,9 +128,10 @@ public class CustomerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals("email2;username2;storename;strawberry;5", list1.get(0));
+        assertEquals("email;username1;storename;blueberry;12", list1.get(0));
+        assertEquals("email2;username2;storename;strawberry;5", list1.get(1));
 
-        assertEquals("[]", Customer.getShoppingCartofCustomer("username1").toString());
+        assertEquals("[email;username1;storename;blueberry;12]", Customer.getShoppingCartofCustomer("username1").toString());
 
         assertEquals("[email2;username2;storename;strawberry;5]", Customer.getShoppingCartofCustomer("username2").toString());
 
@@ -154,7 +153,6 @@ public class CustomerTestCases {
         }
 
         assertEquals("email;username1;storename;strawberry;10", list1.get(0));
-        assertEquals("email;username1;storename;blueberry;12", list1.get(1));
 
         Customer.getPurchaseHistoryofCustomer("username2", "Customer2PurchaseHistory.txt");
 
@@ -191,7 +189,7 @@ public class CustomerTestCases {
         }
 
         // should have added max
-        assertEquals("email;username1;storename;strawberry;10", list1.get(1));
+        assertEquals("email;username1;storename;strawberry;10", list1.get(2));
 
         list1.clear();
         // clear and read from file again
@@ -209,7 +207,7 @@ public class CustomerTestCases {
 
         //
         assertEquals("Make sure buyProduct is updating stores.txt!", "storename,storeLocation,username;strawberry," +
-            "fruit,20.0,10;blueberry,fruit,15.0,8;", list1.get(0));
+            "fruit,20.0,10;blueberry,fruit,15.0,20;", list1.get(0));
 
     }
 

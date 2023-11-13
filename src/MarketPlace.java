@@ -667,7 +667,7 @@ public class MarketPlace {
                                                         "you want to reduce)");
                                                 quantity = -1;
                                                 isInt = false;
-                                                while (!isInt) {
+                                                while (!isInt) { // this won't work change later
                                                     try {
                                                         quantity = Integer.parseInt(scanner.nextLine());
                                                         isInt = true;
