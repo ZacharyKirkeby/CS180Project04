@@ -1,5 +1,3 @@
-package src;
-
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -167,9 +165,6 @@ public class Account {
             return false; // should not happen
         }
         usernames.set(index, newUsername);
-        if (roles.get(index).equalsIgnoreCase("seller")) {
-            Seller.changeStoreUsernames(newUsername, oldUsername);
-        }
         writeToFile();
         return true;
     }

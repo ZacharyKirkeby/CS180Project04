@@ -1,5 +1,3 @@
-package src;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -125,12 +123,6 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    /**
-     * Buys product
-     *
-     * @param quantity
-     * @return successful buy
-     */
     public boolean buyProduct(int quantity) {
         if (onSale) {
             if (this.saleCap > 0 && quantity <= this.saleCap && quantity <= this.orderCap) {
@@ -267,30 +259,15 @@ public class Product {
         return true;
     }
 
-    /**
-     * Ends sale
-     *
-     * @return
-     */
     public boolean endSale() {
         this.onSale = false;
         return true;
     }
 
-    /**
-     * Gets sale cap
-     *
-     * @return
-     */
     public int getSaleCap() {
         return saleCap;
     }
 
-    /**
-     * Gets sale price
-     *
-     * @return
-     */
     public double getSalePrice() {
         return salePrice;
     }
@@ -321,11 +298,6 @@ public class Product {
         return orderCap;
     }
 
-    /**
-     * Gets onSale
-     *
-     * @return onSale
-     */
     public boolean getOnSale() {
         return onSale;
     }

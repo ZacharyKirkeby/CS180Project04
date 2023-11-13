@@ -1,5 +1,3 @@
-package src;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -72,11 +70,7 @@ public class Store {
         return productList;
     }
 
-    /**
-     * Sets productList of seller
-     *
-     * @param productList
-     */
+    // generic setter
     public void setProductList(ArrayList<Product> productList) {
         this.productList = productList;
     }
@@ -88,11 +82,7 @@ public class Store {
         return storeName;
     }
 
-    /**
-     * Renames store
-     *
-     * @param storeName
-     */
+    // allows for renaming store
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
@@ -104,11 +94,7 @@ public class Store {
         return storeLocation;
     }
 
-    /**
-     * Sets store location
-     *
-     * @param storeLocation
-     */
+    // generic setter
     public void setStoreLocation(String storeLocation) {
         this.storeLocation = storeLocation;
     }
@@ -120,11 +106,6 @@ public class Store {
         return sellerUsername;
     }
 
-    /**
-     * Sets seller username
-     *
-     * @param sellerUsername
-     */
     public void setSellerUsername(String sellerUsername) {
         this.sellerUsername = sellerUsername;
     }
@@ -201,11 +182,6 @@ public class Store {
         return sentence;
     }
 
-    /**
-     * Gets sorted customers and purchases
-     *
-     * @return
-     */
     public String getSortedCustomersAndPurchases() {
         String result = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         ;
