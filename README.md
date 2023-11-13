@@ -3,10 +3,55 @@
 ## Running Instructions
 
 ## Submission Log
+***
 
+Project Report: 
+Submitted by: 
+
+***
+
+Project File/Repo:
+Submitted by:
+
+***
 ## Class Descriptions
 
+We utilize 6 total classes for the full execution of the program. Product.java represents a product object. Product
+objects serve as the foundational object for the organization of transactions. Store.java represents a singular store,
+much like product the overall program utilizes multiple different stores. Account is the foundational class for 
+customers and seller objects, which are permission levels on user accounts. Customer and Seller both manage the
+intrinsic properties and functions of a seller or customer, which will be detailed further below. Marketplace is the
+central program for the program, managing functions from all other calls, handling user input, and calling the 
+needed classes depending on input. 
+
 ### Product.java
+***
+Product.java is the file representing a generic product object. A product is sold in a store by a seller, can be put in
+a shopping cart, and can be purchased by a customer. Products are stored in a database file for persistance purposes,
+are stored in a list within each store, and are on some occasions directly invoked for sorting purposes. Generally, 
+all products are invoked through store, which is usually invoked from Seller or Marketplace.
+
+A standard product has a name, description, integer value for the current
+stock, an integer for the total number sold, and a double for the current price. As a bonus feature added, products also 
+have a boolean value for being on sale, a sale price, a number of that item on sale, and the amount of that product sold
+while on sale. There are multiple constructors for Products, allowing for the inclusion or exclusion of a description.
+Product possesses a range of standard getters and setters for price, name, description, quantity sold, and stock. 
+
+In addition to more basic methods, Products have a method for direct purchasing. Purchasing first checks if the product
+is on sale. If the product is on sale, and the purchase does not exceed any purchase limits, be it sale limits,
+general limits, or quantity constraints, the sale quantity is decremented and overall quantity is decrement. If the
+product is not on sale, the same checks for a valid purchase are made, and quantity is decremented. If a product is out
+of stock, an error message will be displayed. 
+
+Product also houses a method to sort products by price. 
+
+Product houses revenue calculations, allowing total revenue from that particular product to be calculated. Methods to
+implement a sale limit, start a sale, and assign traits to the sale also exist. Getters and setters for those methods
+also exist. 
+
+As for testing, JUnit test cases were written to test the different functions of Product. In addition to JUnit cases, 
+manual hard testing was done on a method by method basis to ensure each method behaved as predicted. 
+
 
 ### Store.java
 ***
