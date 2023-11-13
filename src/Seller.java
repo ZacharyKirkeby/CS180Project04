@@ -893,14 +893,14 @@ public abstract class Seller {
      * @param productName
      * @param quantity
      */
-    public static void changeQuantity(String storeName, String productName, int quantity) {
+    public static boolean changeQuantity(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equals(storeName)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
-                        if (quantity > stores.get(i).getProductList().get(j).getStockQuantity()) {
-                            return;
+                        if (quantity > stores.get(i).getProductList().get(j).getStockQuantity() || quantity < 0) {
+                            return false;
                         }
                         stores.get(i).getProductList().get(j).setStockQuantity(
                                 (stores.get(i).getProductList().get(j).getStockQuantity() - quantity)
@@ -911,6 +911,7 @@ public abstract class Seller {
             }
         }
         writeToFile();
+        return true;
     }
 
     /**
