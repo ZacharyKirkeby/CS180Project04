@@ -94,7 +94,8 @@ public abstract class Customer {
                             if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity() <= 0) {
                                 System.out.println("Error out of Stock");
                                 return false;
-                            } else if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity) {
+                            } else if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity()
+                                       < quantity) {
                                 quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
                                 System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
                             }
@@ -157,24 +158,24 @@ public abstract class Customer {
      * @return
      */
     public static boolean addToCartChangeCheckoutQuantity(String storeName, String productName, int quantity) {
-        boolean bool = true;
+        boolean success = true;
         if (alreadyInCart(storeName, productName)) {
             readFromShoppingCartDatabaseFile();
             for (int i = 0; i < storeNames.size(); i++) {
                 if (storeNames.get(i).equals(storeName) && productNames.get(i).equalsIgnoreCase(productName)) {
                     quantity = quantities.get(i) + quantity;
                     quantities.set(i, quantity);
-                    bool = Seller.changeQuantity(storeNames.get(i), productNames.get(i), quantities.get(i));
-                    if (bool) {
+                    success = Seller.changeQuantity(storeNames.get(i), productNames.get(i), quantities.get(i));
+                    if (success) {
                         writeToShoppingCartDatabaseFile();
-                    } else if (!bool) {
-                        return bool;
+                    } else if (!success) {
+                        return success;
                     }
                 }
             }
         }
         writeToShoppingCartDatabaseFile();
-        return bool;
+        return success;
     }
 
     /**
@@ -202,7 +203,8 @@ public abstract class Customer {
                 productNames.remove(i);
                 quantities.remove(i);
                 break;
-            } else if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
+            } else if (emails.get(i).equals(email) && usernames.get(i).equals(username)
+                       && storeNames.get(i).equals(storeName)
                     && productNames.get(i).equals(productName) && quantities.get(i) > quantity) {
                 quantities.set(i, quantities.get(i) - quantity);
                 Seller.changeQuantity(storeName, productName, quantity);
@@ -292,7 +294,6 @@ public abstract class Customer {
      * Reads from the shopping cart database file
      */
     public static void readFromShoppingCartDatabaseFile() {
-        bool = false;
         emails.clear();
         usernames.clear();
         storeNames.clear();
@@ -368,7 +369,7 @@ public abstract class Customer {
      * @param fileName
      */
     public static boolean getPurchaseHistoryofCustomer(String username, String fileName) {
-        boolean bool = false;
+        boolean success = false;
         readFromPurchaseHistoryDatabaseFile();
         try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
             for (int i = 0; i < usernames.size(); i++) {
@@ -377,11 +378,11 @@ public abstract class Customer {
                             productNames.get(i), quantities.get(i)));
                 }
             }
-            bool = true;
+            success = true;
         } catch (IOException e) {
-            bool = false;
+            success = false;
         }
-        return bool;
+        return success;
     }
 
     /**

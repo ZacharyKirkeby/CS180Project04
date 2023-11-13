@@ -16,6 +16,14 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * A set of test cases.
+ *
+ * <p>Purdue University -- CS18000 -- Fall 2023</p>
+ *
+ * @author William Hyun
+ * @version November 9, 2023
+ */
 public class CustomerTestCases {
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(CustomerTestCases.class);

@@ -80,7 +80,7 @@ public class MarketPlace {
     }
 
     /**
-     * Getter for the Stores's in the MarketPlace
+     * Getter for the stores in the MarketPlace
      *
      * @return stores
      */
