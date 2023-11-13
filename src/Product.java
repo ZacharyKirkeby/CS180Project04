@@ -267,15 +267,30 @@ public class Product {
         return true;
     }
 
+    /**
+     * Ends sale
+     *
+     * @return
+     */
     public boolean endSale() {
         this.onSale = false;
         return true;
     }
 
+    /**
+     * Gets sale cap
+     *
+     * @return
+     */
     public int getSaleCap() {
         return saleCap;
     }
 
+    /**
+     * Gets sale price
+     *
+     * @return
+     */
     public double getSalePrice() {
         return salePrice;
     }

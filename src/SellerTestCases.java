@@ -205,7 +205,7 @@ public class SellerTestCases {
 
         assertEquals("store name - product name | in stock: 15 | in shopping cart: 1\n" +
                 "store name - second product | in stock: 10 | in shopping cart: 0\n", Seller.getShoppingCartProducts(
-                        "sellerUsername"));
+                "sellerUsername"));
 
 
         assertEquals("Make sure editProductDescription method checks invalid arguments!", false,

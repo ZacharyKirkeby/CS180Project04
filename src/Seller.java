@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.util.*;
 
@@ -838,7 +839,7 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
-    
+
     /**
      * Views customer reviews
      *
@@ -872,6 +873,12 @@ public abstract class Seller {
         return result;
     }
 
+    /**
+     * Gets which store
+     *
+     * @param storeName
+     * @return
+     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {

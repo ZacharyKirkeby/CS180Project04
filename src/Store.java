@@ -1,4 +1,5 @@
 package src;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -202,29 +203,30 @@ public class Store {
 
     /**
      * Gets sorted customers and purchases
-     * 
+     *
      * @return
      */
     public String getSortedCustomersAndPurchases() {
-        String result = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";;
+        String result = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
+        ;
         String sentence = getAllCustomersAndPurchases();
-        if(sentence == null || sentence.isEmpty()){
+        if (sentence == null || sentence.isEmpty()) {
             return "No Purchase History Found!";
         }
         String[] line = sentence.split("\n");
         ArrayList<String> lineList = new ArrayList<>();
-        for(int a = 0; a < line.length; a++){
+        for (int a = 0; a < line.length; a++) {
             lineList.add(line[a]);
         }
-        for(int i = 0; i < lineList.size(); i++){
-            for(int j = i + 1; j < lineList.size(); j++) {
+        for (int i = 0; i < lineList.size(); i++) {
+            for (int j = i + 1; j < lineList.size(); j++) {
                 String[] attributes = lineList.get(i).split(";");
                 String[] attributesTwo = lineList.get(j).split(";");
                 double amountPurchased1 = Seller.getTotalPurchasePerCustomer(attributes[2], attributes[3],
                         Integer.parseInt(attributes[4]));
                 double amountPurchased2 = Seller.getTotalPurchasePerCustomer(attributesTwo[2], attributesTwo[3],
                         Integer.parseInt(attributesTwo[4]));
-                if(amountPurchased1 < amountPurchased2){
+                if (amountPurchased1 < amountPurchased2) {
                     Collections.swap(lineList, i, j);
                 }
             }

@@ -42,23 +42,23 @@ public class AccountTestCases {
         reset();
         assertFalse("Ensure that invalid email format is being checked!",
                 Account.createAccount("InvalidEmailFormat",
-                "username", "password", "customer"));
+                        "username", "password", "customer"));
 
         assertFalse("Ensure that invalid email format is being checked!",
                 Account.createAccount("InvalidEmail Format"
-                , "username", "password", "customer"));
+                        , "username", "password", "customer"));
 
         assertFalse("Ensure that invalid email format is being checked!",
                 Account.createAccount("InvalidEmail " +
-                "@Format", "username", "password", "customer"));
+                        "@Format", "username", "password", "customer"));
 
         assertTrue("Ensure that valid format is being passed!",
                 Account.createAccount("ValidEmailFormat@gmail.com",
-                "username", "password", "customer"));
+                        "username", "password", "customer"));
 
         assertFalse("Ensure that repeat emails are being checked!",
                 Account.createAccount("ValidEmailFormat@gmail" +
-                ".com", "username1", "password", "customer"));
+                        ".com", "username1", "password", "customer"));
 
         // should have account added to database (persistent file) now
         assertFalse("Ensure that invalid username format is being checked!",
@@ -79,7 +79,7 @@ public class AccountTestCases {
 
         assertFalse("Ensure that repeat usernames are being checked!",
                 Account.createAccount("ValidEmailFormat1@gmail"
-                + ".com", "username", "password", "customer"));
+                        + ".com", "username", "password", "customer"));
     }
 
     @Test(timeout = 1000)
@@ -89,7 +89,7 @@ public class AccountTestCases {
         // create a test account to log into
         assertTrue("Ensure that valid format is being passed!",
                 Account.createAccount("ValidEmailFormat@gmail.com",
-                "username", "password", "customer"));
+                        "username", "password", "customer"));
 
         // test
         assertFalse("Ensure that invalid usernames are being checked!",
@@ -97,14 +97,14 @@ public class AccountTestCases {
 
         assertFalse("Ensure that invalid emails are being checked!",
                 Account.login("invalidEmail@gmail.com",
-                "password"));
+                        "password"));
 
         assertTrue("Ensure that valid usernames are being passed!",
                 Account.login("username", "password"));
 
         assertTrue("Ensure that valid emails are being passed!",
                 Account.login("ValidEmailFormat@gmail.com",
-                "password"));
+                        "password"));
 
         assertFalse("Ensure that invalid passwords are being checked with email!",
                 Account.login("ValidEmailFormat" + "@gmail.com", "invalidPassword"));
@@ -120,21 +120,21 @@ public class AccountTestCases {
         // create a test account to delete
         assertTrue("Ensure that valid format is being passed!",
                 Account.createAccount("ValidEmailFormat@gmail.com",
-                "username1", "password", "customer"));
+                        "username1", "password", "customer"));
 
         // create a second test account to delete
         assertTrue("Ensure that valid format is being passed!",
                 Account.createAccount("testing@gmail.com", "username2"
-                , "password", "customer"));
+                        , "password", "customer"));
 
         //test
         assertFalse("Ensure that invalid usernames are being checked!",
                 Account.deleteAccount("invalidUsername",
-                "password"));
+                        "password"));
 
         assertFalse("Ensure that invalid emails are being checked!",
                 Account.deleteAccount("invalidEmail@gmail.com",
-                "password"));
+                        "password"));
 
         assertFalse("Ensure that invalid passwords are being checked with email!", Account.deleteAccount(
                 "ValidEmailFormat@gmail.com", "invalidPassword"));
@@ -164,7 +164,7 @@ public class AccountTestCases {
 
         assertTrue("Ensure that valid emails are being passed!",
                 Account.deleteAccount("testing@gmail.com", "password"
-        ));
+                ));
 
         // account2 should have been deleted by now so check file to see if its empty
         ArrayList<String> list2 = new ArrayList<>();
@@ -190,12 +190,12 @@ public class AccountTestCases {
         // create a test account1
         assertTrue("Ensure that valid format is being passed!",
                 Account.createAccount("email1@gmail.com", "username1"
-                , "password", "customer"));
+                        , "password", "customer"));
 
         // create a second test account2
         assertTrue("Ensure that valid format is being passed!",
                 Account.createAccount("email2@gmail.com", "username2"
-                , "password", "seller"));
+                        , "password", "seller"));
 
         assertFalse("Ensure that the old username exists!",
                 Account.changeUsername("newusername", "oldusername"));
@@ -218,11 +218,12 @@ public class AccountTestCases {
 
         assertEquals("Ensure the AccountData.txt file is updated after!",
                 "email1@gmail.com;newusername;" +
-                "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;customer", list1.get(0));
+                        "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;customer", list1.get(0));
 
         assertEquals("Ensure that nothing else in the AccountData.txt file is updated after!",
                 "email2@gmail.com;" +
-                "username2;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller", list1.get(1));
+                        "username2;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller",
+                list1.get(1));
 
 
         assertTrue("Ensure that the method also works for seller!", Account.changeUsername(
@@ -246,12 +247,12 @@ public class AccountTestCases {
 
         assertEquals("Ensure that nothing else in the AccountData.txt file is updated after!",
                 "email1@gmail.com;" +
-                "newusername;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "customer",
+                        "newusername;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "customer",
                 list2.get(0));
 
         assertEquals("Ensure the AccountData.txt file is updated after!",
                 "email2@gmail.com;newusername2;" +
-                "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;seller", list2.get(1));
+                        "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;seller", list2.get(1));
     }
 
     @Test(timeout = 1000)
@@ -302,11 +303,12 @@ public class AccountTestCases {
 
         assertEquals("Ensure the AccountData.txt file is updated after!",
                 "email1@gmail.com;username1;" +
-                "089542505d659cecbb988bb5ccff5bccf85be2dfa8c221359079aee2531298bb;customer", list1.get(0));
+                        "089542505d659cecbb988bb5ccff5bccf85be2dfa8c221359079aee2531298bb;customer", list1.get(0));
 
         assertEquals("Ensure that nothing else in the AccountData.txt file is updated after!",
                 "email2@gmail.com;" +
-                "username2;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller", list1.get(1));
+                        "username2;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller",
+                list1.get(1));
 
 
         assertTrue("Ensure that the method also works with an email!", Account.changePassword(
@@ -329,12 +331,12 @@ public class AccountTestCases {
 
         assertEquals("Ensure that nothing else in the AccountData.txt file is updated after!",
                 "email1@gmail.com;" +
-                "username1;089542505d659cecbb988bb5ccff5bccf85be2dfa8c221359079aee2531298bb;" + "customer",
+                        "username1;089542505d659cecbb988bb5ccff5bccf85be2dfa8c221359079aee2531298bb;" + "customer",
                 list2.get(0));
 
         assertEquals("Ensure the AccountData.txt file is updated after!",
                 "email2@gmail.com;username2;" +
-                "089542505d659cecbb988bb5ccff5bccf85be2dfa8c221359079aee2531298bb;seller", list2.get(1));
+                        "089542505d659cecbb988bb5ccff5bccf85be2dfa8c221359079aee2531298bb;seller", list2.get(1));
     }
 
     @Test(timeout = 1000)
@@ -376,11 +378,12 @@ public class AccountTestCases {
 
         assertEquals("Ensure the AccountData.txt file is updated after!",
                 "email1@gmail.com;username1;" +
-                "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;seller", list1.get(0));
+                        "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;seller", list1.get(0));
 
         assertEquals("Ensure that nothing else in the AccountData.txt file is updated after!",
                 "email2@gmail.com;" +
-                "username2;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller", list1.get(1));
+                        "username2;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller",
+                list1.get(1));
 
 
         assertTrue("Ensure that the method also works with an email!", Account.changeRole(
@@ -403,11 +406,12 @@ public class AccountTestCases {
 
         assertEquals("Ensure that nothing else in the AccountData.txt file is updated after!",
                 "email1@gmail.com;" +
-                "username1;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller", list2.get(0));
+                        "username1;5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;" + "seller",
+                list2.get(0));
 
         assertEquals("Ensure the AccountData.txt file is updated after!",
                 "email2@gmail.com;username2;" +
-                "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;customer", list2.get(1));
+                        "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8;customer", list2.get(1));
     }
 
     @Test(timeout = 1000)
