@@ -542,7 +542,8 @@ public abstract class Seller {
             if (stores.get(i).getSellerUsername().equalsIgnoreCase(sellerUsername)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
-                            stores.get(i).getProductList().get(j).getName() + ": " +
+                            stores.get(i).getProductList().get(j).getName() + " | in stock: "
+                        + stores.get(i).getProductList().get(j).getStockQuantity() + " | in shopping cart: " +
                             Customer.getTotalInCart(stores.get(i).getStoreName(),
                                     stores.get(i).getProductList().get(j).getName()) + "\n";
                 }

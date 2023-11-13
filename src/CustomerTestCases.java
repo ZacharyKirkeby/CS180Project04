@@ -225,6 +225,11 @@ public class CustomerTestCases {
             "productName"));
     }
 
+    @Test(timeout = 1000)
+    public void searchTests() {
+
+    }
+
     public static void reset() {
         // create ShoppingCartDatabase.txt if not already there or clear its contents if its already there
         try {
