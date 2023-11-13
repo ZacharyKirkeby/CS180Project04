@@ -1,5 +1,3 @@
-package src;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -78,9 +76,9 @@ public class MarketPlace {
             1. Sort By Highest Stock\s 
             2. Sort By Low On Stock\s
             """;
-    private static final String SEARCH_PROMPT = "Enter search term: "; //
-    private static ArrayList<Store> stores = new ArrayList<>(); //
-    private static boolean isLoggedIn; //
+    private static final String SEARCH_PROMPT = "Enter search term: ";
+    private static ArrayList<Store> stores = new ArrayList<>();
+    private static boolean isLoggedIn;
 
     /**
      * Constructors for the MarketPlace
@@ -204,8 +202,7 @@ public class MarketPlace {
                                                 }
                                                 System.out.println("Enter Product Description: ");
                                                 String description = scanner.nextLine();
-                                                bool = Seller.createProduct(storeName, productName, description,
-                                                        price, quantity, user);
+                                                bool = Seller.createProduct(storeName, productName, description, price, quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Added Product");
                                                 } else {
@@ -255,8 +252,7 @@ public class MarketPlace {
                                                         System.out.println("Enter New Quantity: ");
                                                     }
                                                 }
-                                                bool = Seller.editProductQuantity(storeName, productName, quantity,
-                                                        user);
+                                                bool = Seller.editProductQuantity(storeName, productName, quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Edited");
                                                 } else {
@@ -381,8 +377,7 @@ public class MarketPlace {
                                                     System.out.println("Invalid Input");
                                                     break;
                                                 }
-                                                System.out.println(Seller.getCustomersAndPurchases(storeName, user,
-                                                        sorted));
+                                                System.out.println(Seller.getCustomersAndPurchases(storeName, user, sorted));
                                                 break;
                                             //View Product Sales
                                             case "2":
@@ -448,8 +443,7 @@ public class MarketPlace {
                                         break;
                                     //View Customer Reviews
                                     case "5":
-                                        System.out.println("Enter Product Name (Leave empty if you want to view " +
-                                                "reviews " +
+                                        System.out.println("Enter Product Name (Leave empty if you want to view reviews " +
                                                 "of all products)");
                                         productName = scanner.nextLine();
                                         System.out.print(Seller.viewCustomerReviews(productName, user));
@@ -567,8 +561,7 @@ public class MarketPlace {
                                         break;
                                 }
                                 // Customer Experience
-                            } else if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase(
-                                    "customer")) {
+                            } else if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("customer")) {
                                 System.out.print(BUYERPROMPT);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -650,8 +643,7 @@ public class MarketPlace {
                                                                 isInt = true;
                                                             } catch (NumberFormatException e) {
                                                                 System.out.println("Error, Invalid Input");
-                                                                System.out.printf("Enter how many %s would you like " +
-                                                                                "to buy: \n"
+                                                                System.out.printf("Enter how many %s would you like to buy: \n"
                                                                         , productName);
                                                             }
                                                         }
@@ -711,10 +703,8 @@ public class MarketPlace {
                                                                         , productName);
                                                             }
                                                         }
-                                                        boolean productRemoved =
-                                                                Customer.removeFromCart(Account.getEmail(user),
-                                                                Account.getUsername(user), storeName, productName,
-                                                                        quantity);
+                                                        boolean productRemoved = Customer.removeFromCart(Account.getEmail(user),
+                                                                Account.getUsername(user), storeName, productName, quantity);
                                                         if (productRemoved) {
                                                             System.out.println("Product removed from cart");
                                                         } else {
@@ -739,8 +729,7 @@ public class MarketPlace {
                                             case "5": // view shopping cart
                                                 for (String s : Customer.getShoppingCartofCustomer(user)) {
                                                     String[] view = s.split(";");
-                                                    System.out.println("Customer Name | Store Name | Product Name | " +
-                                                            "Qty");
+                                                    System.out.println("Customer Name | Store Name | Product Name | Qty");
                                                     String output =
                                                             view[1] + " | " + view[2] + " | " + view[3] + " | " + view[4];
                                                     System.out.println(output);

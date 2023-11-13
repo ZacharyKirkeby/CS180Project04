@@ -1,5 +1,3 @@
-package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -12,7 +10,6 @@ import java.util.*;
  * Creates the Purchase History file based on the customer input filename
  *
  * @author Yi Lin Yang
- * @author Armaan Sayyad
  * @version November 9, 2023
  */
 
@@ -23,9 +20,11 @@ public abstract class Customer {
     private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
     private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
     private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
-    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt"; //shopping cart database
-    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt"; // purchase history
-    private static boolean bool; //
+    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
+    //shopping cart database for all customers
+    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
+    // purchase history databse for all customers
+    private static boolean bool;
 
 
     /**
@@ -49,6 +48,7 @@ public abstract class Customer {
      * @param stores
      * @return boolean of whether the store exists in the marketplace
      */
+
     public static boolean searchedStoreExists(String storeName, ArrayList<Store> stores) {
         for (Store store : Seller.getStores()) {
             if (store.getStoreName().equals(storeName)) {
@@ -63,6 +63,7 @@ public abstract class Customer {
      * @param stores
      * @return boolean of whether the product exists in a store in the marketplace
      */
+
     public static boolean searchedProductExists(String productName, ArrayList<Store> stores) {
         for (Store store : Seller.getStores()) {
             for (Product product : store.getProductList()) {
@@ -83,6 +84,7 @@ public abstract class Customer {
      * @param product
      * @param quantity
      */
+
     public static boolean addToCart(String email, String username, String store, String product, int quantity) {
         if (alreadyInCart(store, product)) {
             System.out.println("This product is already in the Cart!");
@@ -114,13 +116,6 @@ public abstract class Customer {
         return true;
     }
 
-    /**
-     * Check if already in cart
-     *
-     * @param store
-     * @param product
-     * @return
-     */
     public static boolean alreadyInCart(String store, String product) {
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < storeNames.size(); i++) {
@@ -131,14 +126,6 @@ public abstract class Customer {
         return false;
     }
 
-    /**
-     * Adds quantity to cart
-     *
-     * @param storeName
-     * @param productName
-     * @param quantity
-     * @return
-     */
     public static boolean addToCartChangeCheckoutQuantity(String storeName, String productName, int quantity) {
         boolean bool = true;
         if (alreadyInCart(storeName, productName)) {
@@ -170,6 +157,7 @@ public abstract class Customer {
      * @param quantity
      * @return
      */
+
     public static boolean removeFromCart(String email, String username, String storeName, String productName,
                                          int quantity) {
         boolean successfullyRemovedFromCart = false;
@@ -206,6 +194,7 @@ public abstract class Customer {
      * @param username
      * @return boolean of whether the products in the shopping cart were purchased sucessfully
      */
+
     public static boolean buyProductsInShoppingCart(String username) {
         readFromShoppingCartDatabaseFile();
         boolean productsBoughtSuccessfully = false;
@@ -246,6 +235,7 @@ public abstract class Customer {
      * @param productName
      * @param quantity
      */
+
     public static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName,
                                                           String productName, int quantity, double unitprice) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
@@ -260,6 +250,7 @@ public abstract class Customer {
      * Writes to the shopping cart database file by iterating through all the arrayList fields and appending them to
      * the shopping cart database file
      */
+
     public static void writeToShoppingCartDatabaseFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
@@ -367,16 +358,7 @@ public abstract class Customer {
         return bool;
     }
 
-    /**
-     * Leaves review
-     *
-     * @param storeName
-     * @param productName
-     * @param customerName
-     * @param rating
-     * @param description
-     * @return
-     */
+    //Optional Method
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
                                       String description) {
         boolean bool = false;
@@ -407,13 +389,6 @@ public abstract class Customer {
         return false;
     }
 
-    /**
-     * Views reviews
-     *
-     * @param storeName
-     * @param productName
-     * @return
-     */
     public static String viewReviews(String storeName, String productName) {
         String result = "Store Name | Product Name | Customer Name | Rating \n";
         try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))) {
