@@ -11,6 +11,7 @@ import java.util.*;
  * Create stores.txt and products.txt before using
  *
  * @author Alexander Chen, 05
+ * @author Armaan Sayyad, 05
  * @version November 10, 2023
  */
 
