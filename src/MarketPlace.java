@@ -108,7 +108,7 @@ public class MarketPlace {
      * @param args (String[])
      */
     public static void main(String[] args) {
-        
+
         Scanner scanner = new Scanner(System.in); //instantiates a scanner object to read terminal inputs
         do {
             boolean logOrRegistration = false;
@@ -147,7 +147,8 @@ public class MarketPlace {
                         // loops while definite user
                         while (isLoggedIn) {
                             //Seller Experience
-                            if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("seller")) {
+                            if (Account.getRole(user) != null
+                                && Account.getRole(user).equalsIgnoreCase("seller")) {
                                 System.out.print(sellerChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -204,7 +205,8 @@ public class MarketPlace {
                                                 }
                                                 System.out.println("Enter Product Description: ");
                                                 String description = scanner.nextLine();
-                                                bool = Seller.createProduct(storeName, productName, description, price, quantity, user);
+                                                bool = Seller.createProduct(storeName, productName, description,
+                                                    price, quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Added Product");
                                                 } else {
@@ -254,7 +256,8 @@ public class MarketPlace {
                                                         System.out.println("Enter New Quantity: ");
                                                     }
                                                 }
-                                                bool = Seller.editProductQuantity(storeName, productName, quantity, user);
+                                                bool = Seller.editProductQuantity(storeName, productName,
+                                                    quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Edited");
                                                 } else {
@@ -379,7 +382,8 @@ public class MarketPlace {
                                                     System.out.println("Invalid Input");
                                                     break;
                                                 }
-                                                System.out.println(Seller.getCustomersAndPurchases(storeName, user, sorted));
+                                                System.out.println(Seller.getCustomersAndPurchases(storeName,
+                                                    user, sorted));
                                                 break;
                                             //View Product Sales
                                             case "2":
@@ -445,8 +449,8 @@ public class MarketPlace {
                                         break;
                                     //View Customer Reviews
                                     case "5":
-                                        System.out.println("Enter Product Name (Leave empty if you want to view reviews " +
-                                                "of all products)");
+                                        System.out.println("Enter Product Name (Leave empty if you want to " +
+                                            "view reviews of all products)");
                                         productName = scanner.nextLine();
                                         System.out.print(Seller.viewCustomerReviews(productName, user));
                                         break;
@@ -563,7 +567,8 @@ public class MarketPlace {
                                         break;
                                 }
                                 // Customer Experience
-                            } else if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("customer")) {
+                            } else if (Account.getRole(user) != null
+                                && Account.getRole(user).equalsIgnoreCase("customer")) {
                                 System.out.print(BUYERPROMPT);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -645,8 +650,8 @@ public class MarketPlace {
                                                                 isInt = true;
                                                             } catch (NumberFormatException e) {
                                                                 System.out.println("Error, Invalid Input");
-                                                                System.out.printf("Enter how many %s would you like to buy: \n"
-                                                                        , productName);
+                                                                System.out.printf("Enter how many %s would " +
+                                                                        "you like to buy: \n", productName);
                                                             }
                                                         }
                                                         bool = Customer.addToCart(Account.getEmail(user),
@@ -705,8 +710,9 @@ public class MarketPlace {
                                                                         , productName);
                                                             }
                                                         }
-                                                        boolean productRemoved = Customer.removeFromCart(Account.getEmail(user),
-                                                                Account.getUsername(user), storeName, productName, quantity);
+                                                        boolean productRemoved = Customer.removeFromCart(
+                                                            Account.getEmail(user), Account.getUsername(user),
+                                                            storeName, productName, quantity);
                                                         if (productRemoved) {
                                                             System.out.println("Product removed from cart");
                                                         } else {
@@ -719,7 +725,8 @@ public class MarketPlace {
                                                 bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
                                                 ArrayList<String> check = Customer.getShoppingCartofCustomer(user);
                                                 while (!check.isEmpty()) {
-                                                    bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
+                                                    bool = Customer.buyProductsInShoppingCart(
+                                                        Account.getUsername(user));
                                                     check = Customer.getShoppingCartofCustomer(user);
                                                 }
                                                 if (bool) {
@@ -731,9 +738,11 @@ public class MarketPlace {
                                             case "5": // view shopping cart
                                                 for (String s : Customer.getShoppingCartofCustomer(user)) {
                                                     String[] view = s.split(";");
-                                                    System.out.println("Customer Name | Store Name | Product Name | Qty");
+                                                    System.out.println("Customer Name | Store Name " +
+                                                        "| Product Name | Qty");
                                                     String output =
-                                                            view[1] + " | " + view[2] + " | " + view[3] + " | " + view[4];
+                                                            view[1] + " | " + view[2] +
+                                                                " | " + view[3] + " | " + view[4];
                                                     System.out.println(output);
                                                 }
                                                 break;

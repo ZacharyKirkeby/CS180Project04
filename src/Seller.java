@@ -14,7 +14,6 @@ import java.util.*;
  * @author Armaan Sayyad, 05
  * @version November 10, 2023
  */
-
 public abstract class Seller {
 
     private static final ArrayList<Store> stores = new ArrayList<Store>(); // store arraylist
@@ -839,6 +838,12 @@ public abstract class Seller {
         return result;
     }
 
+    /**
+     *
+     * @param productName
+     * @param user
+     * @return String of all reviews of the product
+     */
     public static String viewCustomerReviews(String productName, String user) {
         readFromFile();
         String result = "";
@@ -865,6 +870,11 @@ public abstract class Seller {
         return result;
     }
 
+    /**
+     *
+     * @param storeName
+     * @return
+     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {
@@ -874,6 +884,13 @@ public abstract class Seller {
         return null;
     }
 
+    /**
+     * Changes the quantity of the product passed in
+     * @param storeName
+     * @param productName
+     * @param quantity
+     * @return true if success false if not
+     */
     public static boolean changeQuantity(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
@@ -895,6 +912,13 @@ public abstract class Seller {
         return true;
     }
 
+    /**
+     * Returns the total spending per customer for a certain product
+     * @param storeName
+     * @param productName
+     * @param quantity
+     * @return
+     */
     public static double getTotalPurchasePerCustomer(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
