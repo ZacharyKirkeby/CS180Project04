@@ -1,3 +1,4 @@
+package src;
 import java.io.*;
 import java.util.*;
 
@@ -8,8 +9,9 @@ import java.util.*;
  * Manages the shopping cart and purchase history
  * Creates ShoppingCartDatabase.txt and "PurchaseHistoryDatabase.txt"
  * Creates the Purchase History file based on the customer input filename
- *
+ * 
  * @author Yi Lin Yang
+ * @author Armaan Sayyad
  * @version November 9, 2023
  */
 
