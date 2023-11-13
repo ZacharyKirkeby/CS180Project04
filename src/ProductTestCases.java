@@ -86,10 +86,10 @@ public class ProductTestCases {
 
         assertEquals("Ensure that getSales method works correctly!", 10.0 * 5, product1.getRevenue(), 0.001);
 
-        assertEquals("Ensure that startSale method handles invalid inputs", "Unable to Start Sale",
+        assertEquals("Ensure that startSale method handles invalid inputs", false,
             product1.startSale(0.0, 3));
 
-        assertEquals("Ensure that startSale method handles invalid inputs", "Unable to Start Sale",
+        assertEquals("Ensure that startSale method handles invalid inputs", false,
             product1.startSale(8.0, 0));
 
         product1.startSale(8.0, 3);
