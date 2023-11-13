@@ -121,6 +121,7 @@ public class MarketPlace {
                         }
                         else if (logOrRegistration){
                             isLoggedIn = true;
+                            System.out.println("Login Successful!");
                         }
 
                         // Switch Var declarations
@@ -130,7 +131,8 @@ public class MarketPlace {
                         int quantity;
                         boolean sorted;
                         String isSorted;
-
+                        boolean isDouble = false;
+                        boolean isInt = false;
 
                         // loops while definite user
                         while (isLoggedIn) {
@@ -165,9 +167,31 @@ public class MarketPlace {
                                                 System.out.println("Enter Product Name: ");
                                                 productName = scanner.nextLine();
                                                 System.out.println("Enter Product Price: ");
-                                                price = Double.parseDouble(scanner.nextLine());
+
+                                                price = -0.1;
+                                                isDouble = false;
+                                                while (!isDouble) {
+                                                    try {
+                                                        price = Double.parseDouble(scanner.nextLine());
+                                                        isDouble = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Invalid Price!");
+                                                        System.out.println("Enter Product Price: ");
+                                                    }
+                                                }
+
                                                 System.out.println("Enter Product Quantity: ");
-                                                quantity = Integer.parseInt(scanner.nextLine());
+                                                quantity = -1;
+                                                isInt = false;
+                                                while (!isInt) {
+                                                    try {
+                                                        quantity = Integer.parseInt(scanner.nextLine());
+                                                        isInt = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Invalid Quantity!");
+                                                        System.out.println("Enter Product Quantity: ");
+                                                    }
+                                                }
                                                 System.out.println("Enter Product Description: ");
                                                 String description = scanner.nextLine();
                                                 bool = Seller.createProduct(storeName, productName, description, price, quantity, user);
@@ -184,7 +208,17 @@ public class MarketPlace {
                                                 System.out.println("Enter Product Name: ");
                                                 productName = scanner.nextLine();
                                                 System.out.println("Enter New Product Price: ");
-                                                price = Double.parseDouble(scanner.nextLine());
+                                                price = -0.1;
+                                                isDouble = false;
+                                                while (!isDouble) {
+                                                    try {
+                                                        price = Double.parseDouble(scanner.nextLine());
+                                                        isDouble = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Invalid Price!");
+                                                        System.out.println("Enter Product Price: ");
+                                                    }
+                                                }
                                                 bool = Seller.editProductPrice(storeName, productName, price, user);
                                                 if (bool) {
                                                     System.out.println("Successfully edited");
@@ -199,7 +233,17 @@ public class MarketPlace {
                                                 System.out.println("Enter Product Name: ");
                                                 productName = scanner.nextLine();
                                                 System.out.println("Enter New Quantity: ");
-                                                quantity = Integer.parseInt(scanner.nextLine());
+                                                quantity = -1;
+                                                isInt = false;
+                                                while (!isInt) {
+                                                    try {
+                                                        quantity = Integer.parseInt(scanner.nextLine());
+                                                        isInt = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Error, Invalid Input");
+                                                        System.out.println("Enter New Quantity: ");
+                                                    }
+                                                }
                                                 bool = Seller.editProductQuantity(storeName, productName, quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Edited");
@@ -240,11 +284,29 @@ public class MarketPlace {
                                                 System.out.println("Enter Product to Put on Sale: ");
                                                 input = scanner.nextLine();
                                                 System.out.println("Enter Sale price: ");
-                                                double salePrice = scanner.nextDouble();
-                                                scanner.nextLine();
+                                                isDouble = false;
+                                                double salePrice = -0.1;
+                                                while (!isDouble) {
+                                                    try {
+                                                        salePrice = Double.parseDouble(scanner.nextLine());
+                                                        isDouble = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Invalid Sale price!");
+                                                        System.out.println("Enter Sale price: ");
+                                                    }
+                                                }
                                                 System.out.println("Enter Quantity on sale: ");
-                                                int numOnSale = scanner.nextInt();
-                                                scanner.nextLine();
+                                                int numOnSale = -1;
+                                                isInt = false;
+                                                while (!isInt) {
+                                                    try {
+                                                        numOnSale = Integer.parseInt(scanner.nextLine());
+                                                        isInt = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Error, Invalid Input");
+                                                        System.out.println("Enter Quantity on sale: ");
+                                                    }
+                                                }
                                                 if (store.triggerSale(input, salePrice, numOnSale)) {
                                                     System.out.println("Sale Successfully Started!");
                                                 } else {
@@ -258,8 +320,18 @@ public class MarketPlace {
                                                 store = Seller.whichStore(storeName);
                                                 System.out.println("Enter a product to restrict: ");
                                                 input = scanner.nextLine();
-                                                System.out.println("Enter Sales cap ");
-                                                int cap = scanner.nextInt();
+                                                System.out.println("Enter Sales cap: ");
+                                                int cap = -1;
+                                                isInt = false;
+                                                while (!isInt) {
+                                                    try {
+                                                        cap = Integer.parseInt(scanner.nextLine());
+                                                        isInt = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Error, Invalid Input");
+                                                        System.out.println("Enter Sales cap: ");
+                                                    }
+                                                }
                                                 scanner.nextLine();
                                                 if (store.triggerOrderCap(input, cap)) {
                                                     System.out.println("Order Cap created successfully!");
@@ -548,10 +620,20 @@ public class MarketPlace {
                                                             "you want to add to cart: ");
                                                     productName = scanner.nextLine();
                                                     if (Customer.searchedProductExists(productName, stores)) {
-                                                        System.out.printf("Enter how many %s would you like to buy: "
+                                                        quantity = -1;
+                                                        System.out.printf("Enter how many %s would you like to buy: \n"
                                                                 , productName);
-                                                        quantity = scanner.nextInt();
-                                                        scanner.nextLine();
+                                                        isInt = false;
+                                                        while (!isInt) {
+                                                            try {
+                                                                quantity = Integer.parseInt(scanner.nextLine());
+                                                                isInt = true;
+                                                            } catch (NumberFormatException e) {
+                                                                System.out.println("Error, Invalid Input");
+                                                                System.out.printf("Enter how many %s would you like to buy: \n"
+                                                                    , productName);
+                                                            }
+                                                        }
                                                         Customer.addToCart(Account.getEmail(user),
                                                                 Account.getUsername(user),
                                                                 storeName, productName, quantity);
@@ -577,9 +659,20 @@ public class MarketPlace {
                                                     productName = scanner.nextLine();
                                                     if (Customer.searchedProductExists(productName, stores)) {
                                                         System.out.printf("Enter how many %s would you like to " +
-                                                                "remove: ", productName);
-                                                        quantity = scanner.nextInt();
-                                                        scanner.nextLine();
+                                                                "remove: \n", productName);
+                                                        quantity = -1;
+                                                        isInt = false;
+                                                        while (!isInt) {
+                                                            try {
+                                                                quantity = Integer.parseInt(scanner.nextLine());
+                                                                isInt = true;
+                                                            } catch (NumberFormatException e) {
+                                                                System.out.println("Error, Invalid Input");
+                                                                System.out.printf("Enter how many %s would you like " +
+                                                                        "to remove: \n"
+                                                                    , productName);
+                                                            }
+                                                        }
                                                         boolean productRemoved = Customer.removeFromCart(Account.getEmail(user),
                                                                 Account.getUsername(user), storeName, productName, quantity);
                                                         if (productRemoved) {
@@ -628,10 +721,11 @@ public class MarketPlace {
                                         System.out.println("Name of Store Product is from: ");
                                         storeName = scanner.nextLine();
                                         System.out.println("Enter a rating between 1-5");
-                                        while (!bool) {
+                                        isInt = false;
+                                        while (!isInt) {
                                             try {
                                                 rating = Integer.parseInt(scanner.nextLine());
-                                                bool = true;
+                                                isInt = true;
                                             } catch (NumberFormatException e) {
                                                 System.out.println("Error, Invalid Input");
                                                 System.out.println("Enter a rating between 1-5");
