@@ -503,7 +503,7 @@ public abstract class Seller {
         if (index == -1) {
             return "Error: Invalid parameters";
         } else {
-            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
                         stores.get(index).getProductList().get(i).getRevenue());
             }
