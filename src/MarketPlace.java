@@ -665,7 +665,18 @@ public class MarketPlace {
                                                 productName = scanner.nextLine();
                                                 System.out.println("Enter amount you want to change by (include - if " +
                                                         "you want to reduce)");
-                                                quantity = Integer.parseInt(scanner.nextLine());
+                                                quantity = -1;
+                                                isInt = false;
+                                                while (!isInt) {
+                                                    try {
+                                                        quantity = Integer.parseInt(scanner.nextLine());
+                                                        isInt = true;
+                                                    } catch (NumberFormatException e) {
+                                                        System.out.println("Error, Invalid Input");
+                                                        System.out.printf("Enter amount you want to change by (include - if " +
+                                                            "you want to reduce)");
+                                                    }
+                                                }
                                                 bool = Customer.addToCartChangeCheckoutQuantity(storeName, productName,
                                                         quantity);
                                                 if(bool){
