@@ -128,7 +128,7 @@ public class CustomerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals(1, list1.size());
+        assertEquals("email2;username2;storename;strawberry;5", list1.get(0));
 
         assertEquals("[]", Customer.getShoppingCartofCustomer("username").toString());
 
