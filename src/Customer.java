@@ -11,6 +11,7 @@ import java.util.*;
  * Creates the Purchase History file based on the customer input filename
  *
  * @author Yi Lin Yang
+ * @author Armaan Sayyad
  * @version November 9, 2023
  */
 
@@ -87,31 +88,59 @@ public abstract class Customer {
      */
 
     public static boolean addToCart(String email, String username, String store, String product, int quantity) {
-        readFromShoppingCartDatabaseFile();
-        for(int i = 0; i < Seller.getStores().size(); i++){
-            if(Seller.getStores().get(i).getStoreName().equals(store)) {
-                for (int j = 0; j < Seller.getStores().get(i).getProductList().size(); j++) {
-                    if (Seller.getStores().get(i).getProductList().get(j).getName().equalsIgnoreCase(product)) {
-                        if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() <= 0) {
-                            System.out.println("Error out of Stock");
-                            return false;
-                        } else if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity){
-                            quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
-                            System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
+        if(alreadyInCart(store, product)){
+            System.out.println("This product is already in the Cart!");
+            return false;
+        } else {
+            readFromShoppingCartDatabaseFile();
+            for (int i = 0; i < Seller.getStores().size(); i++) {
+                if (Seller.getStores().get(i).getStoreName().equals(store)) {
+                    for (int j = 0; j < Seller.getStores().get(i).getProductList().size(); j++) {
+                        if (Seller.getStores().get(i).getProductList().get(j).getName().equalsIgnoreCase(product)) {
+                            if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity() <= 0) {
+                                System.out.println("Error out of Stock");
+                                return false;
+                            } else if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity) {
+                                quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
+                                System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
+                            }
                         }
                     }
                 }
             }
+            emails.add(email);
+            usernames.add(username);
+            storeNames.add(store);
+            productNames.add(product);
+            quantities.add(quantity);
+            writeToShoppingCartDatabaseFile();
         }
-        emails.add(email);
-        usernames.add(username);
-        storeNames.add(store);
-        productNames.add(product);
-        quantities.add(quantity);
-        writeToShoppingCartDatabaseFile();
         return true;
     }
-
+    public static boolean alreadyInCart(String store, String product){
+        readFromShoppingCartDatabaseFile();
+        for(int i = 0; i < storeNames.size(); i++){
+            if(storeNames.get(i).equals(store) && productNames.get(i).equalsIgnoreCase(product)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean addToCartChangeCheckoutQuantity(String storeName, String productName, int quantity){
+        if(alreadyInCart(storeName, productName)){
+            readFromShoppingCartDatabaseFile();
+            for(int i = 0; i < storeNames.size(); i++){
+                if(storeNames.get(i).equals(storeName) && productNames.get(i).equalsIgnoreCase(productName)){
+                    quantity = quantities.get(i) + quantity;
+                    quantities.set(i, quantity);
+                    writeToShoppingCartDatabaseFile();
+                   return true;
+                }
+            }
+        }
+        writeToShoppingCartDatabaseFile();
+        return false;
+    }
     /**
      * Removes a product from the purchase history database
      *
