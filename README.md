@@ -6,12 +6,14 @@
 
 ## Submission Log
 ***
-Project Report: 
-Submitted by:
+Project Report: PDF File
+
+Submitted by: William Hyun
 ***
 
-Project File/Repo:
-Submitted by:
+Project File/Repo: Git copy of Current Repo
+
+Submitted by: Zachary Kirkeby
 
 ***
 ## Class Descriptions
@@ -113,72 +115,76 @@ As with all other classes, testing occurred in two main ways. The primary was th
 methods were manually checked to ensure normal behavior, as anomalous behavior will break Customer and Seller objects
 as well as disrupt MarketPlace functions. 
 
-### Customer.java
+### [Customer.java](</src/Customer.java>)
+***
+The customer class is a user designated the customer permissions. At a high level, Customer directly interacts with 
+Marketplace and Product. Customer handles the shopping cart feature, Customer Purchase history, the purchase history 
+databases, and allows for the exporting of the customers purchase. 
 
-### Seller.java
+ngl i have no idea whats going on here
 
-### MarketPlace.java
+
+
+
+### [Seller.java](</src/Seller.java>)
+***
+ngl i have no idea whats going on here
+
+### [MarketPlace.java](</src/MarketPlace.java>)
 ***
 Overarching handler for Sellers, Store, and Customer classes. Creates a looping menu with options depending on user
 designation. First prompts the user to login or register a new account. From there, a looping menu is created showing 
-options based on user designation. 
+options based on user designation. The marketplace uses a scanner for all system input and output. The marketplace will
+keep running until the program is terminated. Users can exit at any point. 
 
 #### Seller Options
 ***
 If the user is designated as a seller, options are presented to create a new store, manage an existing store, view
 statistics, delete an existing store, modify their account, or logout. Modify account and logout are not unique to 
-seller designated accounts. 
+seller designated accounts, these will be detailed further below. All of these directly work with the Seller class. 
 
 Creating a new store calls the Seller class, see Seller section. Most store actions are handled through seller. 
 Within editing/modifying a store, the options to update products, change prices, and change quantities are presented. 
 The Seller can also create or delete products, ie add/remove it from their store. File support is included, products can
-be added via CSV file. 
+be added via CSV file. The Seller can also start a sale for any product in their store, which works with the Store and
+Product classes. The same process is used to implement a product sale cap. 
 
 The statistics menu presents sorting options, customers and purchase records, shopping cart records, and the ability to 
-export product listings to a file. 
+export product listings to a file. This is where the seller can see their total sales by store, as well as total revenue
+by store. 
+
+All of the above is handled through a series of nested switch statements. All menus are presented as a list with a
+number corresponding to a different sub menu or choice. There are multiple sub menus. 
 
 #### Customer Options
 ***
-The customer designated users are prompted with search options. They can search by store specifically, by product, or
-just return everything. 
+The customer designated users are prompted with search options. They can search by store specifically, by product, by 
+description, or just return everything. The customer can also view all products in sorted form. The sorting options
+include by cheapest product, most expensive, and availability. 
 
-Lastly, the customer can purchase items, add to a shopping cart, view their shopping cart ... 
+The customer has the option to leave a review on a product. In order to account for repetition among product names, the
+customer has to specify which store the product comes from. The customer can view existing reviews on products as well. 
+
+Within the shopping cart menu, the user can add products to the shopping cart. These will persist between sessions as
+they are stored in a file. A customer can change the quantity of any product in the cart, as well as remove a product 
+from the cart. A customer can return to shopping as well, or purchase all products in the shopping cart. 
+
 
 #### Account Management (General Feature)
 ***
-Users, regardless of designation can change their username, role, password and can also logout. 
+Users, regardless of designation can change their username, role, password and can also logout. All of these features 
+interact with primarily the Account class, as well as the customer or seller class depending on the user permission
+role. Logging out prevents any function of the application from being used until one logs back in. Changing any account
+credentials will be saved and updated in the appropriate database files. 
 
+As for testing. There exists a set of JUnit test cases for marketplace, found [here](</src/MarketPlaceTestCases.java>).
+These test to ensure the menus behave correctly, primarily by utilizing different functions and method calls in order to 
+ensure there is a consistent flow within Marketplace logic. Manual testing primarily has involved running Marketplace
+multiple times, checking each menu and sub menu to ensure that MarketPlace and it's calls all work appropriately. 
 
+***
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## TODO List
-
-Add Documentation to each class
-Write comments/explain what stuff does
-
-Primary authors of Files -> add writeup of file to Writeups folder
-
-Everyone -> work on individual write up files
-
-Document Testing methods
-
-Come up with Setup Instructions
-
-## Selected Option Requirements
+## Project Selection Requirements
 
 ### Option 3
 The third option is to implement the official marketplace of the application. The marketplace will allow sellers to list their products and customers to purchase them. 
