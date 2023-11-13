@@ -51,7 +51,7 @@ public class CustomerTestCases {
         }
 
         assertEquals("Ensure the addToCart method works!", "email;username;storename;" +
-            "productname;10", list1.get(0));
+                "productname;10", list1.get(0));
 
         Customer.removeFromCart("email", "username", "storename", "productname", 10);
 
@@ -76,27 +76,27 @@ public class CustomerTestCases {
         Seller.createProduct("storename", "blueberry", "fruit", 15.0, 20, "username");
 
         assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username1", "storename",
-            "strawberry", 10));
+                "strawberry", 10));
         assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username1", "storename"
-            , "blueberry", 12));
+                , "blueberry", 12));
 
 
         assertEquals("Ensure the getTotalInCart method works!", 10, Customer.getTotalInCart("storename", "strawberry"));
         assertEquals("Ensure the getTotalInCart method works!", 12, Customer.getTotalInCart("storename", "blueberry"));
 
         assertEquals("Ensure the addtoCart method does not stop different customers from adding multiple of the same " +
-                "product!", true,
-            Customer.addToCart("email2", "username2", "storename", "strawberry", 5));
+                        "product!", true,
+                Customer.addToCart("email2", "username2", "storename", "strawberry", 5));
 
 
         assertEquals("Ensure the getTotalInCart method works with multiple users' shopping carts!", 15,
-            Customer.getTotalInCart("storename", "strawberry"));
+                Customer.getTotalInCart("storename", "strawberry"));
         assertEquals("Ensure the getTotalInCart method works with multiple users' shopping carts!", 12,
-            Customer.getTotalInCart("storename", "blueberry"));
+                Customer.getTotalInCart("storename", "blueberry"));
 
         // test buyproduct
         assertEquals("Ensure the buyProduct method works with valid input!", true,
-            Customer.buyProductsInShoppingCart("username1"));
+                Customer.buyProductsInShoppingCart("username1"));
 
         list1.clear();
         // clear and read from file again
@@ -131,9 +131,11 @@ public class CustomerTestCases {
         assertEquals("email;username1;storename;blueberry;12", list1.get(0));
         assertEquals("email2;username2;storename;strawberry;5", list1.get(1));
 
-        assertEquals("[email;username1;storename;blueberry;12]", Customer.getShoppingCartofCustomer("username1").toString());
+        assertEquals("[email;username1;storename;blueberry;12]",
+                Customer.getShoppingCartofCustomer("username1").toString());
 
-        assertEquals("[email2;username2;storename;strawberry;5]", Customer.getShoppingCartofCustomer("username2").toString());
+        assertEquals("[email2;username2;storename;strawberry;5]",
+                Customer.getShoppingCartofCustomer("username2").toString());
 
 
         Customer.getPurchaseHistoryofCustomer("username1", "Customer1PurchaseHistory.txt");
@@ -172,7 +174,7 @@ public class CustomerTestCases {
 
         assertEquals(0, list1.size());
         assertEquals("Ensure the addtoCart method works with adding maximum available quantity!", true,
-            Customer.addToCart("email", "username1", "storename", "strawberry", 20));
+                Customer.addToCart("email", "username1", "storename", "strawberry", 20));
 
         list1.clear();
         // clear and read from file again
@@ -207,7 +209,7 @@ public class CustomerTestCases {
 
         //
         assertEquals("Make sure buyProduct is updating stores.txt!", "storename,storeLocation,username;strawberry," +
-            "fruit,20.0,10;blueberry,fruit,15.0,20;", list1.get(0));
+                "fruit,20.0,10;blueberry,fruit,15.0,20;", list1.get(0));
 
     }
 
@@ -221,8 +223,8 @@ public class CustomerTestCases {
         assertEquals(true, Customer.leaveReview("storename", "productName", "customerName", 3, "description"));
 
         assertEquals("Store Name | Product Name | Customer Name | Rating \n" +
-            "storename | productName | customerName | 3 | description\n\n", Customer.viewReviews("storename",
-            "productName"));
+                "storename | productName | customerName | 3 | description\n\n", Customer.viewReviews("storename",
+                "productName"));
     }
 
     @Test(timeout = 1000)

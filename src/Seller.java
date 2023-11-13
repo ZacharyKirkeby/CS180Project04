@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.util.*;
 
@@ -62,13 +63,12 @@ public abstract class Seller {
         System.out.println("Store Name | Product Name | Product Price | Qty Left in Stock");
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                if(stores.get(i).getProductList().get(j).getStockQuantity() <= 0){
+                if (stores.get(i).getProductList().get(j).getStockQuantity() <= 0) {
                     System.out.println(stores.get(i).getStoreName() + " | " +
                             stores.get(i).getProductList().get(j).getName() + " | " +
                             stores.get(i).getProductList().get(j).getPurchasePrice() + " | " +
                             "Out of Stock");
-                }
-                else {
+                } else {
                     System.out.println(stores.get(i).getStoreName() + " | " +
                             stores.get(i).getProductList().get(j).getName() + " | " +
                             stores.get(i).getProductList().get(j).getPurchasePrice() + " | " +
@@ -312,26 +312,26 @@ public abstract class Seller {
     public static boolean writeProductsToCSV(String storeName, String path) {
         readFromFile();
         int index = -1;
-            try (PrintWriter pw = new PrintWriter(new FileWriter(path, false))) {
-                for (int i = 0; i < stores.size(); i++) {
-                    if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
-                        index = i;
-                        break;
-                    }
+        try (PrintWriter pw = new PrintWriter(new FileWriter(path, false))) {
+            for (int i = 0; i < stores.size(); i++) {
+                if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
+                    index = i;
+                    break;
                 }
-                if (index == -1) {
-                    return false;
-                }
-                for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                    pw.write(stores.get(index).getProductList().get(i).toString());
-                    pw.flush();
-                }
-                pw.close();
-                return true;
-
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            if (index == -1) {
+                return false;
+            }
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+                pw.write(stores.get(index).getProductList().get(i).toString());
+                pw.flush();
+            }
+            pw.close();
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -543,7 +543,7 @@ public abstract class Seller {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
                             stores.get(i).getProductList().get(j).getName() + " | in stock: "
-                        + stores.get(i).getProductList().get(j).getStockQuantity() + " | in shopping cart: " +
+                            + stores.get(i).getProductList().get(j).getStockQuantity() + " | in shopping cart: " +
                             Customer.getTotalInCart(stores.get(i).getStoreName(),
                                     stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
@@ -852,6 +852,13 @@ public abstract class Seller {
         return result;
     }
 
+    /**
+     * Views customer reviews
+     *
+     * @param productName
+     * @param user
+     * @return
+     */
     public static String viewCustomerReviews(String productName, String user) {
         readFromFile();
         String result = "";
@@ -859,7 +866,7 @@ public abstract class Seller {
             for (int i = 0; i < stores.size(); i++) {
                 if (stores.get(i).getSellerUsername().equalsIgnoreCase(user)) {
                     result += Customer.viewReviews(stores.get(i).getStoreName(), productName) + "\n";
-                } else{
+                } else {
                     result += "No store found";
                 }
             }
@@ -878,6 +885,12 @@ public abstract class Seller {
         return result;
     }
 
+    /**
+     * Finds store
+     *
+     * @param storeName
+     * @return
+     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {
@@ -886,13 +899,21 @@ public abstract class Seller {
         }
         return null;
     }
-    public static void changeQuantity(String storeName, String productName, int quantity){
+
+    /**
+     * Changes quantity of product
+     *
+     * @param storeName
+     * @param productName
+     * @param quantity
+     */
+    public static void changeQuantity(String storeName, String productName, int quantity) {
         readFromFile();
-        for(int i = 0; i < stores.size(); i++){
-            if(stores.get(i).getStoreName().equals(storeName)){
-                for(int j = 0; j < stores.get(i).getProductList().size(); j++){
-                    if(stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)){
-                        if(quantity > stores.get(i).getProductList().get(j).getStockQuantity()){
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equals(storeName)) {
+                for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
+                    if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
+                        if (quantity > stores.get(i).getProductList().get(j).getStockQuantity()) {
                             return;
                         }
                         stores.get(i).getProductList().get(j).setStockQuantity(

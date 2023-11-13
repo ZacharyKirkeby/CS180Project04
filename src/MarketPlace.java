@@ -1,13 +1,18 @@
 package src;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+
+import static src.Account.*;
+
 /**
  * Project 04 -- MarketPlace.java
  * creates a Market to manage interactions and listings in a marketplace
  * Handles all MarketPlace related tasks
  * and functions.
  * Acts as the main interface of all the classes
+ *
  * @author Armaan Sayyad, 05
  * @author Zachary Kirkeby, 05
  * @version November 10, 2023
@@ -71,32 +76,37 @@ public class MarketPlace {
              5. View shopping cart\s
              6. Back
             """;
-    private static  final String AVAILABILITY = """
-             1. Sort By Highest Stock\s 
-             2. Sort By Low On Stock\s
-             """;
+    private static final String AVAILABILITY = """
+            1. Sort By Highest Stock\s 
+            2. Sort By Low On Stock\s
+            """;
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores = new ArrayList<>();
     private static boolean isLoggedIn;
 
     /**
-     *Constructors for the MarketPlace
+     * Constructors for the MarketPlace
+     *
      * @param stores (ArrayList<Stores></>)
      */
     public MarketPlace(ArrayList<Store> stores) {
         this.stores = stores;
         // some kind of logic tbd
     }
+
     /**
-     *Getter for the Stores's in the MarketPlace
+     * Getter for the Stores's in the MarketPlace
+     *
      * @return stores
      */
     public static ArrayList<Store> getStores() {
         return stores;
     }
+
     /**
-     *Main method for the Marketplace handles all the interactions
+     * Main method for the Marketplace handles all the interactions
      * and interfaces between the classes
+     *
      * @param args (String[])
      */
     public static void main(String[] args) {
@@ -104,7 +114,7 @@ public class MarketPlace {
         Scanner scanner = new Scanner(System.in); //instantiates a scanner object to read terminal inputs
         do {
             boolean logOrRegistration = false;
-            while(!logOrRegistration) {
+            while (!logOrRegistration) {
                 System.out.println(WELCOME_PROMPT);
                 System.out.println(LOGIN_PROMPT);
                 String input = scanner.nextLine().toLowerCase();
@@ -116,13 +126,12 @@ public class MarketPlace {
                         String user = scanner.nextLine();
                         System.out.println("Enter your password: ");
                         String password = scanner.nextLine();
-                        boolean bool = Account.login(user, password);
-                        logOrRegistration = Account.login(user,password);
-                        if(!logOrRegistration) {
+                        boolean bool = login(user, password);
+                        logOrRegistration = login(user, password);
+                        if (!logOrRegistration) {
                             System.out.println("Login Failed");
                             System.out.println("Try Again!");
-                        }
-                        else if (logOrRegistration){
+                        } else if (logOrRegistration) {
                             isLoggedIn = true;
                             System.out.println("Login Successful!");
                         }
@@ -140,7 +149,8 @@ public class MarketPlace {
                         // loops while definite user
                         while (isLoggedIn) {
                             //Seller Experience
-                            if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("seller")) {
+                            if (getRole(user) != null &&
+                                    getRole(user).equalsIgnoreCase("seller")) {
                                 System.out.print(sellerChoices);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -197,7 +207,8 @@ public class MarketPlace {
                                                 }
                                                 System.out.println("Enter Product Description: ");
                                                 String description = scanner.nextLine();
-                                                bool = Seller.createProduct(storeName, productName, description, price, quantity, user);
+                                                bool = Seller.createProduct(storeName, productName, description,
+                                                        price, quantity, user);
                                                 if (bool) {
                                                     System.out.println("Successfully Added Product");
                                                 } else {
@@ -247,7 +258,8 @@ public class MarketPlace {
                                                         System.out.println("Enter New Quantity: ");
                                                     }
                                                 }
-                                                bool = Seller.editProductQuantity(storeName, productName, quantity, user);
+                                                bool = Seller.editProductQuantity(storeName, productName, quantity,
+                                                        user);
                                                 if (bool) {
                                                     System.out.println("Successfully Edited");
                                                 } else {
@@ -372,7 +384,8 @@ public class MarketPlace {
                                                     System.out.println("Invalid Input");
                                                     break;
                                                 }
-                                                System.out.println(Seller.getCustomersAndPurchases(storeName, user, sorted));
+                                                System.out.println(Seller.getCustomersAndPurchases(storeName, user,
+                                                        sorted));
                                                 break;
                                             //View Product Sales
                                             case "2":
@@ -438,7 +451,8 @@ public class MarketPlace {
                                         break;
                                     //View Customer Reviews
                                     case "5":
-                                        System.out.println("Enter Product Name (Leave empty if you want to view reviews " +
+                                        System.out.println("Enter Product Name (Leave empty if you want to view " +
+                                                "reviews " +
                                                 "of all products)");
                                         productName = scanner.nextLine();
                                         System.out.print(Seller.viewCustomerReviews(productName, user));
@@ -465,7 +479,7 @@ public class MarketPlace {
                                                         System.out.println("Enter New Username Again");
                                                         newUsernameCheck = scanner.nextLine();
                                                     }
-                                                    bool = Account.changeUsername(newUsername, oldUsername);
+                                                    bool = changeUsername(newUsername, oldUsername);
                                                     if (bool) {
                                                         System.out.println("Successfully Changed Username");
                                                     } else {
@@ -493,7 +507,7 @@ public class MarketPlace {
                                                         System.out.println("Enter New Password Again");
                                                         newPasswordCheck = scanner.nextLine();
                                                     }
-                                                    bool = Account.changePassword(user, oldPassword, newPassword);
+                                                    bool = changePassword(user, oldPassword, newPassword);
                                                     if (bool) {
                                                         System.out.println("Successfully Changed Password");
                                                     } else {
@@ -512,7 +526,7 @@ public class MarketPlace {
                                                     password = scanner.nextLine();
                                                     System.out.println("Enter New Role: ");
                                                     String newRole = scanner.nextLine();
-                                                    bool = Account.changeRole(user, password, newRole);
+                                                    bool = changeRole(user, password, newRole);
                                                     if (bool) {
                                                         System.out.println("Successfully Changed Role");
                                                     } else {
@@ -529,7 +543,7 @@ public class MarketPlace {
                                                     user = scanner.nextLine();
                                                     System.out.println("Enter Password: ");
                                                     password = scanner.nextLine();
-                                                    bool = Account.deleteAccount(user, password);
+                                                    bool = deleteAccount(user, password);
                                                     if (bool) {
                                                         System.out.println("Successfully Deleted");
                                                         isLoggedIn = false;
@@ -556,7 +570,8 @@ public class MarketPlace {
                                         break;
                                 }
                                 // Customer Experience
-                            } else if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("customer")) {
+                            } else if (getRole(user) != null && getRole(user).equalsIgnoreCase(
+                                    "customer")) {
                                 System.out.print(BUYERPROMPT);
                                 input = scanner.nextLine();
                                 switch (input) {
@@ -584,7 +599,7 @@ public class MarketPlace {
                                         System.out.println("Which Product would you like to view?");
                                         input = scanner.nextLine();
                                         String result = Seller.searchByProduct(input);
-                                        if(result.isEmpty() || result == null){
+                                        if (result.isEmpty() || result == null) {
                                             System.out.println("No Products Available for Listing");
                                         } else {
                                             System.out.println(result);
@@ -638,12 +653,13 @@ public class MarketPlace {
                                                                 isInt = true;
                                                             } catch (NumberFormatException e) {
                                                                 System.out.println("Error, Invalid Input");
-                                                                System.out.printf("Enter how many %s would you like to buy: \n"
+                                                                System.out.printf("Enter how many %s would you like " +
+                                                                                "to buy: \n"
                                                                         , productName);
                                                             }
                                                         }
-                                                        bool = Customer.addToCart(Account.getEmail(user),
-                                                                Account.getUsername(user),
+                                                        bool = Customer.addToCart(getEmail(user),
+                                                                getUsername(user),
                                                                 storeName, productName, quantity);
                                                     }
                                                     if (bool) {
@@ -656,7 +672,7 @@ public class MarketPlace {
                                                 }
 
                                                 break;
-                                            case"2":
+                                            case "2":
                                                 System.out.println("Enter store of the product whose checkout " +
                                                         "quantity you want to change");
                                                 storeName = scanner.nextLine();
@@ -673,15 +689,16 @@ public class MarketPlace {
                                                         isInt = true;
                                                     } catch (NumberFormatException e) {
                                                         System.out.println("Error, Invalid Input");
-                                                        System.out.printf("Enter amount you want to change by (include - if " +
-                                                            "you want to reduce)");
+                                                        System.out.printf("Enter amount you want to change by " +
+                                                                "(include - if " +
+                                                                "you want to reduce)");
                                                     }
                                                 }
                                                 bool = Customer.addToCartChangeCheckoutQuantity(storeName, productName,
                                                         quantity);
-                                                if(bool){
+                                                if (bool) {
                                                     System.out.println("Change Successful");
-                                                } else if(!bool){
+                                                } else if (!bool) {
                                                     System.out.println("Change failed");
                                                 }
                                                 break;
@@ -709,8 +726,10 @@ public class MarketPlace {
                                                                         , productName);
                                                             }
                                                         }
-                                                        boolean productRemoved = Customer.removeFromCart(Account.getEmail(user),
-                                                                Account.getUsername(user), storeName, productName, quantity);
+                                                        boolean productRemoved =
+                                                                Customer.removeFromCart(getEmail(user),
+                                                                getUsername(user), storeName, productName,
+                                                                        quantity);
                                                         if (productRemoved) {
                                                             System.out.println("Product removed from cart");
                                                         } else {
@@ -720,10 +739,10 @@ public class MarketPlace {
                                                 }
                                                 break;
                                             case "4": // buy products in cart
-                                                bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
+                                                bool = Customer.buyProductsInShoppingCart(getUsername(user));
                                                 ArrayList<String> check = Customer.getShoppingCartofCustomer(user);
-                                                while(!check.isEmpty()) {
-                                                    bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
+                                                while (!check.isEmpty()) {
+                                                    bool = Customer.buyProductsInShoppingCart(getUsername(user));
                                                     check = Customer.getShoppingCartofCustomer(user);
                                                 }
                                                 if (bool) {
@@ -735,9 +754,11 @@ public class MarketPlace {
                                             case "5": // view shopping cart
                                                 for (String s : Customer.getShoppingCartofCustomer(user)) {
                                                     String[] view = s.split(";");
-                                                    System.out.println("Customer Name | Store Name | Product Name | Qty");
+                                                    System.out.println("Customer Name | Store Name | Product Name | " +
+                                                            "Qty");
                                                     String output =
-                                                            view[1] + " | " + view[2] + " | " + view[3] + " | " + view[4];
+                                                            view[1] + " | " + view[2] + " | " + view[3]
+                                                                    + " | " + view[4];
                                                     System.out.println(output);
                                                 }
                                                 break;
@@ -751,9 +772,9 @@ public class MarketPlace {
                                         System.out.println("Enter Filename to be exported to (include .txt)");
                                         String filename = scanner.nextLine();
                                         bool = Customer.getPurchaseHistoryofCustomer(user, filename);
-                                        if(bool){
+                                        if (bool) {
                                             System.out.println("Exported Successfully!");
-                                        } else if(!bool){
+                                        } else if (!bool) {
                                             System.out.println("Export Failed");
                                         }
                                         break;
@@ -817,7 +838,7 @@ public class MarketPlace {
                                                         System.out.println("Enter New Username Again");
                                                         newUsernameCheck = scanner.nextLine();
                                                     }
-                                                    bool = Account.changeUsername(newUsername, oldUsername);
+                                                    bool = changeUsername(newUsername, oldUsername);
                                                     if (bool) {
                                                         System.out.println("Successfully Changed Username");
                                                     } else {
@@ -845,7 +866,7 @@ public class MarketPlace {
                                                         System.out.println("Enter New Password Again");
                                                         newPasswordCheck = scanner.nextLine();
                                                     }
-                                                    bool = Account.changePassword(user, oldPassword, newPassword);
+                                                    bool = changePassword(user, oldPassword, newPassword);
                                                     if (bool) {
                                                         System.out.println("Successfully Changed Password");
                                                     } else {
@@ -864,7 +885,7 @@ public class MarketPlace {
                                                     password = scanner.nextLine();
                                                     System.out.println("Enter New Role: ");
                                                     String newRole = scanner.nextLine();
-                                                    bool = Account.changeRole(user, password, newRole);
+                                                    bool = changeRole(user, password, newRole);
                                                     if (bool) {
                                                         System.out.println("Successfully Changed");
                                                     } else {
@@ -881,7 +902,7 @@ public class MarketPlace {
                                                     user = scanner.nextLine();
                                                     System.out.println("Enter Password: ");
                                                     password = scanner.nextLine();
-                                                    bool = Account.deleteAccount(user, password);
+                                                    bool = deleteAccount(user, password);
                                                     if (bool) {
                                                         System.out.println("Successfully Deleted");
                                                         isLoggedIn = false;
@@ -926,10 +947,10 @@ public class MarketPlace {
                             System.out.println("Enter your role (customer / seller");
                             role = scanner.nextLine();
                         }
-                        logOrRegistration = Account.createAccount(email, user, password, role);
-                        if(logOrRegistration){
+                        logOrRegistration = createAccount(email, user, password, role);
+                        if (logOrRegistration) {
                             System.out.println("Account Made Successfully");
-                        } else if (!logOrRegistration){
+                        } else if (!logOrRegistration) {
                             System.out.println("Account Creation failed. Invalid Credentials");
                         }
                         break;

@@ -71,12 +71,14 @@ public class StoreTestCases {
 
         assertEquals("Ensure that getProductsSortedByCheapest method works!", blueberry, store.getProductList().get(1));
 
-        assertEquals("Ensure that getProductsSortedByCheapest method works!", strawberry, store.getProductList().get(2));
+        assertEquals("Ensure that getProductsSortedByCheapest method works!", strawberry,
+                store.getProductList().get(2));
 
 
         assertEquals("Ensure that toString method works!", "name,storeLocation,seller", store.toString());
 
-        assertEquals("Ensure that toString method works!", "name:raspberry | blueberry | strawberry", store.toStringProducts());
+        assertEquals("Ensure that toString method works!", "name:raspberry | blueberry | strawberry",
+                store.toStringProducts());
 
         // buy 5 raspberries at 5.0 each
         store.getProductList().get(0).buyProduct(5);
@@ -91,7 +93,7 @@ public class StoreTestCases {
         assertEquals("Ensure getTotalSales is working correctly!", 10, store.getTotalSales());
 
         assertEquals("Ensure getTotalRevenue is working correctly!", 5.0 * 5 + 10.0 * 5, store.getTotalRevenue(),
-            0.001);
+                0.001);
 
         // buy 5 strawberries at 15.0 each
         store.getProductList().get(2).buyProduct(5);
@@ -99,7 +101,7 @@ public class StoreTestCases {
         assertEquals("Ensure getTotalSales is working correctly!", 15, store.getTotalSales());
 
         assertEquals("Ensure getTotalRevenue is working correctly!", 5.0 * 5 + 10.0 * 5 + 15.0 * 5,
-            store.getTotalRevenue(), 0.001);
+                store.getTotalRevenue(), 0.001);
 
         store.triggerSale("blueberry", 8.0, 10);
 
@@ -109,8 +111,8 @@ public class StoreTestCases {
         assertEquals("Ensure getTotalSales is working correctly during a sale!", 17, store.getTotalSales());
 
         assertEquals("Ensure getTotalRevenue is working correctly during a sale!",
-            5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2,
-            store.getTotalRevenue(), 0.001);
+                5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2,
+                store.getTotalRevenue(), 0.001);
 
         // start sale for raspberry and strawberry
         assertTrue(store.triggerSale("raspberry", 3.0, 10));
@@ -129,8 +131,8 @@ public class StoreTestCases {
         assertEquals("Ensure getTotalSales is working correctly!", 19, store.getTotalSales());
 
         assertEquals("Ensure getTotalRevenue is working correctly!",
-            5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2 + 10.0 * 2,
-            store.getTotalRevenue(), 0.001);
+                5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2 + 10.0 * 2,
+                store.getTotalRevenue(), 0.001);
 
         // buy 5 raspberries at sale price of 3.0 each
         store.getProductList().get(0).buyProduct(5);
@@ -138,8 +140,8 @@ public class StoreTestCases {
         assertEquals("Ensure getTotalSales is working correctly!", 24, store.getTotalSales());
 
         assertEquals("Ensure getTotalRevenue is working correctly!",
-            5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2 + 10.0 * 2 + 3.0 * 5, store.getTotalRevenue(),
-            0.001);
+                5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2 + 10.0 * 2 + 3.0 * 5, store.getTotalRevenue(),
+                0.001);
 
         assertTrue("Ensure triggerOrderCap method works!", store.triggerOrderCap("strawberry", 3));
 
@@ -151,8 +153,8 @@ public class StoreTestCases {
         assertEquals("Ensure getTotalSales is working correctly!", 27, store.getTotalSales());
 
         assertEquals("Ensure getTotalRevenue is working correctly!",
-            5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2 + 10.0 * 2 + 3.0 * 5 + 12.0 * 3,
-            store.getTotalRevenue(), 0.001);
+                5.0 * 5 + 10.0 * 5 + 15.0 * 5 + 8.0 * 2 + 10.0 * 2 + 3.0 * 5 + 12.0 * 3,
+                store.getTotalRevenue(), 0.001);
 
         store.setStoreLocation("internet");
 
@@ -167,7 +169,7 @@ public class StoreTestCases {
         store.setProductList(productList);
 
         assertEquals("Ensure that setProductList method works!", "storename:raspberry | blueberry",
-            store.toStringProducts());
+                store.toStringProducts());
 
 
         System.out.println(store.getCustomerInformationAndRevenue());

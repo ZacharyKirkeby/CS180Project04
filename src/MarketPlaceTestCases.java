@@ -118,10 +118,10 @@ public class MarketPlaceTestCases {
              5. View shopping cart\s
              6. Back
             """;
-    private static  final String AVAILABILITY = """
-             1. Sort By Highest Stock\s
-             2. Sort By Low On Stock\s
-             """;
+    private static final String AVAILABILITY = """
+            1. Sort By Highest Stock\s
+            2. Sort By Low On Stock\s
+            """;
     private static final String SEARCH_PROMPT = "Enter search term: ";
 
 
@@ -130,56 +130,55 @@ public class MarketPlaceTestCases {
         AccountTestCases.reset();
         // Set the input
         String input = "register\n" +
-            "neweemail@gmail.com\n" +
-            "username\n" +
-            "password\n" +
-            "seller\n" +
-            "login\n" +
-            "username\n" +
-            "password\n" +
-            "1\n" +
-            "fruit stand\n" +
-            "IN\n" +
-            "2\n" +
-            "1\n" +
-            "fruit stand\n" +
-            "apple\n" +
-            "5\n" +
-            "10\n" +
-            "red fruit\n" +
-            "7\n";
+                "neweemail@gmail.com\n" +
+                "username\n" +
+                "password\n" +
+                "seller\n" +
+                "login\n" +
+                "username\n" +
+                "password\n" +
+                "1\n" +
+                "fruit stand\n" +
+                "IN\n" +
+                "2\n" +
+                "1\n" +
+                "fruit stand\n" +
+                "apple\n" +
+                "5\n" +
+                "10\n" +
+                "red fruit\n" +
+                "7\n";
 
         // Pair the input with the expected result
         String expected = WELCOME_PROMPT + "\n" +
-            LOGIN_PROMPT + "\n" +
-            "Enter an email: \n" +
-            "Input Username: \n" +
-            "Enter your password: \n" +
-            "Enter your role (customer / seller)" +
-            "Account Made Successfully\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register)\n" +
-            "Input Username or Email: \n" +
-            "Input Username or Email: \n" +
-            "Enter your password: \n" +
-            "Login Successful!\n" +
-            sellerChoices + "\n" +
-            "Enter a store name: \n" +
-            "Enter a store location: \n" +
-            "Successfully Created\n" +
-            sellerChoices + "\n" +
-            sellerModificationChoices + "\n" +
-            "Enter Store Name: \n" +
-            "Enter Product Name: \n" +
-            "Enter Product Price: \n" +
-            "Enter Product Quantity: \n" +
-            "Enter Product Description: \n" +
-            "Successfully Added Product\n" +
-            sellerChoices + "\n" +
-            "Successfully Logged out\n" +
-            "Welcome to the Fruit Market!\n" +
-            "Would you like to Login or Register an Account? (Login / Register)\n"
-            ;
+                LOGIN_PROMPT + "\n" +
+                "Enter an email: \n" +
+                "Input Username: \n" +
+                "Enter your password: \n" +
+                "Enter your role (customer / seller)" +
+                "Account Made Successfully\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register)\n" +
+                "Input Username or Email: \n" +
+                "Input Username or Email: \n" +
+                "Enter your password: \n" +
+                "Login Successful!\n" +
+                sellerChoices + "\n" +
+                "Enter a store name: \n" +
+                "Enter a store location: \n" +
+                "Successfully Created\n" +
+                sellerChoices + "\n" +
+                sellerModificationChoices + "\n" +
+                "Enter Store Name: \n" +
+                "Enter Product Name: \n" +
+                "Enter Product Price: \n" +
+                "Enter Product Quantity: \n" +
+                "Enter Product Description: \n" +
+                "Successfully Added Product\n" +
+                sellerChoices + "\n" +
+                "Successfully Logged out\n" +
+                "Welcome to the Fruit Market!\n" +
+                "Would you like to Login or Register an Account? (Login / Register)\n";
 
         // Runs the program with the input values
         receiveInput(input);
@@ -191,7 +190,7 @@ public class MarketPlaceTestCases {
         // Trims the output and verifies it is correct.
         stuOut = stuOut.replace("\r\n", "\n");
         assertEquals("Make sure marketplace is implemented correctly!",
-            expected.trim(), stuOut.trim());
+                expected.trim(), stuOut.trim());
     }
 
 
