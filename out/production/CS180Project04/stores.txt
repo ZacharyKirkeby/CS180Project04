@@ -1,1 +1,1 @@
-fruit stand,IN,username;apple,red fruit,5.0,10;
+fruit stand,IN,username;apple,red fruit,7.0,10;blueberry,blue fruit,3.0,15;

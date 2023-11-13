@@ -129,6 +129,7 @@ public class MarketPlaceTestCases {
     @Test(timeout = 1000)
     public void testSellerCreateStore() {
         AccountTestCases.reset();
+        CustomerTestCases.reset();
         // Set the input
         String input = "register\n" +
                 "neweemail@gmail.com\n" +
@@ -153,6 +154,10 @@ public class MarketPlaceTestCases {
 
         // Pair the input with the expected result
         String expected = "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
+                "File cleared.\n" +
                 WELCOME_PROMPT + "\n" +
                 LOGIN_PROMPT + "\n" +
                 "Enter an email: \n" +
@@ -305,10 +310,17 @@ public class MarketPlaceTestCases {
             "3\n" +
             "20\n" +
             "blue fruit\n" +
+            "2\n" +
+            "2\n" +
+            "fruit stand\n" +
+            "apple\n" +
             "7\n" +
             "2\n" +
-            "1\n" +
-
+            "3\n" +
+            "fruit stand\n" +
+            "blueberry\n" +
+            "15\n" +
+            "7\n" +
             "exit";
 
         // Pair the input with the expected result
@@ -355,4 +367,6 @@ public class MarketPlaceTestCases {
         assertEquals("Make sure marketplace is implemented correctly!",
             expected.trim(), stuOut.trim());
     }
+
+
 }
