@@ -1,4 +1,5 @@
 package src;
+
 import java.io.*;
 import java.util.*;
 
@@ -87,11 +88,11 @@ public abstract class Customer {
 
     public static void addToCart(String email, String username, String store, String product, int quantity) {
         readFromShoppingCartDatabaseFile();
-        for(int i = 0; i < Seller.getStores().size(); i++){
-            if(Seller.getStores().get(i).getStoreName().equals(store)) {
+        for (int i = 0; i < Seller.getStores().size(); i++) {
+            if (Seller.getStores().get(i).getStoreName().equals(store)) {
                 for (int j = 0; j < Seller.getStores().get(i).getProductList().size(); j++) {
                     if (Seller.getStores().get(i).getProductList().get(j).getName().equalsIgnoreCase(product)) {
-                        if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity){
+                        if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity) {
                             quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
                             System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
                         }
@@ -123,19 +124,14 @@ public abstract class Customer {
         boolean successfullyRemovedFromCart = false;
         readFromShoppingCartDatabaseFile();
         for (int i = 0; i < usernames.size(); i++) {
-            if (emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
-                    && productNames.get(i).equals(productName) && quantities.get(i) == quantity) {
+            if (emails.get(i).equals(email) && storeNames.get(i).equals(storeName)
+                    && productNames.get(i).equals(productName)) {
                 successfullyRemovedFromCart = true;
                 emails.remove(i);
                 usernames.remove(i);
                 storeNames.remove(i);
                 productNames.remove(i);
                 quantities.remove(i);
-                break;
-            } else if(emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
-                    && productNames.get(i).equals(productName) && quantities.get(i) > quantity){
-                quantities.set(i, quantities.get(i)-quantity);
-                successfullyRemovedFromCart = true;
             }
         }
         writeToShoppingCartDatabaseFile();
@@ -155,27 +151,38 @@ public abstract class Customer {
     public static boolean buyProductsInShoppingCart(String username) {
         readFromShoppingCartDatabaseFile();
         boolean productsBoughtSuccessfully = false;
+        boolean matches = false;
         for (int i = 0; i < usernames.size(); i++) {
             if (usernames.get(i).equals(username)) { // check if username matches'
-                for (int j = 0; j < Seller.getStores().size(); j++) { // iterate through stores in marketplace
-                    if (storeNames.get(i).equals(Seller.getStores().get(j).getStoreName())) {
-                        // if storename matches
-                        for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
-                            // iterate through product list
-                            if (Seller.getStores().get(j).getProductList().get(k).getName()
-                                    .equals(productNames.get(i))) { // if product name matches
-                                Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
-                                double unitprice =
-                                        Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
+                matches = true;
+            }
+        }
+        for (int q = 0; q < 2; q++) {
+            if (matches) {
+                for (int i = 0; i < storeNames.size(); i++) {
+                    for (int j = 0; j < Seller.getStores().size(); j++) { // iterate through stores in marketplace
+                        if (storeNames.get(i).equals(Seller.getStores().get(j).getStoreName())) {
+                            // if storename matches
+                            for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
+                                // iterate through product list
+                                for (int l = 0; l < productNames.size(); l++) {
 
-                                writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
-                                        productNames.get(i), quantities.get(i), unitprice);
+                                    if (Seller.getStores().get(j).getProductList().get(k).getName()
+                                            .equals(productNames.get(l))) { // if product name matches
+                                        Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(l));
+                                        double unitprice =
+                                                Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
 
-                                removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
-                                        productNames.get(i), quantities.get(i));
+                                        writeToPurchaseHistoryDatabaseFile(emails.get(l), usernames.get(l), storeNames.get(l),
+                                                productNames.get(l), quantities.get(l), unitprice);
 
-                                productsBoughtSuccessfully = true;
-                                return true;
+                                        removeFromCart(emails.get(l), usernames.get(l), storeNames.get(l),
+                                                productNames.get(l), quantities.get(l));
+
+                                        productsBoughtSuccessfully = true;
+                                    }
+
+                                }
                             }
                         }
                     }
@@ -320,10 +327,10 @@ public abstract class Customer {
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
                                       String description) {
         boolean bool = false;
-            if (!(1 <= rating && rating <= 5)) {
-                System.out.println("Invalid Input");
-                return false;
-            }
+        if (!(1 <= rating && rating <= 5)) {
+            System.out.println("Invalid Input");
+            return false;
+        }
         try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"));
              PrintWriter pw = new PrintWriter(new FileWriter("Reviews.txt", true), true)) {
             String line = br.readLine();
