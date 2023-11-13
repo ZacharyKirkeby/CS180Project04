@@ -60,7 +60,7 @@ public abstract class Seller {
         System.out.println("Store Name | Product Name | Product Price | Qty Left in Stock");
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                if(stores.get(i).getProductList().get(j).getStockQuantity() == 0){
+                if(stores.get(i).getProductList().get(j).getStockQuantity() <= 0){
                     System.out.println(stores.get(i).getStoreName() + " | " +
                             stores.get(i).getProductList().get(j).getName() + " | " +
                             stores.get(i).getProductList().get(j).getPurchasePrice() + " | " +
@@ -880,7 +880,7 @@ public abstract class Seller {
                 for(int j = 0; j < stores.get(i).getProductList().size(); j++){
                     if(stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)){
                         if(quantity > stores.get(i).getProductList().get(j).getStockQuantity()){
-                            System.out.println("Error, Quantity Exceeds Stock");
+                            return;
                         }
                         stores.get(i).getProductList().get(j).setStockQuantity(
                                 (stores.get(i).getProductList().get(j).getStockQuantity() - quantity)
