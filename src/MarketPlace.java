@@ -554,7 +554,7 @@ public class MarketPlace {
                                 }
                                 // Customer Experience
                             } else if (Account.getRole(user) != null && Account.getRole(user).equalsIgnoreCase("customer")) {
-                                System.out.println(BUYERPROMPT);
+                                System.out.print(BUYERPROMPT);
                                 input = scanner.nextLine();
                                 switch (input) {
                                     //Search for a Store
@@ -580,7 +580,12 @@ public class MarketPlace {
                                         Seller.printProductAndStores();
                                         System.out.println("Which Product would you like to view?");
                                         input = scanner.nextLine();
-                                        System.out.println(Seller.searchByProduct(input));
+                                        String result = Seller.searchByProduct(input);
+                                        if(result.isEmpty() || result == null){
+                                            System.out.println("No Products Available for Listing");
+                                        } else {
+                                            System.out.println(result);
+                                        }
                                         break;
                                     //Sort Products by Cheapest
                                     case "5":
@@ -607,7 +612,7 @@ public class MarketPlace {
                                         break;
                                     // shopping cart
                                     case "8":
-                                        System.out.println(customerShoppingCartChoices);
+                                        System.out.print(customerShoppingCartChoices);
                                         input = scanner.nextLine();
                                         switch (input) {
                                             case "1": // add product to cart
@@ -631,13 +636,12 @@ public class MarketPlace {
                                                             } catch (NumberFormatException e) {
                                                                 System.out.println("Error, Invalid Input");
                                                                 System.out.printf("Enter how many %s would you like to buy: \n"
-                                                                    , productName);
+                                                                        , productName);
                                                             }
                                                         }
-                                                        Customer.addToCart(Account.getEmail(user),
+                                                        bool = Customer.addToCart(Account.getEmail(user),
                                                                 Account.getUsername(user),
                                                                 storeName, productName, quantity);
-                                                        bool = true;
                                                     }
                                                     if (bool) {
                                                         System.out.println("Product added to cart!");
@@ -669,8 +673,8 @@ public class MarketPlace {
                                                             } catch (NumberFormatException e) {
                                                                 System.out.println("Error, Invalid Input");
                                                                 System.out.printf("Enter how many %s would you like " +
-                                                                        "to remove: \n"
-                                                                    , productName);
+                                                                                "to remove: \n"
+                                                                        , productName);
                                                             }
                                                         }
                                                         boolean productRemoved = Customer.removeFromCart(Account.getEmail(user),
