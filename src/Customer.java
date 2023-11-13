@@ -91,13 +91,13 @@ public abstract class Customer {
             if(Seller.getStores().get(i).getStoreName().equals(store)) {
                 for (int j = 0; j < Seller.getStores().get(i).getProductList().size(); j++) {
                     if (Seller.getStores().get(i).getProductList().get(j).getName().equalsIgnoreCase(product)) {
-                        if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity){
+                        if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() == 0) {
+                            System.out.println("Error out of Stock");
+                            return false;
+                        } else if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity){
                             quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
                             System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
                             return true;
-                        } if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() == 0){
-                            System.out.println("Error out of Stock");
-                            return false;
                         }
                     }
                 }
