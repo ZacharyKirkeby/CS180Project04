@@ -197,11 +197,17 @@ public class MarketPlace {
                                                 while (!isInt) {
                                                     try {
                                                         quantity = Integer.parseInt(scanner.nextLine());
-                                                        isInt = true;
+                                                        if (quantity > 0) {
+                                                            isInt = true;
+                                                        } else {
+                                                            System.out.println("Invalid Quantity!");
+                                                            System.out.println("Enter Product Quantity: ");
+                                                        }
                                                     } catch (NumberFormatException e) {
                                                         System.out.println("Invalid Quantity!");
                                                         System.out.println("Enter Product Quantity: ");
                                                     }
+
                                                 }
                                                 System.out.println("Enter Product Description: ");
                                                 String description = scanner.nextLine();
@@ -210,7 +216,7 @@ public class MarketPlace {
                                                 if (bool) {
                                                     System.out.println("Successfully Added Product");
                                                 } else {
-                                                    System.out.println("Deletion Failed");
+                                                    System.out.println("Addition Failed");
                                                 }
                                                 break;
                                             // Edit Product Price
@@ -401,7 +407,14 @@ public class MarketPlace {
                                                     System.out.println("Invalid Input");
                                                     break;
                                                 }
-                                                System.out.println(Seller.getProductSales(storeName, user, sorted));
+                                                if (Seller.getProductSales(storeName, user, sorted).equals("Customer " +
+                                                    "Email | Customer Username | Store Name | Product Name | " +
+                                                    "Quantity Purchased ")) {
+                                                    System.out.println("No Product Sales Found!");
+                                                } else {
+                                                    System.out.println(Seller.getProductSales(storeName, user, sorted));
+                                                }
+
                                                 break;
                                             //View Products in Shopping Cart
                                             case "3":
@@ -452,7 +465,12 @@ public class MarketPlace {
                                         System.out.println("Enter Product Name (Leave empty if you want to " +
                                             "view reviews of all products)");
                                         productName = scanner.nextLine();
-                                        System.out.print(Seller.viewCustomerReviews(productName, user));
+                                        if (Seller.viewCustomerReviews(productName, user).equals("Store Name | " +
+                                            "Product Name | Customer Name | Rating ")) {
+                                            System.out.println("Could not find any reviews!");
+                                        } else {
+                                            System.out.print(Seller.viewCustomerReviews(productName, user));
+                                        }
                                         break;
                                     //Manage the Seller's account
                                     case "6":
