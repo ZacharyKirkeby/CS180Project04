@@ -223,7 +223,7 @@ public class CustomerTestCases {
         assertEquals(true, Customer.leaveReview("storename", "productName", "customerName", 3, "description"));
 
         assertEquals("Store Name | Product Name | Customer Name | Rating \n" +
-                "storename | productName | customerName | 3 | description\n\n", Customer.viewReviews("storename",
+                "storename | productName | customerName | 3 | description\n", Customer.viewReviews("storename",
                 "productName"));
     }
 
