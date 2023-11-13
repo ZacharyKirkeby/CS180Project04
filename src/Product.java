@@ -31,9 +31,10 @@ public class Product {
     private int orderCap; // Max number a customer can order
 
     /**
-     * Constructors for the Product
-     *
-     * @param name, description, quantity, purchasePrice,
+     * Creats a new Product Class
+     * @param name
+     * @param purchasePrice
+     * @param quantity
      */
     public Product(String name, double purchasePrice, int quantity) {
         this.name = name;
@@ -43,6 +44,13 @@ public class Product {
         this.orderCap = Integer.MAX_VALUE;
     }
 
+    /**
+     * Creats a new Product Class
+     * @param name
+     * @param description
+     * @param purchasePrice
+     * @param quantity
+     */
     public Product(String name, String description, double purchasePrice, int quantity) {
         this.name = name;
         this.description = description;
@@ -124,6 +132,11 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
+    /**
+     *
+     * @param quantity
+     * @return true if success in buying product false if not
+     */
     public boolean buyProduct(int quantity) {
         if (onSale) {
             if (this.saleCap > 0 && quantity <= this.saleCap && quantity <= this.orderCap) {
