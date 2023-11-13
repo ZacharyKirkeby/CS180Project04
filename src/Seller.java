@@ -46,10 +46,10 @@ public abstract class Seller {
             result += "Store not found";
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                result += stores.get(index).getProductList().get(i).getName();
+                result += stores.get(index).getProductList().get(i).getName() + ", ";
             }
         }
-        return result;
+        return result.substring(0, result.length() - 2);
     }
 
     /**
@@ -139,6 +139,9 @@ public abstract class Seller {
      */
     public static boolean createProduct(String storeName, String name, String description, double price, int quantity,
                                         String username) {
+        if (price <= 0 || quantity <= 0) {
+            return false;
+        }
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -205,6 +208,9 @@ public abstract class Seller {
      * @return boolean indicating whether edit was successful
      */
     public static boolean editProductPrice(String storeName, String name, double price, String username) {
+        if (price <= 0) {
+            return false;
+        }
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -238,6 +244,9 @@ public abstract class Seller {
      * @return boolean indicating whether edit was successful
      */
     public static boolean editProductQuantity(String storeName, String name, int quantity, String username) {
+        if (quantity < 0) {
+            return false;
+        }
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -527,12 +536,13 @@ public abstract class Seller {
      */
     public static String getShoppingCartProducts(String username) {
         readFromFile();
-        String shoppingCartProducts = null;
+        String shoppingCartProducts = "";
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
-                            stores.get(i).getProductList().get(j).getName() + ": " +
+                            stores.get(i).getProductList().get(j).getName() + " | in stock: "
+                        + stores.get(i).getProductList().get(j).getStockQuantity() + " | in shopping cart: " +
                             Customer.getTotalInCart(stores.get(i).getStoreName(),
                                     stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
