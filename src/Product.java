@@ -43,13 +43,6 @@ public class Product {
         this.orderCap = Integer.MAX_VALUE;
     }
 
-    /**
-     * Constructor
-     * @param name
-     * @param description
-     * @param purchasePrice
-     * @param quantity
-     */
     public Product(String name, String description, double purchasePrice, int quantity) {
         this.name = name;
         this.description = description;
@@ -131,11 +124,6 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
-    /**
-     * Buys product
-     * @param quantity
-     * @return if product was successfully bought
-     */
     public boolean buyProduct(int quantity) {
         if (onSale) {
             if (this.saleCap > 0 && quantity <= this.saleCap && quantity <= this.orderCap) {
@@ -272,27 +260,15 @@ public class Product {
         return true;
     }
 
-    /**
-     * Ends sale
-     * @return true
-     */
     public boolean endSale() {
         this.onSale = false;
         return true;
     }
 
-    /**
-     * Gets sale cap
-     * @return sale cap
-     */
     public int getSaleCap() {
         return saleCap;
     }
 
-    /**
-     *
-     * @return sale price
-     */
     public double getSalePrice() {
         return salePrice;
     }
@@ -323,10 +299,6 @@ public class Product {
         return orderCap;
     }
 
-    /**
-     * Gets if on sale
-     * @return onSale
-     */
     public boolean getOnSale() {
         return onSale;
     }
