@@ -1,1 +1,1 @@
-fruit stand,IN,william@gmail.com;strawberry,description,10.0,20;
+storename,storeLocation,username;strawberry,fruit,20.0,20;blueberry,fruit,15.0,20;

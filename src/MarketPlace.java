@@ -623,6 +623,7 @@ public class MarketPlace {
                                                         quantity = -1;
                                                         System.out.printf("Enter how many %s would you like to buy: \n"
                                                                 , productName);
+                                                        bool = true;
                                                         isInt = false;
                                                         while (!isInt) {
                                                             try {
@@ -637,7 +638,6 @@ public class MarketPlace {
                                                         Customer.addToCart(Account.getEmail(user),
                                                                 Account.getUsername(user),
                                                                 storeName, productName, quantity);
-                                                        bool = true;
                                                     }
                                                     if (bool) {
                                                         System.out.println("Product added to cart!");
