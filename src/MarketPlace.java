@@ -16,7 +16,8 @@ import java.util.Scanner;
  */
 public class MarketPlace {
     private static final String WELCOME_PROMPT = "Welcome to the Fruit Market!";
-    private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register)";
+    private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register / " +
+        "Exit)";
     private static final String sellerChoices = """
              1. Create Store\s
              2. Modify Store\s
@@ -107,7 +108,7 @@ public class MarketPlace {
      * @param args (String[])
      */
     public static void main(String[] args) {
-
+        
         Scanner scanner = new Scanner(System.in); //instantiates a scanner object to read terminal inputs
         do {
             boolean logOrRegistration = false;
@@ -918,7 +919,8 @@ public class MarketPlace {
                         String role = scanner.nextLine();
                         while (!(role.equalsIgnoreCase("customer") ||
                                 role.equalsIgnoreCase("seller"))) {
-                            System.out.println("Enter your role (customer / seller");
+                            System.out.println("Invalid Input!");
+                            System.out.println("Enter your role (customer / seller)");
                             role = scanner.nextLine();
                         }
                         logOrRegistration = Account.createAccount(email, user, password, role);
@@ -928,6 +930,9 @@ public class MarketPlace {
                             System.out.println("Account Creation failed. Invalid Credentials");
                         }
                         break;
+                    case ("exit"):
+                        System.out.println("Thank You For Using Our Fruit Market!");
+                        return;
 
                     default:
                         System.out.println("Invalid Input");
