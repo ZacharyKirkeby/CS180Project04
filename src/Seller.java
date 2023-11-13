@@ -86,6 +86,9 @@ public abstract class Seller {
      * @return boolean indicating whether creation was successful
      */
     public static boolean createStore(String storeName, String storeLocation, String username) {
+        if (storeName == null || storeName.isEmpty() || storeLocation == null || storeLocation.isEmpty()) {
+            return false;
+        }
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 return false;
@@ -503,7 +506,7 @@ public abstract class Seller {
         if (index == -1) {
             return "Error: Invalid parameters";
         } else {
-            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
                         stores.get(index).getProductList().get(i).getRevenue());
             }

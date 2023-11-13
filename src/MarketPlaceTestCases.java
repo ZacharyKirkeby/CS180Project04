@@ -126,8 +126,8 @@ public class MarketPlaceTestCases {
     private static final String SEARCH_PROMPT = "Enter search term: ";
 
 
-    @Test(timeout = 100000)
-    public void testExpectedOne() {
+    @Test(timeout = 1000)
+    public void testSellerCreateStore() {
         AccountTestCases.reset();
         // Set the input
         String input = "register\n" +
@@ -196,5 +196,163 @@ public class MarketPlaceTestCases {
                 expected.trim(), stuOut.trim());
     }
 
+    @Test(timeout = 1000)
+    public void testSellerCreateStoreInvalidInputs() {
+        AccountTestCases.reset();
+        CustomerTestCases.reset();
+        String input = "\n" +
+            "7\n" +
+            "register\n" +
+            "email@gmail.com\n" +
+            "username\n" +
+            "password\n" +
+            "seller\n" +
+            "login\n" +
+            "username\n" +
+            "password\n" +
+            "8\n" +
+            "1\n" +
+            "\n" +
+            "\n" +
+            "1\n" +
+            "validname\n" +
+            "\n" +
+            "7\n" +
+            "exit";
 
+        // Pair the input with the expected result
+        String expected = "File cleared.\n" +
+            "File cleared.\n" +
+            "File cleared.\n" +
+            "File cleared.\n" +
+            "File cleared.\n" +
+            WELCOME_PROMPT + "\n" +
+            LOGIN_PROMPT + "\n" +
+            "Invalid Input\n" +
+            WELCOME_PROMPT + "\n" +
+            LOGIN_PROMPT + "\n" +
+            "Invalid Input\n" +
+            WELCOME_PROMPT + "\n" +
+            LOGIN_PROMPT + "\n" +
+            "Enter an email: \n" +
+            "Input Username: \n" +
+            "Enter your password: \n" +
+            "Enter your role (customer / seller)\n" +
+            "Account Made Successfully\n" +
+            "Welcome to the Fruit Market!\n" +
+            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+            "Input Username or Email: \n" +
+            "Enter your password: \n" +
+            "Login Successful!\n" +
+            sellerChoices +
+            "Invalid Input\n" +
+            sellerChoices +
+            "Enter a store name: \n" +
+            "Enter a store location: \n" +
+            "Creation Failed\n" +
+            "Try Again!\n" +
+            sellerChoices +
+            "Enter a store name: \n" +
+            "Enter a store location: \n" +
+            "Creation Failed\n" +
+            "Try Again!\n" +
+            sellerChoices +
+            "Successfully Logged out\n" +
+            "Welcome to the Fruit Market!\n" +
+            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+            "Thank You For Using Our Fruit Market!";
+
+        // Runs the program with the input values
+        receiveInput(input);
+        MarketPlace.main(new String[0]);
+
+        // Retreives the output from the program
+        String stuOut = getOutput();
+
+        // Trims the output and verifies it is correct.
+        stuOut = stuOut.replace("\r\n", "\n");
+        assertEquals("Make sure marketplace is implemented correctly!",
+            expected.trim(), stuOut.trim());
+    }
+
+    @Test(timeout = 1000)
+    public void testSellerEditAndDelete() {
+        AccountTestCases.reset();
+        CustomerTestCases.reset();
+        // Set the input
+        String input = "register\n" +
+            "email@gmail.com\n" +
+            "username\n" +
+            "password\n" +
+            "seller\n" +
+            "login\n" +
+            "username\n" +
+            "password\n" +
+            "1\n" +
+            "fruit stand\n" +
+            "IN\n" +
+            "2\n" +
+            "1\n" +
+            "fruit stand\n" +
+            "apple\n" +
+            "5\n" +
+            "10\n" +
+            "red fruit\n" +
+            "2\n" +
+            "1\n" +
+            "fruit stand\n" +
+            "blueberry\n" +
+            "3\n" +
+            "20\n" +
+            "blue fruit\n" +
+            "7\n" +
+            "2\n" +
+            "1\n" +
+
+            "exit";
+
+        // Pair the input with the expected result
+        String expected = "File cleared.\n" +
+            WELCOME_PROMPT + "\n" +
+            LOGIN_PROMPT + "\n" +
+            "Enter an email: \n" +
+            "Input Username: \n" +
+            "Enter your password: \n" +
+            "Enter your role (customer / seller)\n" +
+            "Account Made Successfully\n" +
+            "Welcome to the Fruit Market!\n" +
+            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+            "Input Username or Email: \n" +
+            "Enter your password: \n" +
+            "Login Successful!\n" +
+            sellerChoices +
+            "Enter a store name: \n" +
+            "Enter a store location: \n" +
+            "Successfully Created\n" +
+            sellerChoices +
+            sellerModificationChoices +
+            "Enter Store Name: \n" +
+            "Enter Product Name: \n" +
+            "Enter Product Price: \n" +
+            "Enter Product Quantity: \n" +
+            "Enter Product Description: \n" +
+            "Successfully Added Product\n" +
+            sellerChoices +
+            "Successfully Logged out\n" +
+            "Welcome to the Fruit Market!\n" +
+            "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+            "Thank You For Using Our Fruit Market!";
+
+        // Runs the program with the input values
+        receiveInput(input);
+        MarketPlace.main(new String[0]);
+
+        // Retreives the output from the program
+        String stuOut = getOutput();
+
+        // Trims the output and verifies it is correct.
+        stuOut = stuOut.replace("\r\n", "\n");
+        assertEquals("Make sure marketplace is implemented correctly!",
+            expected.trim(), stuOut.trim());
+    }
 }
