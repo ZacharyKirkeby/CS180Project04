@@ -2,12 +2,12 @@
 
 ## Running Instructions
 
+
+
 ## Submission Log
 ***
-
 Project Report: 
-Submitted by: 
-
+Submitted by:
 ***
 
 Project File/Repo:
@@ -15,7 +15,7 @@ Submitted by:
 
 ***
 ## Class Descriptions
-
+***
 We utilize 6 total classes for the full execution of the program. Product.java represents a product object. Product
 objects serve as the foundational object for the organization of transactions. Store.java represents a singular store,
 much like product the overall program utilizes multiple different stores. Account is the foundational class for 
@@ -24,7 +24,7 @@ intrinsic properties and functions of a seller or customer, which will be detail
 central program for the program, managing functions from all other calls, handling user input, and calling the 
 needed classes depending on input. 
 
-### Product.java
+### [Product.java](</src/Product.java>)
 ***
 Product.java is the file representing a generic product object. A product is sold in a store by a seller, can be put in
 a shopping cart, and can be purchased by a customer. Products are stored in a database file for persistance purposes,
@@ -50,22 +50,68 @@ implement a sale limit, start a sale, and assign traits to the sale also exist. 
 also exist. 
 
 As for testing, JUnit test cases were written to test the different functions of Product. In addition to JUnit cases, 
-manual hard testing was done on a method by method basis to ensure each method behaved as predicted. 
+manual hard testing was done on a method by method basis to ensure each method behaved as predicted. JUnit cases are 
+found [here](</src/ProductTestCases.java>)
 
 
-### Store.java
+### [Store.java](</src/Store.java>)
 ***
 The store class handles the creation of the Store object. A Store object contains an arraylist of Products,
-seller name, seller location, and the store name. Store.java has the standard getters/setters for a java class, allowing for the modification of the name, location, sales and revenue. 
+seller name, seller location, and the store name. Store.java has the standard getters/setters for a java class, allowing
+for the modification of the name, location, sales and revenue. Store classes are all stored in a list within the
+marketplace. Stores are also stored within sellers, as sellers hold their own list of stores. Stores directly manage
+Product Objects. 
 
 The store keeps track of purchases, can return product options, and hosts the sorting methods on a store
-by store basis. Store has a toString method to print out all products contained within that specific store. Store facilitates sorting products within the store by price and by alphabetical order. 
+by store basis. The store constructor takes a name, location, and an associated seller. A store can be created with a 
+list of products, or can be made with no starter products. Store has a toString method to print out all products 
+contained within that specific store. Store facilitates sorting products within the store by price and by alphabetical
+order. 
 
-The store object also calculates store based statistics for the seller. It can access and display customer history, revenue from past purchases. 
+The store object also calculates store based statistics for the seller. It can access and display customer history, 
+revenue from past purchases. The store can release a file that details purchases, revenue, and customer information.
 
-For optional features, store manages starting a sale for a specific product as well as the implementation of a cap on the number of any one item that you can purchase. 
+For optional features, store manages starting a sale for a specific product as well as the implementation of a cap on 
+the number of any one item that you can purchase. It also has the trigger method for starting a sale. The store is used
+to stage these methods in order to correctly identify the product, which then is passed the appropriate arguments. 
 
-### Account.java
+The store was tested via JUnit test cases found [here](</src/StoreTestCases.java>). These were used to determine that 
+the output from all methods behaved normally and was formatted correctly. On top of JUnit cases, Store was manually
+tested as a part of our hard testing to ensure it behaved correctly, regardless of edge cases. This was the more robust 
+testing that also included persistence testing by abruptly ending the program. 
+
+### [Account.java](</src/Account.java>)
+***
+Account.java is the underlying class behind all accounts. Both users and sellers are based on common traits found within
+Account. Note; Customer and Seller are not subclasses of Account. Account manages all functions for the creation of 
+accounts, logging in, and deletion of accounts. Account is directly invoked from MarketPlace as a part of managing 
+account settings. Account manages the account data database file, AccountData.txt which ensures persistence for all user
+accounts. 
+
+Account in of itself is not an object, it holds a list of all account credentials. Account has an arraylist holding 
+emails, usernames, passwords, and roles. Creating an account takes a username, password, role, and email. The email is 
+checked via regex to ensure it fits the general format of an email, assuming success all data is added to the lists and
+are added to the account database. 
+
+The login method checks that the entered username and password match records in the database. If they don't, a message 
+is displayed. Deleting an account works a similar way, it takes the entered data, finds the matching database entry, and 
+deletes it. Data stored in the arraylists are adjusted accordingly. 
+
+Changing usernames are also handled through account, which updates the utilized data structures. Change password works
+in a similar manner. 
+
+Account has standard getters that take entered data for a user and will fetch the account role, password, username, and
+email. There is a method to writing to the database file as well as a method for reading the file. All actions call
+these two methods to ensure persistence. 
+
+As a bonus feature, password encryption is also handled within Account. We do not store passwords as plaintext. The 
+passwords are stored as a SHA 256 hash. While not the most advanced it is better than plaintext passwords. All password
+operations involve checking the hashes against each other. 
+
+As with all other classes, testing occurred in two main ways. The primary was through JUnit testing found
+[here](</src/AccountTestCases.java>). In addition to testing each method through JUnit, as a part of maunal hard testing
+methods were manually checked to ensure normal behavior, as anomalous behavior will break Customer and Seller objects
+as well as disrupt MarketPlace functions. 
 
 ### Customer.java
 
