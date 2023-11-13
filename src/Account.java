@@ -166,6 +166,9 @@ public class Account {
             return false; // should not happen
         }
         usernames.set(index, newUsername);
+        if (roles.get(index).equalsIgnoreCase("seller")) {
+            Seller.changeStoreUsernames(newUsername, oldUsername);
+        }
         writeToFile();
         return true;
     }

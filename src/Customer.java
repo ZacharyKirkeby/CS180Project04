@@ -401,13 +401,13 @@ public abstract class Customer {
         try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))) {
             String line = br.readLine();
             while (line != null) {
-                String[] subpart = line.split(",");
+                String[] subpart = line.split(" , ");
                 if (storeName.equals("")) {
-                    if (subpart[1].contains(productName)) {
+                    if (subpart[1].equalsIgnoreCase(productName)) {
                         result += line + "\n";
                     }
                 } else {
-                    if (subpart[0].contains(storeName) && subpart[1].contains(productName)) {
+                    if (subpart[0].contains(storeName) && subpart[1].equalsIgnoreCase(productName)) {
                         result += line + "\n";
                     }
                 }
@@ -416,7 +416,10 @@ public abstract class Customer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        result = result.replace(",", "|");
+        if (result.equals("Store Name | Product Name | Customer Name | Rating \n")) {
+            return "Couldn't find Products!\n\n";
+        }
+        result = result.replace(",", "|") + "\n";
         return result;
     }
 }
