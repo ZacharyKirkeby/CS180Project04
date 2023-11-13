@@ -180,6 +180,9 @@ product name,description,price,quantity
 When writeToFile() is called for data persistence, the stores in the arrayList are written into the stores.txt file which is in this format:
 Store name,location,username,product name,product description,price,quantity
 
+As for testing, JUnit test cases were written to test the different functions of Product. In addition to JUnit cases, 
+manual hard testing was done on a method by method basis to ensure each method behaved as predicted. JUnit cases are 
+found [here](</src/SellerTestCases.java>)
 
 ### [MarketPlace.java](</src/MarketPlace.java>)
 ***
