@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -12,7 +11,6 @@ import java.util.*;
  * Create stores.txt and products.txt before using
  *
  * @author Alexander Chen, 05
- * @author Armaan Sayyad, 05
  * @version November 10, 2023
  */
 
@@ -48,9 +46,8 @@ public abstract class Seller {
             result += "Store not found";
         } else {
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                result += stores.get(index).getProductList().get(i).getName() + ", ";
+                result += stores.get(index).getProductList().get(i).getName();
             }
-            result = result.substring(0, result.length() - 2);
         }
         return result;
     }
@@ -85,16 +82,16 @@ public abstract class Seller {
      *
      * @param storeName
      * @param storeLocation
-     * @param sellerUsername
+     * @param username
      * @return boolean indicating whether creation was successful
      */
-    public static boolean createStore(String storeName, String storeLocation, String sellerUsername) {
+    public static boolean createStore(String storeName, String storeLocation, String username) {
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)) {
                 return false;
             }
         }
-        stores.add(new Store(storeName, storeLocation, sellerUsername));
+        stores.add(new Store(storeName, storeLocation, username));
         writeToFile();
         return true;
     }
@@ -139,9 +136,6 @@ public abstract class Seller {
      */
     public static boolean createProduct(String storeName, String name, String description, double price, int quantity,
                                         String username) {
-        if (price <= 0.0 || quantity <= 0) {
-            return false;
-        }
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -208,9 +202,6 @@ public abstract class Seller {
      * @return boolean indicating whether edit was successful
      */
     public static boolean editProductPrice(String storeName, String name, double price, String username) {
-        if (price <= 0.0) {
-            return false;
-        }
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -244,9 +235,6 @@ public abstract class Seller {
      * @return boolean indicating whether edit was successful
      */
     public static boolean editProductQuantity(String storeName, String name, int quantity, String username) {
-        if (quantity < 0) {
-            return false;
-        }
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
@@ -470,15 +458,15 @@ public abstract class Seller {
      * Username should be inputted automatically from user input
      *
      * @param storeName
-     * @param sellerUsername
+     * @param username
      * @return Store information and revenue
      */
-    public static String salesByStore(String storeName, String sellerUsername) {
+    public static String salesByStore(String storeName, String username) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellerUsername().equalsIgnoreCase(sellerUsername)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
                 break;
             }
@@ -497,17 +485,17 @@ public abstract class Seller {
      * Username should be stored from user input and inputted automatically
      *
      * @param storeName
-     * @param sellerUsername
+     * @param username
      * @param sorted
      * @return String of product sales, can be sorted
      */
-    public static String getProductSales(String storeName, String sellerUsername, boolean sorted) {
+    public static String getProductSales(String storeName, String username, boolean sorted) {
         readFromFile();
         int index = -1;
         ArrayList<String> productSales = new ArrayList<>();
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellerUsername().equalsIgnoreCase(sellerUsername)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 index = i;
                 break;
             }
@@ -515,10 +503,9 @@ public abstract class Seller {
         if (index == -1) {
             return "Error: Invalid parameters";
         } else {
-            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
-                        stores.get(index).getProductList().get(i).getRevenue()); // .getRevenue returns nothing of
-                // use since the product itself doesnt know its own revenue
+                        stores.get(index).getProductList().get(i).getRevenue());
             }
         }
         if (sorted) {
@@ -532,18 +519,17 @@ public abstract class Seller {
      * Returns a String of all products and quantities in customer shopping carts for a given seller's products
      * Username should be stored from user input and inputted automatically
      *
-     * @param sellerUsername
+     * @param username
      * @return String of products and quantities
      */
-    public static String getShoppingCartProducts(String sellerUsername) {
+    public static String getShoppingCartProducts(String username) {
         readFromFile();
-        String shoppingCartProducts = "";
+        String shoppingCartProducts = null;
         for (int i = 0; i < stores.size(); i++) {
-            if (stores.get(i).getSellerUsername().equalsIgnoreCase(sellerUsername)) {
+            if (stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     shoppingCartProducts += stores.get(i).getStoreName() + " - " +
-                            stores.get(i).getProductList().get(j).getName() + " | in stock: "
-                            + stores.get(i).getProductList().get(j).getStockQuantity() + " | in shopping cart: " +
+                            stores.get(i).getProductList().get(j).getName() + ": " +
                             Customer.getTotalInCart(stores.get(i).getStoreName(),
                                     stores.get(i).getProductList().get(j).getName()) + "\n";
                 }
@@ -852,13 +838,6 @@ public abstract class Seller {
         return result;
     }
 
-    /**
-     * Views customer reviews
-     *
-     * @param productName
-     * @param user
-     * @return
-     */
     public static String viewCustomerReviews(String productName, String user) {
         readFromFile();
         String result = "";
@@ -885,12 +864,6 @@ public abstract class Seller {
         return result;
     }
 
-    /**
-     * Finds store
-     *
-     * @param storeName
-     * @return
-     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {
@@ -900,13 +873,6 @@ public abstract class Seller {
         return null;
     }
 
-    /**
-     * Changes quantity of product
-     *
-     * @param storeName
-     * @param productName
-     * @param quantity
-     */
     public static void changeQuantity(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
@@ -927,5 +893,18 @@ public abstract class Seller {
         writeToFile();
     }
 
-
+    public static double getTotalPurchasePerCustomer(String storeName, String productName, int quantity) {
+        readFromFile();
+        for (int i = 0; i < stores.size(); i++) {
+            if (stores.get(i).getStoreName().equals(storeName)) {
+                for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
+                    if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
+                        double purchase = stores.get(i).getProductList().get(j).getPurchasePrice() * quantity;
+                        return purchase;
+                    }
+                }
+            }
+        }
+        return 0.0;
+    }
 }
