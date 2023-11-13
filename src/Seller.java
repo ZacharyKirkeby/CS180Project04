@@ -11,6 +11,7 @@ import java.util.*;
  * Create stores.txt and products.txt before using
  *
  * @author Alexander Chen, 05
+ * @author Armaan Sayyad, 05
  * @version November 10, 2023
  */
 
@@ -837,7 +838,7 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
-
+    
     /**
      * Views customer reviews
      *
@@ -871,12 +872,6 @@ public abstract class Seller {
         return result;
     }
 
-    /**
-     * Gets store
-     *
-     * @param storeName
-     * @return
-     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {

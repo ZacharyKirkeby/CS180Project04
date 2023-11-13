@@ -1,5 +1,4 @@
 package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -10,7 +9,7 @@ import java.util.*;
  * Manages the shopping cart and purchase history
  * Creates ShoppingCartDatabase.txt and "PurchaseHistoryDatabase.txt"
  * Creates the Purchase History file based on the customer input filename
- *
+ * 
  * @author Yi Lin Yang
  * @author Armaan Sayyad
  * @version November 9, 2023
@@ -23,9 +22,11 @@ public abstract class Customer {
     private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
     private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
     private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
-    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt"; //shopping cart database
-    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt"; // purchase history
-    private static boolean bool; //
+    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt";
+    //shopping cart database for all customers
+    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
+    // purchase history databse for all customers
+    private static boolean bool;
 
 
     /**
@@ -49,6 +50,7 @@ public abstract class Customer {
      * @param stores
      * @return boolean of whether the store exists in the marketplace
      */
+
     public static boolean searchedStoreExists(String storeName, ArrayList<Store> stores) {
         for (Store store : Seller.getStores()) {
             if (store.getStoreName().equals(storeName)) {
@@ -63,6 +65,7 @@ public abstract class Customer {
      * @param stores
      * @return boolean of whether the product exists in a store in the marketplace
      */
+
     public static boolean searchedProductExists(String productName, ArrayList<Store> stores) {
         for (Store store : Seller.getStores()) {
             for (Product product : store.getProductList()) {
@@ -83,8 +86,9 @@ public abstract class Customer {
      * @param product
      * @param quantity
      */
+
     public static boolean addToCart(String email, String username, String store, String product, int quantity) {
-        if (alreadyInCartOfUser(store, product, username)) {
+        if(alreadyInCart(store, product)){
             System.out.println("This product is already in the Cart!");
             return false;
         } else {
@@ -96,8 +100,7 @@ public abstract class Customer {
                             if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity() <= 0) {
                                 System.out.println("Error out of Stock");
                                 return false;
-                            } else if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity()
-                                    < quantity) {
+                            } else if (Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity) {
                                 quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
                                 System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
                             }
@@ -114,67 +117,35 @@ public abstract class Customer {
         }
         return true;
     }
-
-    /**
-     * Check if in cart
-     *
-     * @param store
-     * @param product
-     * @return
-     */
-    public static boolean alreadyInCart(String store, String product) {
+    public static boolean alreadyInCart(String store, String product){
         readFromShoppingCartDatabaseFile();
-        for (int i = 0; i < storeNames.size(); i++) {
-            if (storeNames.get(i).equals(store) && productNames.get(i).equalsIgnoreCase(product)) {
+        for(int i = 0; i < storeNames.size(); i++){
+            if(storeNames.get(i).equals(store) && productNames.get(i).equalsIgnoreCase(product)){
                 return true;
             }
         }
         return false;
     }
-
-    /**
-     * Check if in cart
-     *
-     * @param store
-     * @param product
-     * @param username
-     * @return
-     */
-    public static boolean alreadyInCartOfUser(String store, String product, String username) {
-        readFromShoppingCartDatabaseFile();
-        for (int i = 0; i < storeNames.size(); i++) {
-            if (storeNames.get(i).equals(store) && productNames.get(i).equalsIgnoreCase(product)
-                    && usernames.get(i).equalsIgnoreCase(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Adds to cart
-     *
-     * @param storeName
-     * @param productName
-     * @param quantity
-     * @return
-     */
-    public static boolean addToCartChangeCheckoutQuantity(String storeName, String productName, int quantity) {
-        if (alreadyInCart(storeName, productName)) {
+    public static boolean addToCartChangeCheckoutQuantity(String storeName, String productName, int quantity){
+        boolean bool = true;
+        if(alreadyInCart(storeName, productName)){
             readFromShoppingCartDatabaseFile();
-            for (int i = 0; i < storeNames.size(); i++) {
-                if (storeNames.get(i).equals(storeName) && productNames.get(i).equalsIgnoreCase(productName)) {
+            for(int i = 0; i < storeNames.size(); i++){
+                if(storeNames.get(i).equals(storeName) && productNames.get(i).equalsIgnoreCase(productName)){
                     quantity = quantities.get(i) + quantity;
                     quantities.set(i, quantity);
-                    writeToShoppingCartDatabaseFile();
-                    return true;
+                    bool = Seller.changeQuantity(storeNames.get(i), productNames.get(i), quantities.get(i));
+                    if(bool) {
+                        writeToShoppingCartDatabaseFile();
+                    } else if(!bool){
+                        return bool;
+                    }
                 }
             }
         }
         writeToShoppingCartDatabaseFile();
-        return false;
+        return bool;
     }
-
     /**
      * Removes a product from the purchase history database
      *
@@ -185,6 +156,7 @@ public abstract class Customer {
      * @param quantity
      * @return
      */
+
     public static boolean removeFromCart(String email, String username, String storeName, String productName,
                                          int quantity) {
         boolean successfullyRemovedFromCart = false;
@@ -200,10 +172,9 @@ public abstract class Customer {
                 productNames.remove(i);
                 quantities.remove(i);
                 break;
-            } else if (emails.get(i).equals(email) && usernames.get(i).equals(username)
-                    && storeNames.get(i).equals(storeName)
-                    && productNames.get(i).equals(productName) && quantities.get(i) > quantity) {
-                quantities.set(i, quantities.get(i) - quantity);
+            } else if(emails.get(i).equals(email) && usernames.get(i).equals(username) && storeNames.get(i).equals(storeName)
+                    && productNames.get(i).equals(productName) && quantities.get(i) > quantity){
+                quantities.set(i, quantities.get(i)-quantity);
                 Seller.changeQuantity(storeName, productName, quantity);
                 successfullyRemovedFromCart = true;
             }
@@ -222,40 +193,36 @@ public abstract class Customer {
      * @param username
      * @return boolean of whether the products in the shopping cart were purchased sucessfully
      */
-    public static boolean buyProductsInShoppingCart(String username) {
-        try {
-            readFromShoppingCartDatabaseFile();
-            boolean productsBoughtSuccessfully = false;
-            for (int i = 0; i < usernames.size(); i++) {
-                if (usernames.get(i).equals(username)) { // check if username matches'
-                    for (int j = 0; j < Seller.getStores().size(); j++) { // iterate through stores in marketplace
-                        if (storeNames.get(i).equals(Seller.getStores().get(j).getStoreName())) {
-                            // if storename matches
-                            for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
-                                // iterate through product list
-                                if (Seller.getStores().get(j).getProductList().get(k).getName()
-                                        .equals(productNames.get(i))) { // if product name matches
-                                    Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
-                                    double unitprice =
-                                            Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
-                                    writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
-                                            productNames.get(i), quantities.get(i), unitprice);
-                                    removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
-                                            productNames.get(i), quantities.get(i));
 
-                                    return true;
+    public static boolean buyProductsInShoppingCart(String username) {
+        readFromShoppingCartDatabaseFile();
+        boolean productsBoughtSuccessfully = false;
+        for (int i = 0; i < usernames.size(); i++) {
+            if (usernames.get(i).equals(username)) { // check if username matches'
+                for (int j = 0; j < Seller.getStores().size(); j++) { // iterate through stores in marketplace
+                    if (storeNames.get(i).equals(Seller.getStores().get(j).getStoreName())) {
+                        // if storename matches
+                        for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
+                            // iterate through product list
+                            if (Seller.getStores().get(j).getProductList().get(k).getName()
+                                    .equals(productNames.get(i))) { // if product name matches
+                                Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
+                                double unitprice =
+                                        Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
+                                writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
+                                        productNames.get(i), quantities.get(i), unitprice);
+                                removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
+                                        productNames.get(i), quantities.get(i));
+
+                                productsBoughtSuccessfully = true;
+                                return true;
                                 }
                             }
                         }
                     }
                 }
             }
-            return productsBoughtSuccessfully;
-        } catch (IndexOutOfBoundsException e) {
-            return false;
-        } catch (Exception e) {
-            return false;
-        }
+        return productsBoughtSuccessfully;
     }
 
     /**
@@ -267,6 +234,7 @@ public abstract class Customer {
      * @param productName
      * @param quantity
      */
+
     public static void writeToPurchaseHistoryDatabaseFile(String email, String username, String storeName,
                                                           String productName, int quantity, double unitprice) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(purchaseHistoryDatabaseFileName, true))) {
@@ -281,6 +249,7 @@ public abstract class Customer {
      * Writes to the shopping cart database file by iterating through all the arrayList fields and appending them to
      * the shopping cart database file
      */
+
     public static void writeToShoppingCartDatabaseFile() {
         try (PrintWriter pw = new PrintWriter(new FileWriter(shoppingCartDatabaseFileName))) {
             for (int i = 0; i < usernames.size(); i++) {
@@ -388,16 +357,7 @@ public abstract class Customer {
         return bool;
     }
 
-    /**
-     * Leaves review for product
-     *
-     * @param storeName
-     * @param productName
-     * @param customerName
-     * @param rating
-     * @param description
-     * @return
-     */
+    //Optional Method
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
                                       String description) {
         boolean bool = false;
@@ -428,25 +388,18 @@ public abstract class Customer {
         return false;
     }
 
-    /**
-     * Allows for viewing of product reviews
-     *
-     * @param storeName
-     * @param productName
-     * @return
-     */
     public static String viewReviews(String storeName, String productName) {
         String result = "Store Name | Product Name | Customer Name | Rating \n";
         try (BufferedReader br = new BufferedReader(new FileReader("Reviews.txt"))) {
             String line = br.readLine();
             while (line != null) {
-                String[] subpart = line.split(" , ");
+                String[] subpart = line.split(",");
                 if (storeName.equals("")) {
-                    if (subpart[1].equalsIgnoreCase(productName)) {
+                    if (subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
                 } else {
-                    if (subpart[0].contains(storeName) && subpart[1].equalsIgnoreCase(productName)) {
+                    if (subpart[0].contains(storeName) && subpart[1].contains(productName)) {
                         result += line + "\n";
                     }
                 }
@@ -455,10 +408,7 @@ public abstract class Customer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (result.equals("Store Name | Product Name | Customer Name | Rating \n")) {
-            return "Couldn't find Products!\n\n";
-        }
-        result = result.replace(",", "|") + "\n";
+        result = result.replace(",", "|");
         return result;
     }
 }
