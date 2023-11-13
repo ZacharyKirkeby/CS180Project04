@@ -224,7 +224,7 @@ public abstract class Customer {
                                     removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
                                         productNames.get(i), quantities.get(i));
 
-                                    productsBoughtSuccessfully = true;
+                                    return true;
                                 }
                             }
                         }
