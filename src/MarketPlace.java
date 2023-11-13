@@ -152,7 +152,7 @@ public class MarketPlace {
                                         String location = scanner.nextLine();
                                         bool = Seller.createStore(storeName, location, user);
                                         if (bool) {
-                                            System.out.println("Suceesfully Created");
+                                            System.out.println("Successfully Created");
                                         } else {
                                             System.out.println("Creation Failed");
                                             System.out.println("Try Again!");

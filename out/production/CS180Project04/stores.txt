@@ -1,1 +1,1 @@
-store name,store location,sellerUsername;product name,new description,8.0,15;second product,product,10.0,10;
+fruit stand,IN,username;apple,red fruit,5.0,10;
