@@ -61,7 +61,8 @@ public class MarketPlaceTestCases {
 
     // Each of the correct outputs
     private static final String WELCOME_PROMPT = "Welcome to the Fruit Market!";
-    private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register)";
+    private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register / " +
+        "Exit)";
     private static final String sellerChoices = """
              1. Create Store\s
              2. Modify Store\s
@@ -147,38 +148,40 @@ public class MarketPlaceTestCases {
                 "5\n" +
                 "10\n" +
                 "red fruit\n" +
-                "7\n";
+                "7\n" +
+            "exit";
 
         // Pair the input with the expected result
-        String expected = WELCOME_PROMPT + "\n" +
+        String expected = "File cleared.\n" +
+                WELCOME_PROMPT + "\n" +
                 LOGIN_PROMPT + "\n" +
                 "Enter an email: \n" +
                 "Input Username: \n" +
                 "Enter your password: \n" +
-                "Enter your role (customer / seller)" +
+                "Enter your role (customer / seller)\n" +
                 "Account Made Successfully\n" +
                 "Welcome to the Fruit Market!\n" +
-                "Would you like to Login or Register an Account? (Login / Register)\n" +
-                "Input Username or Email: \n" +
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
                 "Input Username or Email: \n" +
                 "Enter your password: \n" +
                 "Login Successful!\n" +
-                sellerChoices + "\n" +
+                sellerChoices +
                 "Enter a store name: \n" +
                 "Enter a store location: \n" +
                 "Successfully Created\n" +
-                sellerChoices + "\n" +
-                sellerModificationChoices + "\n" +
+                sellerChoices +
+                sellerModificationChoices +
                 "Enter Store Name: \n" +
                 "Enter Product Name: \n" +
                 "Enter Product Price: \n" +
                 "Enter Product Quantity: \n" +
                 "Enter Product Description: \n" +
                 "Successfully Added Product\n" +
-                sellerChoices + "\n" +
+                sellerChoices +
                 "Successfully Logged out\n" +
                 "Welcome to the Fruit Market!\n" +
-                "Would you like to Login or Register an Account? (Login / Register)\n";
+                "Would you like to Login or Register an Account? (Login / Register / Exit)\n" +
+                "Thank You For Using Our Fruit Market!";
 
         // Runs the program with the input values
         receiveInput(input);
