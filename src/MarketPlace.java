@@ -13,7 +13,8 @@ import java.util.Scanner;
  * @version November 10, 2023
  */
 public class MarketPlace {
-    private static final String WELCOME_PROMPT = "Login or Register an Account (Login / Register)";
+    private static final String WELCOME_PROMPT = "Welcome to the Fruit Market!";
+    private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register)";
     private static final String sellerChoices = """
              1. Create Store\s
              2. Modify Store\s
@@ -64,10 +65,11 @@ public class MarketPlace {
             """;
     private static final String customerShoppingCartChoices = """
              1. Add product(s) to cart\s
-             2. Remove product(s) from cart\s
-             3. Buy products in cart\s
-             4. View shopping cart\s
-             5. Back
+             2. Change Quantity of Product in Cart\s
+             3. Remove product(s) from cart\s
+             4. Buy products in cart\s
+             5. View shopping cart\s
+             6. Back
             """;
     private static  final String AVAILABILITY = """
              1. Sort By Highest Stock\s 
@@ -104,6 +106,7 @@ public class MarketPlace {
             boolean logOrRegistration = false;
             while(!logOrRegistration) {
                 System.out.println(WELCOME_PROMPT);
+                System.out.println(LOGIN_PROMPT);
                 String input = scanner.nextLine().toLowerCase();
                 isLoggedIn = false;
                 switch (input) { // handles user case of login or register and directs to the next relevant step
@@ -653,7 +656,25 @@ public class MarketPlace {
                                                 }
 
                                                 break;
-                                            case "2": // remove product from cart
+                                            case"2":
+                                                System.out.println("Enter store of the product whose checkout " +
+                                                        "quantity you want to change");
+                                                storeName = scanner.nextLine();
+                                                System.out.println("Enter name of the product whoose quantity you wan" +
+                                                        " to change");
+                                                productName = scanner.nextLine();
+                                                System.out.println("Enter amount you want to change by (include - if " +
+                                                        "you want to reduce)");
+                                                quantity = Integer.parseInt(scanner.nextLine());
+                                                bool = Customer.addToCartChangeCheckoutQuantity(storeName, productName,
+                                                        quantity);
+                                                if(bool){
+                                                    System.out.println("Change Successful");
+                                                } else if(!bool){
+                                                    System.out.println("Change failed");
+                                                }
+                                                break;
+                                            case "3": // remove product from cart
                                                 System.out.println("Enter the store name of the product you want to " +
                                                         "remove from cart: ");
                                                 storeName = scanner.nextLine();
@@ -687,7 +708,7 @@ public class MarketPlace {
                                                     }
                                                 }
                                                 break;
-                                            case "3": // buy products in cart
+                                            case "4": // buy products in cart
                                                 bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
                                                 ArrayList<String> check = Customer.getShoppingCartofCustomer(user);
                                                 while(!check.isEmpty()) {
@@ -700,7 +721,7 @@ public class MarketPlace {
                                                     System.out.println("Checkout failed");
                                                 }
                                                 break;
-                                            case "4": // view shopping cart
+                                            case "5": // view shopping cart
                                                 for (String s : Customer.getShoppingCartofCustomer(user)) {
                                                     String[] view = s.split(";");
                                                     System.out.println("Customer Name | Store Name | Product Name | Qty");
@@ -708,6 +729,10 @@ public class MarketPlace {
                                                             view[1] + " | " + view[2] + " | " + view[3] + " | " + view[4];
                                                     System.out.println(output);
                                                 }
+                                                break;
+                                            case "6":
+                                                break;
+                                            default:
                                                 break;
                                         }
                                         break;
