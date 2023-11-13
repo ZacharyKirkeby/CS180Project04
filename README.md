@@ -118,17 +118,68 @@ as well as disrupt MarketPlace functions.
 ### [Customer.java](</src/Customer.java>)
 ***
 The customer class is a user designated the customer permissions. At a high level, Customer directly interacts with 
-Marketplace and Product. Customer handles the shopping cart feature, Customer Purchase history, the purchase history 
-databases, and allows for the exporting of the customers purchase. 
+Marketplace and Product. Customer handles shopping cart features and preserves customer purchase history. Customer manages the purchase history database file, PurchaseHistoryDatabase.txt which ensures persistence for all customer purchase
+history. Customer also manages the shopping cart database file, ShoppingCartDatabase.txt which ensures persistence for all customer shopping carts.
 
-ngl i have no idea whats going on here
+Customer in of itself is not an object, it holds lists of all necessary information for buying/ removing products from the shopping cart. Account has multiple arraylists holding emails, usernames, storenames, productnames, and quantities. When a customer wants to add a product to the shopping cart, they must specify the storename, productname, and the quantity they want to purchase. The customer's email and username can be directly retrieved by calling getters in the Account class. Each variable is appended to their respective arrayList to update the shopping cart.  
 
+Major methods:
+The Customer class has a method supporting the Seller class (getTotalInCart). 
+The methods searchedStoreExists() and searchedProductExists() ensures that the Customer is viewing and buying existing products in the Marketplace. 
+The methods addToCart(), removeFromCart(), addToCartChangeCheckoutQuantity(), buyProductsInShoppingCart() manage the shopping cart.
+The methods writeToPurchaseHistoryDatabaseFile(), writeToShoppingCartDatabaseFile(), readFromPurchaseHistoryDatabaseFile(), writeFromShoppingCartDatabaseFile() logs the changes made to the shopping cart and additions to the purchase history. Once a product in the shopping cart is purchased, it is removed from the ShoppingCartDatabase. Each row of shopping cart and purchase history data in the databases are preceded by email and username to keep track of specific customer actions. 
+The method getPurchaseHistoryofCustomer() allows a customer to export their purchase history into a specified file.
+The method getShoppingCartofCustomer() sorts through the ShoppingCartDatabase to find products that belong to the customer specified. 
 
+ShoppingCartDatabase is in this format:
+email;username;store name;product name;quantity
 
+PurchaseHistoryDatabase is in this format:
+email;username;store name;product name;quantity;price
+
+BONUS FEATURES: The methods leaveReview() and viewReviews() allows the Customer to see/ leave a review for a specific product.
+
+As with all other classes, testing occurred in two main ways. The primary was through JUnit testing found
+[here](</src/CustomerTestCases.java>). In addition to testing each method through JUnit, as a part of maunal hard testing
+methods were manually checked to ensure normal behavior, as anomalous behavior will disrupt MarketPlace functions. 
 
 ### [Seller.java](</src/Seller.java>)
 ***
-ngl i have no idea whats going on here
+
+The Seller class is a user designated the seller permissions. At a high level, Seller directly interacts with 
+Marketplace and Product. The Seller class is responsible for creating and deleting stores, adding, editing, and removing products within these stores, and allowing Sellers to view store and product statistics.
+
+Seller in of itself is not an object, it holds an arrayLists of all the stores. When a seller wants to create stores or products, the arrayList is modified. 
+
+Major methods:
+Store Management: 
+createStore() Creates a new store 
+deleteStore() Deletes an existing store
+
+Product Management: createProduct() Adds a new product to a store
+deleteProduct() Removes a product from a store
+editProductDescription(), editProductPrice(), editProductQuantity() Edits various aspects of a product
+
+Display Operations
+printStores() Prints all available stores
+printProducts() Displays products of a specific store
+printProductAndStores() Prints all products along with their respective stores
+
+File Operations
+writeProductsToCSV(), readProductsFromCSV() Handles product data in CSV format and ensures data persistence.
+writeToFile(), readFromFile() Generic file operations for data persistence.
+
+Statistics
+getCustomersAndPurchases(), storesBySales() salesByStore() Provide insights about stores and sales
+getProductSales(), getShoppingCartProducts() Offers details about product sales and customer shopping carts.
+Various sorting and searching functions for products and stores.
+
+To readProductsFromCSV(), the csv must be in this format:
+product name,description,price,quantity
+
+When writeToFile() is called for data persistence, the stores in the arrayList are written into the stores.txt file which is in this format:
+Store name,location,username,product name,product description,price,quantity
+
 
 ### [MarketPlace.java](</src/MarketPlace.java>)
 ***
