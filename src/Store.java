@@ -71,7 +71,11 @@ public class Store {
         return productList;
     }
 
-    // generic setter
+    /**
+     * Sets productList of seller
+     *
+     * @param productList
+     */
     public void setProductList(ArrayList<Product> productList) {
         this.productList = productList;
     }
@@ -83,7 +87,11 @@ public class Store {
         return storeName;
     }
 
-    // allows for renaming store
+    /**
+     * Renames store
+     *
+     * @param storeName
+     */
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
@@ -95,7 +103,11 @@ public class Store {
         return storeLocation;
     }
 
-    // generic setter
+    /**
+     * Sets store location
+     *
+     * @param storeLocation
+     */
     public void setStoreLocation(String storeLocation) {
         this.storeLocation = storeLocation;
     }
@@ -107,6 +119,11 @@ public class Store {
         return sellerUsername;
     }
 
+    /**
+     * Sets seller username
+     *
+     * @param sellerUsername
+     */
     public void setSellerUsername(String sellerUsername) {
         this.sellerUsername = sellerUsername;
     }
@@ -183,6 +200,11 @@ public class Store {
         return sentence;
     }
 
+    /**
+     * Gets sorted customers and purchases
+     * 
+     * @return
+     */
     public String getSortedCustomersAndPurchases() {
         // TODO
         return null;

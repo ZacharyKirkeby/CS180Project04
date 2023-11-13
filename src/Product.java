@@ -125,6 +125,12 @@ public class Product {
         this.stockQuantity = stockQuantity;
     }
 
+    /**
+     * Buys product
+     *
+     * @param quantity
+     * @return successful buy
+     */
     public boolean buyProduct(int quantity) {
         if (onSale) {
             if (this.saleCap > 0 && quantity <= this.saleCap && quantity <= this.orderCap) {
@@ -300,6 +306,11 @@ public class Product {
         return orderCap;
     }
 
+    /**
+     * Gets onSale
+     *
+     * @return onSale
+     */
     public boolean getOnSale() {
         return onSale;
     }
