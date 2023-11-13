@@ -504,7 +504,7 @@ public abstract class Seller {
         if (index == -1) {
             return "Error: Invalid parameters";
         } else {
-            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
+            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
                         stores.get(index).getProductList().get(i).getRevenue());
             }
@@ -838,7 +838,14 @@ public abstract class Seller {
         result = result.replace(";", " | ");
         return result;
     }
-
+    
+    /**
+     * Views customer reviews
+     *
+     * @param productName
+     * @param user
+     * @return
+     */
     public static String viewCustomerReviews(String productName, String user) {
         readFromFile();
         String result = "";
@@ -874,6 +881,13 @@ public abstract class Seller {
         return null;
     }
 
+    /**
+     * Changes quantity
+     *
+     * @param storeName
+     * @param productName
+     * @param quantity
+     */
     public static boolean changeQuantity(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
@@ -895,6 +909,14 @@ public abstract class Seller {
         return true;
     }
 
+    /**
+     * Gets purchases per customer
+     *
+     * @param storeName
+     * @param productName
+     * @param quantity
+     * @return
+     */
     public static double getTotalPurchasePerCustomer(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
