@@ -160,5 +160,25 @@ public class SellerTestCases {
 
 
         assertEquals("Make sure createProduct method works with valid arguments!", "product name, second product", Seller.printProducts("store name"));
+
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("stores.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+
+        assertEquals("Make sure createProduct is updating stores.txt!", "store name,store location,username;product " +
+            "name,new description,8.0,20;second product,product,10.0,10;", list1.get(0));
+
+       // Seller.
     }
 }
