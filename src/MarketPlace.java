@@ -108,8 +108,7 @@ public class MarketPlace {
      * @param args (String[])
      */
     public static void main(String[] args) {
-
-        boolean repeat = true;
+        
         Scanner scanner = new Scanner(System.in); //instantiates a scanner object to read terminal inputs
         do {
             boolean logOrRegistration = false;
@@ -939,7 +938,7 @@ public class MarketPlace {
                         System.out.println("Invalid Input");
                 }
             }
-        } while (repeat);
+        } while (true);
     }
 
 
