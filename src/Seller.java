@@ -838,6 +838,13 @@ public abstract class Seller {
         return result;
     }
 
+    /**
+     * Views customer reviews
+     *
+     * @param productName
+     * @param user
+     * @return
+     */
     public static String viewCustomerReviews(String productName, String user) {
         readFromFile();
         String result = "";
@@ -864,6 +871,12 @@ public abstract class Seller {
         return result;
     }
 
+    /**
+     * Gets store
+     *
+     * @param storeName
+     * @return
+     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {
@@ -873,6 +886,13 @@ public abstract class Seller {
         return null;
     }
 
+    /**
+     * Changes quantity
+     *
+     * @param storeName
+     * @param productName
+     * @param quantity
+     */
     public static void changeQuantity(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
@@ -893,6 +913,14 @@ public abstract class Seller {
         writeToFile();
     }
 
+    /**
+     * Gets purchases per customer
+     *
+     * @param storeName
+     * @param productName
+     * @param quantity
+     * @return
+     */
     public static double getTotalPurchasePerCustomer(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
