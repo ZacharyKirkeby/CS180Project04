@@ -11,6 +11,7 @@ import java.util.*;
  * Create stores.txt and products.txt before using
  *
  * @author Alexander Chen, 05
+ * @author Armaan Sayyad, 05
  * @version November 10, 2023
  */
 
@@ -503,7 +504,7 @@ public abstract class Seller {
         if (index == -1) {
             return "Error: Invalid parameters";
         } else {
-            for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
+            for (int i = 0; i < stores.get(i).getProductList().size(); i++) {
                 productSales.add(stores.get(index).getProductList().get(i).getName() + ": " +
                         stores.get(index).getProductList().get(i).getRevenue());
             }
@@ -838,13 +839,6 @@ public abstract class Seller {
         return result;
     }
 
-    /**
-     * Views customer reviews
-     *
-     * @param productName
-     * @param user
-     * @return
-     */
     public static String viewCustomerReviews(String productName, String user) {
         readFromFile();
         String result = "";
@@ -871,12 +865,6 @@ public abstract class Seller {
         return result;
     }
 
-    /**
-     * Gets store
-     *
-     * @param storeName
-     * @return
-     */
     public static Store whichStore(String storeName) {
         for (Store s : stores) {
             if (s.equals(storeName)) {
@@ -886,21 +874,14 @@ public abstract class Seller {
         return null;
     }
 
-    /**
-     * Changes quantity
-     *
-     * @param storeName
-     * @param productName
-     * @param quantity
-     */
-    public static void changeQuantity(String storeName, String productName, int quantity) {
+    public static boolean changeQuantity(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equals(storeName)) {
                 for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
                     if (stores.get(i).getProductList().get(j).getName().equalsIgnoreCase(productName)) {
-                        if (quantity > stores.get(i).getProductList().get(j).getStockQuantity()) {
-                            return;
+                        if (quantity > stores.get(i).getProductList().get(j).getStockQuantity() || quantity < 0) {
+                            return false;
                         }
                         stores.get(i).getProductList().get(j).setStockQuantity(
                                 (stores.get(i).getProductList().get(j).getStockQuantity() - quantity)
@@ -911,16 +892,9 @@ public abstract class Seller {
             }
         }
         writeToFile();
+        return true;
     }
 
-    /**
-     * Gets purchases per customer
-     *
-     * @param storeName
-     * @param productName
-     * @param quantity
-     * @return
-     */
     public static double getTotalPurchasePerCustomer(String storeName, String productName, int quantity) {
         readFromFile();
         for (int i = 0; i < stores.size(); i++) {
