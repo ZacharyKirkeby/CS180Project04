@@ -60,10 +60,18 @@ public abstract class Seller {
         System.out.println("Store Name | Product Name | Product Price | Qty Left in Stock");
         for (int i = 0; i < stores.size(); i++) {
             for (int j = 0; j < stores.get(i).getProductList().size(); j++) {
-                System.out.println(stores.get(i).getStoreName() + " | " +
-                        stores.get(i).getProductList().get(j).getName() + " | " +
-                        stores.get(i).getProductList().get(j).getPurchasePrice() + " | " +
-                        stores.get(i).getProductList().get(j).getStockQuantity());
+                if(stores.get(i).getProductList().get(j).getStockQuantity() == 0){
+                    System.out.println(stores.get(i).getStoreName() + " | " +
+                            stores.get(i).getProductList().get(j).getName() + " | " +
+                            stores.get(i).getProductList().get(j).getPurchasePrice() + " | " +
+                            "Out of Stock");
+                }
+                else {
+                    System.out.println(stores.get(i).getStoreName() + " | " +
+                            stores.get(i).getProductList().get(j).getName() + " | " +
+                            stores.get(i).getProductList().get(j).getPurchasePrice() + " | " +
+                            stores.get(i).getProductList().get(j).getStockQuantity());
+                }
             }
         }
     }
