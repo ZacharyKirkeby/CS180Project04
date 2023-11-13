@@ -21,8 +21,8 @@ public abstract class Customer {
     private static ArrayList<String> storeNames = new ArrayList<>(); // storeNames arraylist
     private static ArrayList<String> productNames = new ArrayList<>(); // productNames arraylist
     private static ArrayList<Integer> quantities = new ArrayList<>(); // quantities arraylist
-    private static final String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt"; //shopping cart database
-    private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt"; // purchase history
+    private static String shoppingCartDatabaseFileName = "ShoppingCartDatabase.txt"; //shopping cart database
+    private static String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt"; // purchase history
     private static boolean bool; //
 
 
@@ -395,7 +395,6 @@ public abstract class Customer {
      */
     public static boolean leaveReview(String storeName, String productName, String customerName, int rating,
                                       String description) {
-        boolean bool = false;
         if (!(1 <= rating && rating <= 5)) {
             System.out.println("Invalid Input");
             return false;

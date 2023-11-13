@@ -27,8 +27,8 @@ public class MarketPlaceTestCases {
         }
     }
 
-    private final PrintStream originalOutput = System.out;
-    private final InputStream originalSysin = System.in;
+    private PrintStream originalOutput = System.out;
+    private InputStream originalSysin = System.in;
 
     @SuppressWarnings("FieldCanBeLocal")
     private ByteArrayInputStream testIn;
