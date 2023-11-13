@@ -112,7 +112,7 @@ public class CustomerTestCases {
 
         assertEquals("email;username;storename;strawberry;10;20.00", list1.get(0));
         // implement back in once buyProduct method buys everything in the user's cart
-         assertEquals("email;username;storename;blueberry;12;15.00", list1.get(1));
+        assertEquals("email;username;storename;blueberry;12;15.00", list1.get(1));
 
         list1.clear();
         // clear and read from file again
@@ -171,6 +171,44 @@ public class CustomerTestCases {
         }
 
         assertEquals(0, list1.size());
+        assertEquals("Ensure the addtoCart method works with adding maximum available quantity!", true,
+            Customer.addToCart("email", "username", "storename", "strawberry", 20));
+
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("ShoppingCartDatabase.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        // should have added max
+        assertEquals("email;username;storename;strawberry;10", list1.get(1));
+
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("stores.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        //
+        assertEquals("Make sure buyProduct is updating stores.txt!", "storename,storeLocation,username;strawberry," +
+            "fruit,20.0,10;blueberry,fruit,15.0,8;", list1.get(0));
+
     }
 
     @Test(timeout = 1000)
