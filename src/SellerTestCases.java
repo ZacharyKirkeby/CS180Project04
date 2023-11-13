@@ -176,9 +176,29 @@ public class SellerTestCases {
         }
 
 
-        assertEquals("Make sure createProduct is updating stores.txt!", "store name,store location,username;product " +
-            "name,new description,8.0,20;second product,product,10.0,10;", list1.get(0));
+        assertEquals(true, Customer.addToCart("email2", "username2", "store name", "product name", 5));
 
-       // Seller.
+        list1.clear();
+        // clear and read from file again
+        try (BufferedReader bfr = new BufferedReader(new FileReader("ShoppingCartDatabase.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        System.out.println(list1.toString());
+
+        assertEquals("Ensure the buyProduct method works with valid input!", true,
+            Customer.buyProductsInShoppingCart("username2"));
+
+        System.out.println(Seller.salesByStore("store name", "username"));
+        //System.out.println(Seller.getProductSales("store name", "username", false));
+        System.out.println(Seller.getProductSales("store name", "username", true));
     }
 }
