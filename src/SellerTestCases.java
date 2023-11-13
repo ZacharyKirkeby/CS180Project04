@@ -197,8 +197,38 @@ public class SellerTestCases {
         System.out.println(Seller.getProductSales("store name", "sellerUsername", false));
         System.out.println(Seller.getProductSales("store name", "sellerUsername", true));
 
-        assertEquals("store name - product name: 1\n" +
-            "store name - second product: 0\n", Seller.getShoppingCartProducts("sellerUsername"));
+        assertEquals("store name - product name | in stock: 15 | in shopping cart: 1\n" +
+            "store name - second product | in stock: 10 | in shopping cart: 0\n", Seller.getShoppingCartProducts("sellerUsername"));
+
+
+        assertEquals("Make sure editProductDescription method checks invalid arguments!", false,
+            Seller.deleteProduct("invalid store name", "product name", "sellerUsername"));
+
+        assertEquals("Make sure editProductDescription method checks invalid arguments!", false,
+            Seller.deleteProduct("store name", "invalid product name", "sellerUsername"));
+
+        assertEquals("Make sure editProductDescription method checks invalid arguments!", false,
+            Seller.deleteProduct("store name", "product name", "invalid username"));
+
+        assertEquals("Make sure editProductDescription method works!", true,
+            Seller.deleteProduct("store name", "product name", "sellerUsername"));
+
+        // check to see if stores.txt database has been updated
+        list1.clear();
+        try (BufferedReader bfr = new BufferedReader(new FileReader("stores.txt"))) {
+            String line = bfr.readLine();
+            while (line != null) {
+                list1.add(line);
+                line = bfr.readLine();
+            }
+        } catch (FileNotFoundException e) { // this is a subclass of IOException so catch it first
+            e.printStackTrace();
+        } catch (IOException e) { // dont forget to catch IOException as well (more general exceptions)
+            e.printStackTrace();
+        }
+
+        assertEquals("Ensure that createStore updates store.txt!", "store name,store location,sellerUsername;second product,product,10.0,10;",
+            list1.get(0));
 
         assertEquals(false, Seller.deleteStore("invalid store name", "sellerUsername"));
         assertEquals(false, Seller.deleteStore("store name", "invalid username"));
