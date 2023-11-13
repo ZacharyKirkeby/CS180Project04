@@ -19,66 +19,52 @@ public class MarketPlace {
     private static final String WELCOME_PROMPT = "Welcome to the Fruit Market!";
     private static final String LOGIN_PROMPT = "Would you like to Login or Register an Account? (Login / Register / " +
             "Exit)";
-    private static final String sellerChoices = """
-             1. Create Store\s
-             2. Modify Store\s
-             3. View Store Statistics\s
-             4. Delete Store\s
-             5. View Customer Reviews\s
-             6. Manage Account\s
-             7. Logout\s
-            """;
-    private static final String sellerModificationChoices = """
-             1. Create Product\s
-             2. Change Product Price\s
-             3. Change Product Quantity\s
-             4. Delete Product\s
-             5. Add products to Store from CSV\s
-             6. Start Sale\s
-             7. Add Purchase Limit\s
-             8. Back\s
-            """;
-    private static final String AccountChoices = """
-             1. Change Username\s
-             2. Change Password\s
-             3. Change Role\s
-             4. Delete Account\s
-             5. Back\s
-            """;
-    private static final String sellerStatisticsChoices = """
-             1. View Customer Purchases\s
-             2. View Product Sales\s
-             3. View Products in Shopping Cart\s
-             4. View Products in Store as CSV file\s
-             5. Back\s
-            """;
-    private static final String BUYERPROMPT = """
-             1.  Search for a store\s
-             2.  Search for a product\s
-             3.  Search Product by Description\s
-             4.  View All Products\s
-             5.  Sort Products By Cheapest\s
-             6.  Sort  Products By Most Expensive\s
-             7.  Sort by Availability\s
-             8.  Shopping Cart\s
-             9.  Export Purchase History as file\s
-             10. Leave Review\s
-             11. View Product Reviews\s
-             12. Manage Account\s
-             13. Logout\s
-            """;
-    private static final String customerShoppingCartChoices = """
-             1. Add product(s) to cart\s
-             2. Change Quantity of Product in Cart\s
-             3. Remove product(s) from cart\s
-             4. Buy products in cart\s
-             5. View shopping cart\s
-             6. Back
-            """;
-    private static final String AVAILABILITY = """
-            1. Sort By Highest Stock\s 
-            2. Sort By Low On Stock\s
-            """;
+    private static final String sellerChoices = " 1. Create Store \n" +
+                                                " 2. Modify Store \n" +
+                                                " 3. View Store Statistics \n" +
+                                                " 4. Delete Store \n" +
+                                                " 5. View Customer Reviews \n" +
+                                                " 6. Manage Account \n" +
+                                                " 7. Logout \n";
+    private static final String sellerModificationChoices = " 1. Create Product \n" +
+                                                            " 2. Change Product Price \n" +
+                                                            " 3. Change Product Quantity \n" +
+                                                            " 4. Delete Product \n" +
+                                                            " 5. Add products to Store from CSV \n" +
+                                                            " 6. Start Sale \n" +
+                                                            " 7. Add Purchase Limit \n" +
+                                                            " 8. Back \n";
+    private static final String AccountChoices = " 1. Change Username \n" +
+                                                 " 2. Change Password \n" +
+                                                 " 3. Change Role \n" +
+                                                 " 4. Delete Account \n" +
+                                                 " 5. Back \n";
+    private static final String sellerStatisticsChoices = " 1. View Customer Purchases \n" +
+                                                          " 2. View Product Sales \n" +
+                                                          " 3. View Products in Shopping Cart \n" +
+                                                          " 4. View Products in Store as CSV file \n" +
+                                                          " 5. Back \n";
+    private static final String BUYERPROMPT = " 1.  Search for a store \n" +
+                                              " 2.  Search for a product \n" +
+                                              " 3.  Search Product by Description \n" +
+                                              " 4.  View All Products \n" +
+                                              " 5.  Sort Products By Cheapest \n" +
+                                              " 6.  Sort  Products By Most Expensive \n" +
+                                              " 7.  Sort by Availability \n" +
+                                              " 8.  Shopping Cart \n" +
+                                              " 9.  Export Purchase History as file \n" +
+                                              " 10. Leave Review \n" +
+                                              " 11. View Product Reviews \n" +
+                                              " 12. Manage Account \n" +
+                                              " 13. Logout \n";
+    private static final String customerShoppingCartChoices = " 1. Add product(s) to cart \n" +
+                                                              " 2. Change Quantity of Product in Cart \n" +
+                                                              " 3. Remove product(s) from cart \n" +
+                                                              " 4. Buy products in cart \n" +
+                                                              " 5. View shopping cart \n" +
+                                                              " 6. Back\n";
+    private static final String AVAILABILITY = "1. Sort By Highest Stock \n" +
+                                               "2. Sort By Low On Stock \n";
     private static final String SEARCH_PROMPT = "Enter search term: ";
     private static ArrayList<Store> stores = new ArrayList<>();
     private static boolean isLoggedIn;
