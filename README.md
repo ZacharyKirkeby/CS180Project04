@@ -2,7 +2,9 @@
 
 ## Running Instructions
 
+First, clone the project. Click the green "Code" button, and copy the URl for the repository. From there, enter the following command into your terminal: ``` git clone <the url> ```. From there, everything should be ready to run. Verify the existance of stores.txt, ShoppingCartDatabase.txt, Reviews.txt, and AccountData.txt. 
 
+Once you have verified all files are present you can proceed to the actual code. Run the marketplace file to begin, and follow the directions provided by the input prompts. If running through the terminal, run ``` javac MarketPlace.java``` followed by ``` java MarketPlace ```. 
 
 ## Submission Log
 ***
