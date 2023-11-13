@@ -1,8 +1,8 @@
 package src;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Project 04 -- Store.java
@@ -170,11 +170,11 @@ public class Store {
      * @Auther Zachary Kirkeby
      **/
     public static String getAllCustomersAndPurchases() {
-        String sentence = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
+        String sentence = "";
         try (BufferedReader reader = new BufferedReader(new FileReader("PurchaseHistoryDatabase.txt"))) {
             String line = reader.readLine();
             while (line != null) {
-                sentence += line.replaceAll(";", " | ") + "\n";
+                sentence += line + "\n";
                 line = reader.readLine();
             }
         } catch (Exception e) {
@@ -184,8 +184,34 @@ public class Store {
     }
 
     public String getSortedCustomersAndPurchases() {
-        // TODO
-        return null;
+        String result = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";;
+        String sentence = getAllCustomersAndPurchases();
+        if(sentence == null || sentence.isEmpty()){
+            return "No Purchase History Found!";
+        }
+        String[] line = sentence.split("\n");
+        ArrayList<String> lineList = new ArrayList<>();
+        for(int a = 0; a < line.length; a++){
+            lineList.add(line[a]);
+        }
+        for(int i = 0; i < lineList.size(); i++){
+            for(int j = i + 1; j < lineList.size(); j++) {
+                String[] attributes = lineList.get(i).split(";");
+                String[] attributesTwo = lineList.get(j).split(";");
+                double amountPurchased1 = Seller.getTotalPurchasePerCustomer(attributes[2], attributes[3],
+                        Integer.parseInt(attributes[4]));
+                double amountPurchased2 = Seller.getTotalPurchasePerCustomer(attributesTwo[2], attributesTwo[3],
+                        Integer.parseInt(attributesTwo[4]));
+                if(amountPurchased1 < amountPurchased2){
+                    Collections.swap(lineList, i, j);
+                }
+            }
+        }
+        for (int a = 0; a < lineList.size(); a++) {
+            result += lineList.get(a) + "\n";
+        }
+        result = result.replace(";", " | ");
+        return result;
     }
 
     /**
