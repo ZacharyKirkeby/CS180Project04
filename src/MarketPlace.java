@@ -689,6 +689,11 @@ public class MarketPlace {
                                                 break;
                                             case "3": // buy products in cart
                                                 bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
+                                                ArrayList<String> check = Customer.getShoppingCartofCustomer(user);
+                                                while(!check.isEmpty()) {
+                                                    bool = Customer.buyProductsInShoppingCart(Account.getUsername(user));
+                                                    check = Customer.getShoppingCartofCustomer(user);
+                                                }
                                                 if (bool) {
                                                     System.out.println("Products in cart purchased successfully!");
                                                 } else if (!bool) {
