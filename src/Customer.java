@@ -25,6 +25,7 @@ public abstract class Customer {
     //shopping cart database for all customers
     private static final String purchaseHistoryDatabaseFileName = "PurchaseHistoryDatabase.txt";
     // purchase history databse for all customers
+    private static boolean bool;
 
 
     /**
@@ -91,13 +92,12 @@ public abstract class Customer {
             if(Seller.getStores().get(i).getStoreName().equals(store)) {
                 for (int j = 0; j < Seller.getStores().get(i).getProductList().size(); j++) {
                     if (Seller.getStores().get(i).getProductList().get(j).getName().equalsIgnoreCase(product)) {
-                        if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() == 0) {
+                        if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() <= 0) {
                             System.out.println("Error out of Stock");
                             return false;
                         } else if(Seller.getStores().get(i).getProductList().get(j).getStockQuantity() < quantity){
                             quantity = Seller.getStores().get(i).getProductList().get(j).getStockQuantity();
                             System.out.println("Quantity Exceeded Maximum in Stock, added as many as available");
-                            return true;
                         }
                     }
                 }
@@ -175,21 +175,19 @@ public abstract class Customer {
                                 Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
                                 double unitprice =
                                         Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
-
                                 writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
                                         productNames.get(i), quantities.get(i), unitprice);
-
                                 removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
                                         productNames.get(i), quantities.get(i));
 
                                 productsBoughtSuccessfully = true;
                                 return true;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
         return productsBoughtSuccessfully;
     }
 
@@ -233,6 +231,7 @@ public abstract class Customer {
      * Reads from the shopping cart database file
      */
     public static void readFromShoppingCartDatabaseFile() {
+        bool = false;
         emails.clear();
         usernames.clear();
         storeNames.clear();
