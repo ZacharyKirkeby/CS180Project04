@@ -314,7 +314,7 @@ public abstract class Seller {
                 return false;
             }
             for (int i = 0; i < stores.get(index).getProductList().size(); i++) {
-                pw.write(stores.get(index).getProductList().get(i).toString());
+                pw.write(stores.get(index).getProductList().get(i).toString() + "\n");
                 pw.flush();
             }
             pw.close();

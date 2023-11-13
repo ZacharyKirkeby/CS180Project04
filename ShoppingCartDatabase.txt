@@ -1,1 +1,0 @@
-email1;username1;store name;product name;1
