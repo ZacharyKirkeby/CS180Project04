@@ -1,0 +1,1 @@
+store name,store location,username;product name,new description,8.0,15;second product,product,10.0,10;

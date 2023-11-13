@@ -75,9 +75,10 @@ public class CustomerTestCases {
         Seller.createProduct("storename", "strawberry", "fruit", 20.0, 20, "username");
         Seller.createProduct("storename", "blueberry", "fruit", 15.0, 20, "username");
 
-        assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username", "storename",
+        assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username1", "storename",
             "strawberry", 10));
-        assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username", "storename", "blueberry", 12));
+        assertEquals("Ensure the addtoCart method works!", true, Customer.addToCart("email", "username1", "storename"
+            , "blueberry", 12));
 
 
         assertEquals("Ensure the getTotalInCart method works!", 10, Customer.getTotalInCart("storename", "strawberry"));
@@ -94,7 +95,8 @@ public class CustomerTestCases {
             Customer.getTotalInCart("storename", "blueberry"));
 
         // test buyproduct
-        assertEquals("Ensure the buyProduct method works with valid input!", true, Customer.buyProductsInShoppingCart("username"));
+        assertEquals("Ensure the buyProduct method works with valid input!", true,
+            Customer.buyProductsInShoppingCart("username1"));
 
         list1.clear();
         // clear and read from file again
@@ -110,9 +112,9 @@ public class CustomerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals("email;username;storename;strawberry;10;20.00", list1.get(0));
+        assertEquals("email;username1;storename;strawberry;10;20.00", list1.get(0));
         // implement back in once buyProduct method buys everything in the user's cart
-        assertEquals("email;username;storename;blueberry;12;15.00", list1.get(1));
+        assertEquals("email;username1;storename;blueberry;12;15.00", list1.get(1));
 
         list1.clear();
         // clear and read from file again
@@ -130,12 +132,12 @@ public class CustomerTestCases {
 
         assertEquals("email2;username2;storename;strawberry;5", list1.get(0));
 
-        assertEquals("[]", Customer.getShoppingCartofCustomer("username").toString());
+        assertEquals("[]", Customer.getShoppingCartofCustomer("username1").toString());
 
         assertEquals("[email2;username2;storename;strawberry;5]", Customer.getShoppingCartofCustomer("username2").toString());
 
 
-        Customer.getPurchaseHistoryofCustomer("username", "Customer1PurchaseHistory.txt");
+        Customer.getPurchaseHistoryofCustomer("username1", "Customer1PurchaseHistory.txt");
 
         list1.clear();
         // clear and read from file again
@@ -151,8 +153,8 @@ public class CustomerTestCases {
             e.printStackTrace();
         }
 
-        assertEquals("email;username;storename;strawberry;10", list1.get(0));
-        assertEquals("email;username;storename;blueberry;12", list1.get(1));
+        assertEquals("email;username1;storename;strawberry;10", list1.get(0));
+        assertEquals("email;username1;storename;blueberry;12", list1.get(1));
 
         Customer.getPurchaseHistoryofCustomer("username2", "Customer2PurchaseHistory.txt");
 
@@ -172,7 +174,7 @@ public class CustomerTestCases {
 
         assertEquals(0, list1.size());
         assertEquals("Ensure the addtoCart method works with adding maximum available quantity!", true,
-            Customer.addToCart("email", "username", "storename", "strawberry", 20));
+            Customer.addToCart("email", "username1", "storename", "strawberry", 20));
 
         list1.clear();
         // clear and read from file again
@@ -189,7 +191,7 @@ public class CustomerTestCases {
         }
 
         // should have added max
-        assertEquals("email;username;storename;strawberry;10", list1.get(1));
+        assertEquals("email;username1;storename;strawberry;10", list1.get(1));
 
         list1.clear();
         // clear and read from file again

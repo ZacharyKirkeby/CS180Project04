@@ -204,33 +204,39 @@ public abstract class Customer {
      */
 
     public static boolean buyProductsInShoppingCart(String username) {
-        readFromShoppingCartDatabaseFile();
-        boolean productsBoughtSuccessfully = false;
-        for (int i = 0; i < usernames.size(); i++) {
-            if (usernames.get(i).equals(username)) { // check if username matches'
-                for (int j = 0; j < Seller.getStores().size(); j++) { // iterate through stores in marketplace
-                    if (storeNames.get(i).equals(Seller.getStores().get(j).getStoreName())) {
-                        // if storename matches
-                        for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
-                            // iterate through product list
-                            if (Seller.getStores().get(j).getProductList().get(k).getName()
-                                .equals(productNames.get(i))) { // if product name matches
-                                Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
-                                double unitprice =
-                                    Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
-                                writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
-                                    productNames.get(i), quantities.get(i), unitprice);
-                                removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
-                                    productNames.get(i), quantities.get(i));
+        try {
+            readFromShoppingCartDatabaseFile();
+            boolean productsBoughtSuccessfully = false;
+            for (int i = 0; i < usernames.size(); i++) {
+                if (usernames.get(i).equals(username)) { // check if username matches'
+                    for (int j = 0; j < Seller.getStores().size(); j++) { // iterate through stores in marketplace
+                        if (storeNames.get(i).equals(Seller.getStores().get(j).getStoreName())) {
+                            // if storename matches
+                            for (int k = 0; k < Seller.getStores().get(j).getProductList().size(); k++) {
+                                // iterate through product list
+                                if (Seller.getStores().get(j).getProductList().get(k).getName()
+                                    .equals(productNames.get(i))) { // if product name matches
+                                    Seller.getStores().get(j).getProductList().get(k).buyProduct(quantities.get(i));
+                                    double unitprice =
+                                        Seller.getStores().get(j).getProductList().get(k).getPurchasePrice();
+                                    writeToPurchaseHistoryDatabaseFile(emails.get(i), username, storeNames.get(i),
+                                        productNames.get(i), quantities.get(i), unitprice);
+                                    removeFromCart(emails.get(i), usernames.get(i), storeNames.get(i),
+                                        productNames.get(i), quantities.get(i));
 
-                                productsBoughtSuccessfully = true;
+                                    productsBoughtSuccessfully = true;
+                                }
                             }
                         }
                     }
                 }
             }
+            return productsBoughtSuccessfully;
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        } catch (Exception e) {
+            return false;
         }
-        return productsBoughtSuccessfully;
     }
 
     /**

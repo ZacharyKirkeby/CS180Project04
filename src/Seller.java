@@ -470,15 +470,15 @@ public abstract class Seller {
      * Username should be inputted automatically from user input
      *
      * @param storeName
-     * @param username
+     * @param sellerUsername
      * @return Store information and revenue
      */
-    public static String salesByStore(String storeName, String username) {
+    public static String salesByStore(String storeName, String sellerUsername) {
         readFromFile();
         int index = -1;
         for (int i = 0; i < stores.size(); i++) {
             if (stores.get(i).getStoreName().equalsIgnoreCase(storeName)
-                    && stores.get(i).getSellerUsername().equalsIgnoreCase(username)) {
+                    && stores.get(i).getSellerUsername().equalsIgnoreCase(sellerUsername)) {
                 index = i;
                 break;
             }
