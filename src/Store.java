@@ -21,7 +21,7 @@ public class Store {
     private double totalRevenue = 0; // total money earned
 
     /**
-     * Constructor w Seller username
+     * Constructor with Seller username
      *
      * @param name
      * @param storeLocation
@@ -35,6 +35,12 @@ public class Store {
         this.productList = productList;
     }
 
+    /**
+     * Creates a new Store object
+     * @param name
+     * @param storeLocation
+     * @param sellerUsername
+     */
     public Store(String name, String storeLocation, String sellerUsername) {
         this.storeName = name;
         this.storeLocation = storeLocation;
@@ -71,7 +77,9 @@ public class Store {
         return productList;
     }
 
-    // generic setter
+    /**
+     * @param productList
+     */
     public void setProductList(ArrayList<Product> productList) {
         this.productList = productList;
     }
@@ -83,7 +91,9 @@ public class Store {
         return storeName;
     }
 
-    // allows for renaming store
+    /**
+     * @param storeName
+     */
     public void setStoreName(String storeName) {
         this.storeName = storeName;
     }
@@ -95,7 +105,9 @@ public class Store {
         return storeLocation;
     }
 
-    // generic setter
+    /**
+     * @param storeLocation
+     */
     public void setStoreLocation(String storeLocation) {
         this.storeLocation = storeLocation;
     }
@@ -107,6 +119,9 @@ public class Store {
         return sellerUsername;
     }
 
+    /**
+     * @param sellerUsername
+     */
     public void setSellerUsername(String sellerUsername) {
         this.sellerUsername = sellerUsername;
     }
@@ -183,6 +198,10 @@ public class Store {
         return sentence;
     }
 
+    /**
+     *
+     * @return All customers and purchases sorted by the amount spend per customer
+     */
     public String getSortedCustomersAndPurchases() {
         String result = "Customer Email | Customer Username | Store Name | Product Name | Quantity Purchased \n";
         ;
